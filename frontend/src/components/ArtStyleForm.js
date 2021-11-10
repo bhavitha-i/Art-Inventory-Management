@@ -19,7 +19,7 @@ import SnackBar from './SnackBar';
 
 
 
-function AddAddress(props)  {
+function ArtStyleForm(props)  {
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
@@ -28,20 +28,25 @@ function AddAddress(props)  {
 
 
 
+
     function refreshPage() {
       setTimeout(()=>{
           window.location.reload(true);
-      }, 1000);
+      }, 500);
       console.log('page to reload')
-  }
+    }
 
 
 
     useEffect(() => {
 
+
         if (props.recordForEdit != null){
             setInputs(props.recordForEdit)
             setIsEdit(true)
+          }
+          else{
+            setInputs([])
           }
         }, []
       )
@@ -57,15 +62,45 @@ function AddAddress(props)  {
         
         if(isEdit){
 
+            axios.put(process.env.REACT_APP_API_URL+'/artStyle/'+inputs.id_Art_Styles,inputs)
+            .then(response =>{ 
+                if(response.data == null){
+                    setCallFlag(true)
+                    setErrAlert("error")
+                    setMessage(response.message)
+                }
+                else{
+                console.log(response.data,"from api")
+                setCallFlag(true)
+                setErrAlert("success")
+                setMessage("Art Style Edited")
+                refreshPage()
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                setCallFlag(true)
+                setErrAlert("error")
+                setMessage("Error while editing Art Style")
+            })
         }
+
         else{
 
             axios.post(process.env.REACT_APP_API_URL+'/artStyle/add',inputs)
             .then(response =>{ 
+                if(response.data == null){
+                    setCallFlag(true)
+                    setErrAlert("error")
+                    setMessage(response.message)
+                }
+                else{
                 console.log(response.data,"from api")
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Art Style Added")
+                refreshPage()
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -143,4 +178,4 @@ function AddAddress(props)  {
   );
 }
 
-export default withRoot(AddAddress);
+export default withRoot(ArtStyleForm);

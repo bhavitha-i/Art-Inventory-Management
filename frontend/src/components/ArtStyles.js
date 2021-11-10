@@ -29,19 +29,22 @@ import ArtStyleForm from './ArtStyleForm';
 
 export default function ArtStyles() {
 
-
-  const [prod,setProd] = useState("");
-  const [errAlert,setErrAlert] = useState("");
-  const [message,setMessage] = useState("");
-  const [loggedin,setLoggedin] = useState(false);
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
   const [artstyles, setStyles] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
   const [isEdit, setIsEdit] = useState(false)
+  const [callFlag,setCallFlag] = useState(false);
+  const [errAlert,setErrAlert] = useState("");
+  const [message,setMessage] = useState("");
 
-
+  function refreshPage() {
+    setTimeout(()=>{
+        window.location.reload(true);
+    }, 500);
+    console.log('page to reload')
+  }
 
   const requestSearch = (searchedVal) => {
     const filteredRows = rows.filter((row) => {
@@ -80,50 +83,31 @@ const cancelSearch = () => {
     setIsEdit(false)
   }
 
-  async function deleteitem(product){
-   
-  //   setLoggedin(false)
-  //   const Bearer = "Bearer "+ Cookies.get('token')
-  //   console.log(Bearer)
-  //   let axiosConfig = {
-  //     headers: {
-  //         'Content-Type': 'application/json;charset=UTF-8',
-  //         "Authorization" : Bearer
-  //     }
-  //   };
+  function deleteitem(style){
 
-  //   if(!Cookies.get('token')){
-  //     setErrAlert("error")
-  //     setMessage("Only vendors can add products")
-
-     
-  // }
-  //   try{
-  //     const hitback =  await axios.delete(`http://localhost:5000/product/${product._id}`,axiosConfig, {
-  //       withCredentials: true
-        
-  //   });
-  //   console.log(hitback.data)
-  //   // this.setState({ products: hitback.data });
-  //   setErrAlert("success")
-  //   setMessage("Item deleted")
-  //   setProd(product.name)
-  //   // setProd(hitback.data.product.name)
-  //   setLoggedin(true)
-  //   refreshPage()
-   
-    
+    axios.delete(process.env.REACT_APP_API_URL+'/artStyle/'+style.id_Art_Styles)
+    .then(response =>{ 
+        if(response.data == null){
+            setCallFlag(true)
+            setErrAlert("error")
+            setMessage(response.message)
+        }
+        else{
+        console.log(response.data,"from api")
+        setCallFlag(true)
+        setErrAlert("success")
+        setMessage("Art Style Deleted")
+        refreshPage()
+        }
+    })
+    .catch(error => {
+        console.log(error)
+        setCallFlag(true)
+        setErrAlert("error")
+        setMessage("Error while deleting Art Style")
+    })
     
 
-  //   }catch(e){
-  //     setErrAlert("error")
-  //     setLoggedin(true)
-  //     setMessage("Something went wrong")
-  //     console.log("in error")
-  //     console.log(e)
-  //   }
-
- 
   }
   return (
     <Container style={styles.ArtStylesContainer}>
