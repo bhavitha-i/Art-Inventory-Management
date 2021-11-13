@@ -5,6 +5,7 @@ import Artist from "./views/Artist"
 import Settings from './views/Settings';
 import theme from './components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
+import FileUpload from './components/FileUpload';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route  path="/" element={<Home />} />
         <Route  path="/artist" element={<Artist />} />
         <Route  path="/settings" element={<Settings />} />
+        <Route  path="/fileUpload" element={<FileUpload />} />
 
       </Routes>
     </BrowserRouter>

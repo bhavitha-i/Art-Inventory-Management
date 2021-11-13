@@ -26,7 +26,12 @@ class SettingsTabs extends React.PureComponent {
           }}
         >
           <Box>
-          <Tabs value={activeIndex} onChange={this.handleChange} orientation="vertical" >
+          <Tabs 
+            value={activeIndex} 
+            onChange={this.handleChange} 
+            orientation="vertical" 
+            sx={{ borderRight: 1, borderColor: 'divider' }}
+            >
             <Tab label="Art Styles" />
             <Tab label="Country" />
             <Tab label="State" />

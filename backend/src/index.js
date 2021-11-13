@@ -7,6 +7,7 @@ const cors = require("cors")
 
 const ArtistRouter = require("./routers/artist");
 const ArtStyleRouter = require("./routers/artStyles")
+const FileUpload = require("./routers/upload")
 
 
 
@@ -26,7 +27,7 @@ app.use(cors({
   
 app.use(ArtistRouter);
 app.use(ArtStyleRouter);
-
+app.use(FileUpload);
 
 
 

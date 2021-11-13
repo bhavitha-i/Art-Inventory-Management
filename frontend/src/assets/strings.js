@@ -9,6 +9,17 @@ ArtStyles:{
     id:"ArtStyleId",
     name:"Name",
     desc: "Description"
+},
+Artist: {
+    id: "ArtistId",
+    name: "Name",
+    dob: "Date of Birth",
+    placebirth: "Place of Birth",
+    phone: "Phone",
+    style:"Famous Style",
+    website:"Website",
+    
+
 }
 }
 

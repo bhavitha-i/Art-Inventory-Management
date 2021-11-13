@@ -46,17 +46,6 @@ export default function ArtStyles() {
     console.log('page to reload')
   }
 
-  const requestSearch = (searchedVal) => {
-    const filteredRows = rows.filter((row) => {
-      return row.StyleName.toLowerCase().includes(searchedVal.toLowerCase());
-    });
-    setStyles(filteredRows);
-};
-
-const cancelSearch = () => {
-  setSearched("");
-  requestSearch(searched);
-};
 
   useEffect(() => {
 
@@ -70,6 +59,20 @@ const cancelSearch = () => {
   };    
   getStyles()
   },[]);
+
+
+  const requestSearch = (searchedVal) => {
+    const filteredRows = rows.filter((row) => {
+      return row.StyleName.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setStyles(filteredRows);
+};
+
+const cancelSearch = () => {
+  setSearched("");
+  requestSearch(searched);
+};
+
 
   const openEditPopup = item => {
     setRecordForEdit(item)
@@ -148,7 +151,7 @@ const cancelSearch = () => {
               <TableCell >{style.id_Art_Styles}</TableCell>
               <TableCell >{style.StyleName}</TableCell>
               <TableCell >{style.Description && trimWords(style.Description, 3, '...')}</TableCell>
-              <TableCell style={styles.ArtStylesIcons}>
+              <TableCell style={styles.TableActionIcons}>
                     <EditIcon onClick={() => openEditPopup(style)}/>
                     <DeleteIcon onClick={() => deleteitem(style)}/>
 

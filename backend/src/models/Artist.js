@@ -1,6 +1,4 @@
 const Sequelize = require('sequelize');
-const { Artist } = require('../mysql');
-
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Artist', {
     id_Artist: {
@@ -42,6 +40,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'Country',
         key: 'id_Country'
       }
+    },
+    Image: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Images',
+        key: 'idImages'
+      }
     }
   }, {
     sequelize,
@@ -78,7 +84,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "FamousStyle" },
         ]
       },
+      {
+        name: "ArtistImageid_idx",
+        using: "BTREE",
+        fields: [
+          { name: "Image" },
+        ]
+      },
     ]
   });
-
 };

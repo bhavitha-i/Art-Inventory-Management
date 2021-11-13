@@ -34,9 +34,14 @@ const ArtStylesAddButton={
   // justifyContent: "flex-end",
 }
 
-const ArtStylesIcons={
+const TableActionIcons={
   justifyContent: "space-around",
   display: "flex",
+}
+
+const ArtistTableContainer={
+  width: "80%",
+  margin: "auto"
 }
 
 
@@ -47,7 +52,8 @@ const ArtStylesIcons={
     ArtStylesSeach:ArtStylesSeach,
     ArtStylesBox:ArtStylesBox,
     ArtStylesAddButton:ArtStylesAddButton,
-    ArtStylesIcons:ArtStylesIcons
+    TableActionIcons:TableActionIcons,
+    ArtistTableContainer:ArtistTableContainer
   }
 
 

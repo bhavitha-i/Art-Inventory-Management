@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const { Art_Styles } = require('../mysql');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Art_Styles', {
     id_Art_Styles: {
@@ -39,12 +38,5 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
     ]
-  },
-  {
-      classMethods:{
-          associate:function(models){
-              Art_Styles.hasMany(models.Artists );
-          }
-      }
   });
 };
