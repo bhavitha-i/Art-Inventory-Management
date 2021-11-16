@@ -18,7 +18,6 @@ Artist: {
     phone: "Phone",
     style:"Famous Style",
     website:"Website",
-    
 
 }
 }

@@ -112,6 +112,7 @@ const cancelSearch = () => {
     
 
   }
+  
   return (
     <Container style={styles.ArtStylesContainer}>
       <Box style={styles.ArtStylesBox}>

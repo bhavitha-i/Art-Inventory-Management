@@ -44,6 +44,11 @@ const ArtistTableContainer={
   margin: "auto"
 }
 
+const flexCentered ={
+  display: "flex",
+  justifyContent :"center"
+}
+
 
   const styles = {
     HeaderContainer: HeaderContainer,
@@ -53,7 +58,8 @@ const ArtistTableContainer={
     ArtStylesBox:ArtStylesBox,
     ArtStylesAddButton:ArtStylesAddButton,
     TableActionIcons:TableActionIcons,
-    ArtistTableContainer:ArtistTableContainer
+    ArtistTableContainer:ArtistTableContainer,
+    flexCentered:flexCentered
   }
 
 

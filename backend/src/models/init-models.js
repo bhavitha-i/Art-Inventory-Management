@@ -17,7 +17,6 @@ var _Country = require("./Country");
 var _Customer = require("./Customer");
 var _Customer_Purchases = require("./Customer_Purchases");
 var _Exhibition_Tickets = require("./Exhibition_Tickets");
-var _Images = require("./Images");
 var _InStore_Art_Status = require("./InStore_Art_Status");
 var _Museum = require("./Museum");
 var _Order = require("./Order");
@@ -49,7 +48,6 @@ function initModels(sequelize) {
   var Customer = _Customer(sequelize, DataTypes);
   var Customer_Purchases = _Customer_Purchases(sequelize, DataTypes);
   var Exhibition_Tickets = _Exhibition_Tickets(sequelize, DataTypes);
-  var Images = _Images(sequelize, DataTypes);
   var InStore_Art_Status = _InStore_Art_Status(sequelize, DataTypes);
   var Museum = _Museum(sequelize, DataTypes);
   var Order = _Order(sequelize, DataTypes);
@@ -120,10 +118,6 @@ function initModels(sequelize) {
   Customer.hasMany(Order, { as: "Orders", foreignKey: "Customer"});
   Premium_Customer.belongsTo(Customer, { as: "id_Customer_Customer", foreignKey: "id_Customer"});
   Customer.hasOne(Premium_Customer, { as: "Premium_Customer", foreignKey: "id_Customer"});
-  Art.belongsTo(Images, { as: "Image_Image", foreignKey: "Image"});
-  Images.hasMany(Art, { as: "Arts", foreignKey: "Image"});
-  Artist.belongsTo(Images, { as: "Image_Image", foreignKey: "Image"});
-  Images.hasMany(Artist, { as: "Artists", foreignKey: "Image"});
   Art_In_Store.belongsTo(InStore_Art_Status, { as: "Status_InStore_Art_Status", foreignKey: "Status"});
   InStore_Art_Status.hasMany(Art_In_Store, { as: "Art_In_Stores", foreignKey: "Status"});
   Art_Exhibition.belongsTo(Museum, { as: "Museum_Museum", foreignKey: "Museum"});
@@ -168,7 +162,6 @@ function initModels(sequelize) {
     Customer,
     Customer_Purchases,
     Exhibition_Tickets,
-    Images,
     InStore_Art_Status,
     Museum,
     Order,

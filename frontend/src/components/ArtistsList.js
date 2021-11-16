@@ -27,6 +27,10 @@ import styles from '../assets/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from '@mui/material/Link';
+import Popup from './Popup'
+import ArtistForm from './ArtistForm';
+import SearchBar from "material-ui-search-bar";
+import { Box } from '@mui/system';
 
 // ----------------------------------------------------------------------
 
@@ -91,6 +95,8 @@ export default function ArtistsList() {
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
+  const [artStyles, setArtStyles] = useState([]);
+  const [countries, setCountires] = useState();
 
   function refreshPage() {
     setTimeout(()=>{
@@ -111,11 +117,90 @@ export default function ArtistsList() {
             .catch(error => {console.log(error)})
   };    
   getArtists()
-  },[]);
 
 
+  const getValues = async () => {
+    axios.get(process.env.REACT_APP_API_URL+'/artStyle/all')
+          .then(response =>{ 
+            const data = response.data
+            const options = data.map(s => ({
+              "value" : s.id_Art_Styles,
+              "label" : s.StyleName
+        
+            }))
+            setArtStyles(options)
+            console.log(options," art sytles from api")})
+          .catch(error => {console.log(error)})
+
+    axios.get(process.env.REACT_APP_API_URL+'/country/all')
+          .then(response =>{ 
+            const data = response.data
+            const options = data.map(s => ({
+              "value" : s.id_Country,
+              "label" : s.Name
+        
+            }))
+            setCountires(options)
+            console.log(options," countries from api")})
+          .catch(error => {console.log(error)})
+          
+}; 
+getValues()
+
+},[]);
 
 
+  const requestSearch = (searchedVal) => {
+    const filteredRows = rows.filter((row) => {
+      return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setArtists(filteredRows);
+};
+
+const cancelSearch = () => {
+  setSearched("");
+  requestSearch(searched);
+};
+
+
+  const openEditPopup = item => {
+    setRecordForEdit(item)
+    setOpenPopup(true)
+    setIsEdit(true)
+  }
+  
+
+  const openAddPopup = item => {
+    setOpenPopup(true)
+    setIsEdit(false)
+  }
+
+  function deleteitem(item){
+
+    axios.delete(process.env.REACT_APP_API_URL+'/artist/'+item.id_Artist)
+    .then(response =>{ 
+        if(response.data == null){
+            setCallFlag(true)
+            setErrAlert("error")
+            setMessage(response.message)
+        }
+        else{
+        console.log(response.data,"from api")
+        setCallFlag(true)
+        setErrAlert("success")
+        setMessage("Artist Deleted")
+        refreshPage()
+        }
+    })
+    .catch(error => {
+        console.log(error)
+        setCallFlag(true)
+        setErrAlert("error")
+        setMessage("Error while deleting Artist")
+    })
+    
+
+  }
 
 
 
@@ -125,6 +210,23 @@ export default function ArtistsList() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Box style={styles.ArtStylesBox}>
+        <SearchBar
+        value={searched}
+        onChange={(searchVal) => requestSearch(searchVal)}
+        onCancelSearch={() => cancelSearch()}
+        placeholder="Seach for Art Style"
+        style={styles.ArtStylesSeach}
+        />
+         <Button
+              type="submit"
+              variant="contained"
+              style={styles.ArtStylesAddButton}
+              onClick={() => openAddPopup(true)}
+      >
+            Add
+          </Button>
+      </Box>
         <TableContainer component={Paper} style={styles.ArtistTableContainer}>
       <Table sx={{ minWidth: 650 }} aria-label="Product table">
         <TableHead>
@@ -146,17 +248,18 @@ export default function ArtistsList() {
             >
 
               <TableCell>
+                {console.log(artist.Image,"in map")}
                     <Avatar variant="rounded" src={artist.Image} ></Avatar>
               </TableCell>
               <TableCell >{artist.id_Artist}</TableCell>
               <TableCell >{artist.Name}</TableCell>
               <TableCell >{artist.Phone}</TableCell>
-              <TableCell >{artist.BirthPlace_Country.Name}</TableCell>
-              <TableCell >{artist.FamousStyle_Art_Style.StyleName}</TableCell>
+              <TableCell >{artist.BirthPlace_Country && artist.BirthPlace_Country.Name}</TableCell>
+              <TableCell >{artist.FamousStyle_Art_Style && artist.FamousStyle_Art_Style.StyleName}</TableCell>
               <TableCell>
                 <Container  style={styles.TableActionIcons}>
-                  <EditIcon />
-                  <DeleteIcon/>
+                  <EditIcon onClick={() => openEditPopup(artist)}/>
+                  <DeleteIcon onClick={() => deleteitem(artist)}/>
                   </Container>
               </TableCell>
               
@@ -165,6 +268,19 @@ export default function ArtistsList() {
           </TableBody>  
       </Table>
     </TableContainer>
+            <Popup
+                title={isEdit?"Edit Artist":"Add Artist"}
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+             >
+                <ArtistForm 
+                    recordForEdit={recordForEdit} 
+                    setOpenPopup={setOpenPopup}
+                    artStyles={artStyles}
+                    countries={countries}
+                    />
+                
+            </Popup>
     </ThemeProvider>
 
   );

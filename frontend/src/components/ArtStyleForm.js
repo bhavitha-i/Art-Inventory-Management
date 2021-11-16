@@ -139,7 +139,7 @@ function ArtStyleForm(props)  {
             name="StyleName"
             label={strings.ArtStyles.name}
             fullWidth
-            variant="outlined"
+            variant="standard"
             onChange={handleInputChange}
             value={inputs.StyleName}
           />
@@ -154,7 +154,7 @@ function ArtStyleForm(props)  {
             name="Description"
             label={strings.ArtStyles.desc}
             fullWidth
-            variant="outlined"
+            variant="standard"
             onChange={handleInputChange}
             value={inputs.Description}
 

@@ -3,7 +3,6 @@ const dbmodels = db.models
 // const Op = db.Sequelize.Op;
 
 
-
 //Create Artists
 exports.create = (req, res) => {
   const Artist = req.body;
@@ -19,10 +18,13 @@ exports.create = (req, res) => {
     .catch(err => {
       res.send({
         message:
-          err.message || "Some error occurred while retrieving Artists."
+          err.message || "Some error occurred while creaitng row."
       });
     });
   };
+
+
+
 
 //Get all Artists
 exports.findAll = (req, res) => {

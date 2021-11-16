@@ -54,12 +54,8 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     Image: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Images',
-        key: 'idImages'
-      }
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -108,13 +104,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "Status" },
-        ]
-      },
-      {
-        name: "ArtImageId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Image" },
         ]
       },
     ]
