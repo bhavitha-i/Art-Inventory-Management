@@ -13,10 +13,8 @@ import axios from "axios";
 import strings from '../assets/strings';
 import SnackBar from './SnackBar';
 import Select from '@mui/material/Select';
-import { func } from 'prop-types';
 import InputLabel from '@mui/material/InputLabel';
 import TrapFocus from '@mui/material/Unstable_TrapFocus';
-import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import styles from '../assets/styles';
 

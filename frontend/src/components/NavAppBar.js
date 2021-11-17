@@ -37,7 +37,7 @@ export default function NavAppBar() {
             <IconButton
               size="large"
               aria-label="account of current user"
-              href="/settings"
+              href="/settings/0"
               color="inherit"
             >
               <SettingsIcon />

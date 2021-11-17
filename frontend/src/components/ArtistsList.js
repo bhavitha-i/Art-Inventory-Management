@@ -107,50 +107,52 @@ export default function ArtistsList() {
 
 
   useEffect(() => {
-
-    const getArtists = async () => {
-      axios.get(process.env.REACT_APP_API_URL+'/artist/all')
-            .then(response =>{ 
-              setArtists(response.data)
-              setRows(response.data)
-              console.log(response.data,"from api")})
-            .catch(error => {console.log(error)})
-  };    
-  getArtists()
-
-
-  const getValues = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/artStyle/all')
-          .then(response =>{ 
-            const data = response.data
-            const options = data.map(s => ({
-              "value" : s.id_Art_Styles,
-              "label" : s.StyleName
         
-            }))
-            setArtStyles(options)
-            console.log(options," art sytles from api")})
-          .catch(error => {console.log(error)})
+        getArtists()
+        getValues()
 
-    axios.get(process.env.REACT_APP_API_URL+'/country/all')
-          .then(response =>{ 
-            const data = response.data
-            const options = data.map(s => ({
-              "value" : s.id_Country,
-              "label" : s.Name
+  },[]);
+
+
+
+const getValues = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/artStyle/all')
+        .then(response =>{ 
+          const data = response.data
+          const options = data.map(s => ({
+            "value" : s.id_Art_Styles,
+            "label" : s.StyleName
+      
+          }))
+          setArtStyles(options)
+          console.log(options," art sytles from api")})
+        .catch(error => {console.log(error)})
+
+  axios.get(process.env.REACT_APP_API_URL+'/country/all')
+        .then(response =>{ 
+          const data = response.data
+          const options = data.map(s => ({
+            "value" : s.id_Country,
+            "label" : s.Name
+      
+          }))
+          setCountires(options)
+          console.log(options," countries from api")})
+        .catch(error => {console.log(error)})
         
-            }))
-            setCountires(options)
-            console.log(options," countries from api")})
-          .catch(error => {console.log(error)})
-          
 }; 
-getValues()
 
-},[]);
+const getArtists = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/artist/all')
+        .then(response =>{ 
+          setArtists(response.data)
+          setRows(response.data)
+          console.log(response.data,"from api")})
+        .catch(error => {console.log(error)})
+};  
 
 
-  const requestSearch = (searchedVal) => {
+const requestSearch = (searchedVal) => {
     const filteredRows = rows.filter((row) => {
       return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
     });
@@ -210,18 +212,18 @@ const cancelSearch = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box style={styles.ArtStylesBox}>
+      <Box >
         <SearchBar
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Seach for Art Style"
-        style={styles.ArtStylesSeach}
+        placeholder="Search for Artist"
+        // style={styles.ArtStylesSeach}
         />
          <Button
               type="submit"
               variant="contained"
-              style={styles.ArtStylesAddButton}
+              // style={styles.ArtStylesAddButton}
               onClick={() => openAddPopup(true)}
       >
             Add

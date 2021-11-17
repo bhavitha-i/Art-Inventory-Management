@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route  path="/" element={<Home />} />
         <Route  path="/artist" element={<Artist />} />
-        <Route  path="/settings" element={<Settings />} />
+        <Route  path="/settings/:index" element={<Settings />} />
         <Route  path="/fileUpload" element={<FileUpload />} />
 
       </Routes>

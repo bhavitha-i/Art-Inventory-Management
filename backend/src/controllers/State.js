@@ -26,8 +26,14 @@ exports.create = (req, res) => {
 
 //Get all from Table
 exports.findAll = (req, res) => {
-
-  dbmodels.State.findAll({})
+  dbmodels.State.findAll({
+    include: [
+        {
+          model: dbmodels.Country,
+          as: "Country"
+        }
+      ]
+})
       .then(result => {
         res.send(result);
       })

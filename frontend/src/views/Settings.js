@@ -4,13 +4,24 @@ import theme from '../components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import withRoot from '../components/WithRoot';
 import SettingsTabs from '../components/SettingsTabs';
+import { useParams } from "react-router-dom";
+
+function Home( {settings} ){
+    
+    console.log(useParams(), "use param")
+    let { index } = useParams();
+    console.log(index, "   activeIndex")
+    
+    if(!index){
+        index = 0
+    }
 
 
-function Home(){
+
     return (
     <ThemeProvider theme={theme}>
         <NavAppBar/>
-        <SettingsTabs />
+        <SettingsTabs activeIndex={parseInt(index)} />
     </ThemeProvider>
     );
 }

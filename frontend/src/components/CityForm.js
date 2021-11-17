@@ -4,14 +4,17 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import theme from './theme';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container } from '@mui/material';
+import { Container, MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
-import { Button } from '@mui/material';
 import withRoot from './WithRoot';
 import { useState, useEffect } from "react"
 import axios from "axios";
 import strings from '../assets/strings';
 import SnackBar from './SnackBar';
+import InputLabel from '@mui/material/InputLabel';
+import TrapFocus from '@mui/material/Unstable_TrapFocus';
+import { Button, Input } from '@mui/material';
+import Select from '@mui/material/Select';
 
 
 
@@ -19,8 +22,7 @@ import SnackBar from './SnackBar';
 
 
 
-
-function CountryForm(props)  {
+function CityForm(props)  {
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
@@ -58,12 +60,12 @@ function CountryForm(props)  {
     async function handleSubmit(event){
         if (event) {
           event.preventDefault();
-          const CountryData=inputs;
-            console.log(CountryData,"  --Data")
+          const CityData=inputs;
+            console.log(CityData,"  --Data")
         
         if(isEdit){
 
-            axios.put(process.env.REACT_APP_API_URL+'/country/'+inputs.id_Country,inputs)
+            axios.put(process.env.REACT_APP_API_URL+'/zipcode/'+inputs.ZipCode,inputs)
             .then(response =>{ 
                 if(response.data == null){
                     setCallFlag(true)
@@ -75,8 +77,8 @@ function CountryForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Edited")
-                window.location.href = "/settings/1";
-              }
+                window.location.href = "/settings/3";
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -88,7 +90,7 @@ function CountryForm(props)  {
 
         else{
 
-            axios.post(process.env.REACT_APP_API_URL+'/country/add',inputs)
+            axios.post(process.env.REACT_APP_API_URL+'/zipcode/add',inputs)
             .then(response =>{ 
                 if(response.data == null){
                     setCallFlag(true)
@@ -100,7 +102,8 @@ function CountryForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Added")
-                window.location.href = "/settings/1";
+                window.location.href = "/settings/3";
+
                 }
             })
             .catch(error => {
@@ -116,7 +119,8 @@ function CountryForm(props)  {
     
 
       const handleInputChange = (event) => {
-        event.persist();
+        // event.persist();
+        // console.log(event.target.value)
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
       }
 
@@ -133,18 +137,57 @@ function CountryForm(props)  {
           component="form"  onSubmit={handleSubmit}
         >
       <Grid container spacing={3}>
+        
         <Grid item xs={12}>
           <TextField
             required
-            id="Name"
-            name="Name"
-            label={strings.Country.name}
+            id="CityName"
+            name="CityName"
+            label={strings.City.name}
             fullWidth
             variant="standard"
             onChange={handleInputChange}
-            value={inputs.Name}
+            value={inputs.CityName}
           />
         </Grid>
+
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="ZipCode"
+            name="ZipCode"
+            label={strings.City.zipcode}
+            fullWidth
+            variant="standard"
+            onChange={handleInputChange}
+            value={inputs.ZipCode}
+          />
+        </Grid>
+
+
+
+        <TrapFocus close disableAutoFocus>
+        <Grid item xs={12}>
+            <InputLabel required htmlFor="select-label">{strings.City.state}</InputLabel>
+            <Select
+              required
+              input={<Input id="select-label" />}
+              value={inputs.StateId || ''}
+              onChange={handleInputChange}
+              id="StateId" 
+              name="StateId"
+              fullWidth
+              label={strings.City.state}
+            >
+                              
+             {props.states.map(row => (
+                <MenuItem key={row.value} value={row.value}>{row.label}</MenuItem>
+            ))} 
+
+            </Select>
+        </Grid> 
+        </TrapFocus> 
 
         <Grid item xs={12}>
         <Button
@@ -163,4 +206,4 @@ function CountryForm(props)  {
   );
 }
 
-export default withRoot(CountryForm);
+export default withRoot(CityForm);

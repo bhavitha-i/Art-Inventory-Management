@@ -49,16 +49,19 @@ export default function ArtStyles() {
 
   useEffect(() => {
 
-    const getStyles = async () => {
-      axios.get(process.env.REACT_APP_API_URL+'/country/all')
-            .then(response =>{ 
-              setCountries(response.data)
-              setRows(response.data)
-              console.log(response.data,"from api")})
-            .catch(error => {console.log(error)})
-  };    
-  getStyles()
+        getOnload()
   },[]);
+
+
+const getOnload = async () => {
+    axios.get(process.env.REACT_APP_API_URL+'/country/all')
+          .then(response =>{ 
+            setCountries(response.data)
+            setRows(response.data)
+            console.log(response.data,"from api")})
+          .catch(error => {console.log(error)})
+}; 
+
 
 
   const requestSearch = (searchedVal) => {
@@ -100,8 +103,8 @@ const cancelSearch = () => {
         setCallFlag(true)
         setErrAlert("success")
         setMessage("Record Deleted")
-        refreshPage()
-        }
+        window.location.href = "/settings/1";
+      }
     })
     .catch(error => {
         console.log(error)
@@ -120,7 +123,7 @@ const cancelSearch = () => {
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Seach for Country"
+        placeholder="Search for Country"
         style={styles.SettingsSearch}
         />
          <Button

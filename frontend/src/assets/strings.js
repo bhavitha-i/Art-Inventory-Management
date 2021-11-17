@@ -26,7 +26,13 @@ Country: {
 },
 State: {
     id: "StateId",
-    name: "State Name"
+    name: "State Name",
+    country: "Country"
+},
+City: {
+    zipcode: "Zip Code",
+    name: "City Name",
+    state: "State"
 }
 }
 

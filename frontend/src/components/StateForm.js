@@ -4,14 +4,17 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import theme from './theme';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container } from '@mui/material';
+import { Container, MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
-import { Button } from '@mui/material';
 import withRoot from './WithRoot';
 import { useState, useEffect } from "react"
 import axios from "axios";
 import strings from '../assets/strings';
 import SnackBar from './SnackBar';
+import InputLabel from '@mui/material/InputLabel';
+import TrapFocus from '@mui/material/Unstable_TrapFocus';
+import { Button, Input } from '@mui/material';
+import Select from '@mui/material/Select';
 
 
 
@@ -19,7 +22,7 @@ import SnackBar from './SnackBar';
 
 
 
-function CountryForm(props)  {
+function StateForm(props)  {
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
@@ -62,7 +65,7 @@ function CountryForm(props)  {
         
         if(isEdit){
 
-            axios.put(process.env.REACT_APP_API_URL+'/state/'+inputs.id_Country,inputs)
+            axios.put(process.env.REACT_APP_API_URL+'/state/'+inputs.id_State,inputs)
             .then(response =>{ 
                 if(response.data == null){
                     setCallFlag(true)
@@ -74,7 +77,7 @@ function CountryForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Edited")
-                refreshPage()
+                window.location.href = "/settings/2";
                 }
             })
             .catch(error => {
@@ -99,7 +102,8 @@ function CountryForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Added")
-                refreshPage()
+                window.location.href = "/settings/2";
+
                 }
             })
             .catch(error => {
@@ -115,7 +119,8 @@ function CountryForm(props)  {
     
 
       const handleInputChange = (event) => {
-        event.persist();
+        // event.persist();
+        console.log(event.target.value,"targerweerererreeeee")
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
       }
 
@@ -145,6 +150,30 @@ function CountryForm(props)  {
           />
         </Grid>
 
+
+
+        <TrapFocus close disableAutoFocus>
+        <Grid item xs={12}>
+            <InputLabel required htmlFor="select-label">{strings.State.country}</InputLabel>
+            <Select
+              required
+              input={<Input id="select-label" />}
+              value={inputs.Country_id || ''}
+              onChange={handleInputChange}
+              id="Country_id" 
+              name="Country_id"
+              fullWidth
+              label={strings.State.country}
+            >
+                              
+             {props.countries.map(row => (
+                <MenuItem key={row.value} value={row.value}>{row.label}</MenuItem>
+            ))} 
+
+            </Select>
+        </Grid> 
+        </TrapFocus> 
+
         <Grid item xs={12}>
         <Button
               type="submit"
@@ -162,4 +191,4 @@ function CountryForm(props)  {
   );
 }
 
-export default withRoot(CountryForm);
+export default withRoot(StateForm);

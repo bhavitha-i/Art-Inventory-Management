@@ -63,7 +63,8 @@ app.use(ArtistRouter);
 app.use(ArtStyleRouter);
 app.use(CountryRouter);
 app.use(ImageRouter);
-
+app.use(StateRouter)
+app.use(ZipcodeRouter)
 
 
 app.listen(port,()=>{

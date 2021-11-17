@@ -21,6 +21,7 @@ import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
 import Popup from './Popup'
 import StateForm from './StateForm';
+import CityForm from './CityForm';
 
 
 
@@ -32,7 +33,7 @@ export default function ArtStyles() {
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
   const [states, setStates] = useState([])
-  const [countries, setCountries] = useState([])
+  const [cities, setCities] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
   const [isEdit, setIsEdit] = useState(false)
@@ -50,37 +51,37 @@ export default function ArtStyles() {
 
   useEffect(() => {
 
-       getCountries()
        getStates()
+       getCities()
   },[]);
 
 
-  const getStates = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/state/all')
+  const getCities = async () => {
+    axios.get(process.env.REACT_APP_API_URL+'/zipcode/all')
           .then(response =>{ 
-            setStates(response.data)
+            setCities(response.data)
             setRows(response.data)
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
 };
 
-const getCountries = async () => {
-        axios.get(process.env.REACT_APP_API_URL+'/country/all')
+const getStates = async () => {
+        axios.get(process.env.REACT_APP_API_URL+'/state/all')
         .then(response =>{ 
           const data = response.data
           const options = data.map(s => ({
-            "value" : s.id_Country,
+            "value" : s.id_State,
             "label" : s.Name
 
           }))
-          setCountries(options)
-          console.log(options," Country data from api")})
+          setStates(options)
+          console.log(options," state data from api")})
         .catch(error => {console.log(error)})
 };
 
   const requestSearch = (searchedVal) => {
     const filteredRows = rows.filter((row) => {
-      return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
+      return row.CityName.toLowerCase().includes(searchedVal.toLowerCase());
     });
     setStates(filteredRows);
 };
@@ -103,9 +104,9 @@ const cancelSearch = () => {
     setIsEdit(false)
   }
 
-  function deleteitem(style){
+  function deleteitem(record){
 
-    axios.delete(process.env.REACT_APP_API_URL+'/state/'+style.id_Country)
+    axios.delete(process.env.REACT_APP_API_URL+'/zipcode/'+record.ZipCode)
     .then(response =>{ 
         if(response.data == null){
             setCallFlag(true)
@@ -117,7 +118,7 @@ const cancelSearch = () => {
         setCallFlag(true)
         setErrAlert("success")
         setMessage("Record Deleted")
-        window.location.href = "/settings/2";
+        window.location.href = "/settings/3";
       }
     })
     .catch(error => {
@@ -137,7 +138,7 @@ const cancelSearch = () => {
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Search for State"
+        placeholder="Search for City"
         style={styles.SettingsSearch}
         />
          <Button
@@ -153,25 +154,25 @@ const cancelSearch = () => {
       <Table sx={{ minWidth: 650 }} aria-label="Record table">
         <TableHead>
           <TableRow>
-            <TableCell >{strings.State.id}</TableCell>
-            <TableCell >{strings.State.name}</TableCell>
-            <TableCell >{strings.State.country}</TableCell>
+            <TableCell >{strings.City.zipcode}</TableCell>
+            <TableCell >{strings.City.name}</TableCell>
+            <TableCell >{strings.City.state}</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {states.map((state) => (
+          {cities.map((record) => (
             <TableRow 
-              key={state.id_Country}
+              key={record.ZipCode}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
 
-              <TableCell >{state.id_State}</TableCell>
-              <TableCell >{state.Name}</TableCell>
-              <TableCell >{state.Country && state.Country.Name}</TableCell>
+              <TableCell >{record.ZipCode}</TableCell>
+              <TableCell >{record.CityName}</TableCell>
+              <TableCell >{record.State && record.State.Name}</TableCell>
               <TableCell style={styles.TableActionIcons}>
-                    <EditIcon onClick={() => openEditPopup(state)}/>
-                    <DeleteIcon onClick={() => deleteitem(state)}/>
+                    <EditIcon onClick={() => openEditPopup(record)}/>
+                    <DeleteIcon onClick={() => deleteitem(record)}/>
 
               </TableCell>
             </TableRow>
@@ -180,12 +181,12 @@ const cancelSearch = () => {
       </Table>
     </TableContainer>
         <Popup
-                title={isEdit?"Edit State":"Add State"}
+                title={isEdit?"Edit City":"Add City"}
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <StateForm 
-                    countries = {countries}
+                <CityForm 
+                    states = {states}
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
                     />

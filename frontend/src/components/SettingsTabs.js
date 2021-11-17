@@ -9,6 +9,7 @@ import styles from "../assets/styles";
 import ArtStyles from "./ArtStyles";
 import Countries from "./Countries"
 import States from "./States"
+import Cities from "./Cities"
 
 
 class SettingsTabs extends React.PureComponent {
@@ -45,7 +46,7 @@ class SettingsTabs extends React.PureComponent {
           {activeIndex === 0 && <TabContainer> <ArtStyles/> </TabContainer>}
           {activeIndex === 1 && <TabContainer> <Countries/> </TabContainer>}
           {activeIndex === 2 && <TabContainer> <States/> </TabContainer>}
-          {activeIndex === 3 && <TabContainer> </TabContainer>}
+          {activeIndex === 3 && <TabContainer> <Cities/> </TabContainer>}
 
         </div>
 
