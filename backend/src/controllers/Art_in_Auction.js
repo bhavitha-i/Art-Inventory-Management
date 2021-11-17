@@ -6,13 +6,13 @@ const dbmodels = db.models
 
 //Create rows in table
 exports.create = (req, res) => {
-  const Country = req.body;
+  const rowData = req.body;
 
-  dbmodels.Country.create(Country)
+  dbmodels.Art_in_Auction.create(rowData)
       .then((result) => {
       res.status(200).json({
         status: true,
-        message: "Country created successfully",
+        message: "Row created successfully",
         data:result
       });
     })
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Country.findAll({})
+  dbmodels.Art_in_Auction.findAll({})
       .then(result => {
         res.send(result);
       })
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-    dbmodels.Country.findByPk(req.params.id, {
+    dbmodels.Art_in_Auction.findByPk(req.params.id, {
     })
       .then((result) => {
       res.status(200).json({
@@ -62,14 +62,13 @@ exports.findByPk = (req, res) => {
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;
-  dbmodels.Country.update(req.body,
-    { where: { id_Country: id } }
+  dbmodels.Art_in_Auction.update(req.body,
+    { where: { id_Art_Auction: id } }
   ).
-  then((result) => {
+  then(() => {
     res.status(200).json({
         status: true,
         message: "Updated successfully with id = " + id,
-        data:result
     });
   })
   .catch(err => {
@@ -85,8 +84,8 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
-  dbmodels.Country.destroy({
-    where: { id_Country: id },
+  dbmodels.Art_in_Auction.destroy({
+    where: { id_Art_Auction: id },
   }).then(() => {
     res.status(200).json({
         status: true,

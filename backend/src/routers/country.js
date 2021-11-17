@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const country = require("../controllers/country");
+const country = require("../controllers/Country");
 
 
 router.get("/country/all",country.findAll)

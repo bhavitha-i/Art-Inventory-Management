@@ -40,8 +40,8 @@ exports.findAll = (req, res) => {
             }
           ]
     })
-      .then(data => {
-        res.send(data);
+      .then(result => {
+        res.send(result);
       })
       .catch(err => {
         res.send({
@@ -65,10 +65,10 @@ exports.findByPk = (req, res) => {
           }
         ]
     })
-      .then((artist) => {
+      .then((result) => {
       res.status(200).json({
         status: true,
-        data: artist,
+        data: result,
       });
     })
     .catch(err => {
@@ -87,10 +87,11 @@ exports.update = (req, res) => {
   dbmodels.Artist.update(req.body,
     { where: { id_Artist: id } }
   ).
-  then(() => {
+  then((result) => {
     res.status(200).json({
         status: true,
         message: "Artist updated successfully with id = " + id,
+        data:result
     });
   })
   .catch(err => {
