@@ -11,11 +11,11 @@ const MyProfileTabsBox ={
   borderColor: 'divider',
 }
 
-const ArtStylesContainer={
+const SettingsContainer={
   width: "90vw"
 }
 
-const ArtStylesBox={
+const SettingsBox={
   display: "flex",
   alignItems:"center",
   justifyContent: "space-between",
@@ -23,14 +23,14 @@ const ArtStylesBox={
 
 }
 
-const ArtStylesSeach={
+const SettingsSearch={
     justifyContent: "flex-start",
     boxShadow: "none",
     backgroundColor: "inherit",
     width:"fit-content",
 }
 
-const ArtStylesAddButton={
+const SettingsAddButton={
   // justifyContent: "flex-end",
 }
 
@@ -53,10 +53,10 @@ const flexCentered ={
   const styles = {
     HeaderContainer: HeaderContainer,
     MyProfileTabsBox:MyProfileTabsBox,
-    ArtStylesContainer:ArtStylesContainer,
-    ArtStylesSeach:ArtStylesSeach,
-    ArtStylesBox:ArtStylesBox,
-    ArtStylesAddButton:ArtStylesAddButton,
+    SettingsContainer:SettingsContainer,
+    SettingsBox:SettingsBox,
+    SettingsSearch:SettingsSearch,
+    SettingsAddButton:SettingsAddButton,
     TableActionIcons:TableActionIcons,
     ArtistTableContainer:ArtistTableContainer,
     flexCentered:flexCentered

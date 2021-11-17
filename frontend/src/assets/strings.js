@@ -19,6 +19,14 @@ Artist: {
     style:"Famous Style",
     website:"Website",
 
+},
+Country: {
+    id: "CountryId",
+    name: "Country Name"
+},
+State: {
+    id: "StateId",
+    name: "State Name"
 }
 }
 

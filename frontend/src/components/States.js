@@ -20,7 +20,7 @@ import SearchBar from "material-ui-search-bar";
 import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
 import Popup from './Popup'
-import ArtStyleForm from './ArtStyleForm';
+import StateForm from './StateForm';
 
 
 
@@ -31,7 +31,7 @@ export default function ArtStyles() {
 
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
-  const [artstyles, setStyles] = useState([])
+  const [states, setStates] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
   const [isEdit, setIsEdit] = useState(false)
@@ -50,9 +50,9 @@ export default function ArtStyles() {
   useEffect(() => {
 
     const getStyles = async () => {
-      axios.get(process.env.REACT_APP_API_URL+'/artStyle/all')
+      axios.get(process.env.REACT_APP_API_URL+'/state/all')
             .then(response =>{ 
-              setStyles(response.data)
+              setStates(response.data)
               setRows(response.data)
               console.log(response.data,"from api")})
             .catch(error => {console.log(error)})
@@ -63,9 +63,9 @@ export default function ArtStyles() {
 
   const requestSearch = (searchedVal) => {
     const filteredRows = rows.filter((row) => {
-      return row.StyleName.toLowerCase().includes(searchedVal.toLowerCase());
+      return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
     });
-    setStyles(filteredRows);
+    setStates(filteredRows);
 };
 
 const cancelSearch = () => {
@@ -88,7 +88,7 @@ const cancelSearch = () => {
 
   function deleteitem(style){
 
-    axios.delete(process.env.REACT_APP_API_URL+'/artStyle/'+style.id_Art_Styles)
+    axios.delete(process.env.REACT_APP_API_URL+'/state/'+style.id_Country)
     .then(response =>{ 
         if(response.data == null){
             setCallFlag(true)
@@ -99,7 +99,7 @@ const cancelSearch = () => {
         console.log(response.data,"from api")
         setCallFlag(true)
         setErrAlert("success")
-        setMessage("Art Style Deleted")
+        setMessage("Record Deleted")
         refreshPage()
         }
     })
@@ -107,7 +107,7 @@ const cancelSearch = () => {
         console.log(error)
         setCallFlag(true)
         setErrAlert("error")
-        setMessage("Error while deleting Art Style")
+        setMessage("Error while deleting record")
     })
     
 
@@ -120,7 +120,7 @@ const cancelSearch = () => {
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Seach for Art Style"
+        placeholder="Seach for State"
         style={styles.SettingsSearch}
         />
          <Button
@@ -133,28 +133,26 @@ const cancelSearch = () => {
           </Button>
       </Box>
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="Product table">
+      <Table sx={{ minWidth: 650 }} aria-label="Record table">
         <TableHead>
           <TableRow>
-            <TableCell >{strings.ArtStyles.id}</TableCell>
-            <TableCell >{strings.ArtStyles.name}&nbsp;</TableCell>
-            <TableCell >{strings.ArtStyles.desc}&nbsp;</TableCell>
+            <TableCell >{strings.State.id}</TableCell>
+            <TableCell >{strings.State.name}&nbsp;</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {artstyles.map((style) => (
+          {states.map((state) => (
             <TableRow 
-              key={style.id_Art_Styles}
+              key={state.id_Country}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
 
-              <TableCell >{style.id_Art_Styles}</TableCell>
-              <TableCell >{style.StyleName}</TableCell>
-              <TableCell >{style.Description && trimWords(style.Description, 3, '...')}</TableCell>
+              <TableCell >{state.id_State}</TableCell>
+              <TableCell >{state.Name}</TableCell>
               <TableCell style={styles.TableActionIcons}>
-                    <EditIcon onClick={() => openEditPopup(style)}/>
-                    <DeleteIcon onClick={() => deleteitem(style)}/>
+                    <EditIcon onClick={() => openEditPopup(state)}/>
+                    <DeleteIcon onClick={() => deleteitem(state)}/>
 
               </TableCell>
             </TableRow>
@@ -163,11 +161,11 @@ const cancelSearch = () => {
       </Table>
     </TableContainer>
         <Popup
-                title={isEdit?"Edit Art Style":"Add Art Syle"}
+                title={isEdit?"Edit State":"Add State"}
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <ArtStyleForm 
+                <StateForm 
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
                     />
