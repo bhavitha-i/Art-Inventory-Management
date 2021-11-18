@@ -102,6 +102,12 @@ exports.findByPk = (req, res) => {
         },{
           model: dbmodels.Artist,
           as: "CreatedBy_Artist"
+        },{
+          model: dbmodels.Painting_Art,
+          as: "Painting_Arts"
+        },{
+          model: dbmodels.Sculpture_Art,
+          as: "Sculpture_Arts"
         }
       ]
     })

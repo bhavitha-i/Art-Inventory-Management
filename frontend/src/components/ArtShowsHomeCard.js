@@ -3,6 +3,7 @@ import androidFilled from '@iconify/icons-ant-design/android-filled';
 import  { useEffect, useState } from "react"
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -38,9 +39,14 @@ const TOTAL = 714000;
 
 export default function ArtShowsHomeCard(props) {
 
+  const navigate = useNavigate();
+
+  function handleClick(){
+    navigate("/artshow")
+  }
 
   return (
-    <RootStyle>
+    <RootStyle onClick={() => handleClick()} >
       <IconWrapperStyle>
         <Icon icon={androidFilled} width={24} height={24} />
       </IconWrapperStyle>

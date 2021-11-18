@@ -253,6 +253,7 @@ const openAddPopup = item => {
                             >
                             {art.CreatedBy_Artist.Name}
                         </CSubtitle>
+                        <Button size="small" variant="outlined"> Move</Button>
                         </Box>
                         </Ccontent>
                     </Ccard>

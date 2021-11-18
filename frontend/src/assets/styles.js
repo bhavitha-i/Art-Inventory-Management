@@ -1,3 +1,5 @@
+import { padding } from "@mui/system"
+import theme from "../components/theme"
 
 const HeaderContainer ={
     padding :"50px"
@@ -71,6 +73,31 @@ const ArtCardContent={
   paddingBottom : "16px" 
 }
 
+const AVImage={
+  width:"80%",
+  height:"100%",
+  margin:"auto"
+}
+
+const AVInfo={
+  textAlign: "left",
+  paddingLeft: "10%"
+}
+
+const AVArtistImage={
+  width:"100px",
+  height:"100px",
+}
+
+const AVInfoHeader={
+  paddingLeft: "5%",
+  paddingTop: "30px"
+}
+
+const level2Box={
+  margin: "10px"
+}
+
 
 
   const styles = {
@@ -86,7 +113,12 @@ const ArtCardContent={
     p1Box:p1Box,
     flexStart:flexStart,
     leftM0:leftM0,
-    ArtCardContent:ArtCardContent
+    ArtCardContent:ArtCardContent,
+    AVImage:AVImage,
+    AVInfo:AVInfo,
+    AVArtistImage:AVArtistImage,
+    AVInfoHeader:AVInfoHeader,
+    level2Box:level2Box
   }
 
 

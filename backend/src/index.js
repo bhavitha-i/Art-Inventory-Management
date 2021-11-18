@@ -66,6 +66,7 @@ app.use(StateRouter)
 app.use(ZipcodeRouter)
 app.use(ArtRouter)
 app.use(Art_StatusRouter)
+app.use(Art_ShowRouter)
 
 
 app.listen(port,()=>{

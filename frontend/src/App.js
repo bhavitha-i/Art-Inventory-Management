@@ -9,7 +9,9 @@ import Home from "./views/Home";
 import Artist from "./views/Artist"
 import Art from "./views/Arts"
 import Settings from './views/Settings';
-import ArtView from './views/ArtView'
+import ArtView from './components/ArtView'
+import ArtShows from './views/Artshows'
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route  path="/artist" element={<Artist />} />
         <Route  path="/art" element={<Art />} />
         <Route  path="/artview/:artId" element={<ArtView />} />
+        <Route  path="/artshow" element={<ArtShows />} />
 
 
 
