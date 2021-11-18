@@ -16,14 +16,14 @@ const useStyles = makeStyles(theme => ({
 
 export default function PopupAction(props) {
 
-    const { title, children, openPopup, setOpenPopup } = props;
+    const { title, children, openActionPopup, setOpenActionPopup } = props;
     console.log(props, "-- prop")
     const classes = useStyles();
 
     
 
     return (
-        <Dialog open={openPopup} maxWidth="md" classes={{ paper: classes.dialogWrapper }}>
+        <Dialog open={openActionPopup} maxWidth="md" classes={{ paper: classes.dialogWrapper }}>
             <DialogTitle className={classes.dialogTitle}>
                 <div style={{ display: 'flex' }}>
                     <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
@@ -31,7 +31,7 @@ export default function PopupAction(props) {
                     </Typography>
                     <Button
                         color="secondary"
-                        onClick={()=>{props.setOpenPopup(false)}}>
+                        onClick={()=>{props.setOpenActionPopup(false)}}>
                         <CloseIcon />
                     </Button>
                 </div>

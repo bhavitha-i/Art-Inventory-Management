@@ -95,7 +95,8 @@ export default function ArtistsList() {
   const [status,setStatus] = useState([]);
   const [artists,setArtists] = useState([]);
   const [artstyles,setArtstyles] = useState([]);
-
+  const [openActionPopup, setOpenActionPopup] = useState(false);
+  const [selectedArt, setSelectedArt] = useState("")
 
   function refreshPage() {
     setTimeout(()=>{
@@ -198,6 +199,15 @@ const openAddPopup = item => {
 
 
 
+const openActionPop = item => {
+  setOpenActionPopup(true)
+  setSelectedArt(item)
+}
+
+
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -256,7 +266,7 @@ const openAddPopup = item => {
                             >
                             {art.CreatedBy_Artist.Name}
                         </CSubtitle>
-                        <Button size="small" variant="outlined" style={styles.level1ActionButton}> Move</Button>
+                        <Button size="small" variant="outlined" onClick={() => openActionPop(art)} style={styles.level1ActionButton}> Move</Button>
                         </Box>
                         </Ccontent>
                     </Ccard>
@@ -278,19 +288,19 @@ const openAddPopup = item => {
                     />
                 
         </PopupLarge>
-        {/* <PopupAction
-                title={isEdit?"Edit Art":"Add Art"}
-                openPopup={openPopup}
-                setOpenPopup={setOpenPopup}
+        <PopupAction
+                title="Move Art from Inventory"
+                openActionPopup={openActionPopup}
+                setOpenActionPopup={setOpenActionPopup}
              >
                 <ArtActionForm 
-                    recordForEdit={recordForEdit} 
-                    setOpenPopup={setOpenPopup}
+                    openActionPopup={openActionPopup}
                     status={status}
+                    art={selectedArt}
 
                 />
                 
-        </PopupAction> */}
+        </PopupAction>
     </ThemeProvider>
 
   );
