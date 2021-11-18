@@ -10,6 +10,7 @@ import ArtStyles from "./ArtStyles";
 import Countries from "./Countries"
 import States from "./States"
 import Cities from "./Cities"
+import ArtStatus from "./ArtStatusList"
 
 
 class SettingsTabs extends React.PureComponent {
@@ -38,7 +39,8 @@ class SettingsTabs extends React.PureComponent {
             <Tab label="Art Styles" />
             <Tab label="Country" />
             <Tab label="State" />
-            <Tab label="City" />
+            <Tab label="City" />            
+            <Tab label="Art Status" />
 
           </Tabs>
           </Box>
@@ -47,6 +49,7 @@ class SettingsTabs extends React.PureComponent {
           {activeIndex === 1 && <TabContainer> <Countries/> </TabContainer>}
           {activeIndex === 2 && <TabContainer> <States/> </TabContainer>}
           {activeIndex === 3 && <TabContainer> <Cities/> </TabContainer>}
+          {activeIndex === 4 && <TabContainer> <ArtStatus/> </TabContainer>}
 
         </div>
 

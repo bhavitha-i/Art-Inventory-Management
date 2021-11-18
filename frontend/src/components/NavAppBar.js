@@ -17,7 +17,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 
 
-export default function NavAppBar() {
+export default function NavAppBar(props) {
   return (
     <ThemeProvider theme={theme}>
     <Box sx={{ flexGrow: 1 }}>
@@ -30,14 +30,21 @@ export default function NavAppBar() {
               color="inherit" 
               href="/"
               sx={{ fontSize: 24 }}>
-            {strings.common.artInventoryManagement}
+            {strings.common.artInventoryManagement } 
+            </Link>
+            <Link 
+              underline="none" 
+              variant="h5" 
+              color="inherit" 
+              sx={{ fontSize: 24 }}>
+            {props.title}
             </Link>
           </Typography>
 
             <IconButton
               size="large"
               aria-label="account of current user"
-              href="/settings/0"
+              href="/settings"
               color="inherit"
             >
               <SettingsIcon />

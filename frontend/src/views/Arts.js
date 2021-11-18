@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ArtistsList from '../components/ArtistsList'
+import ArtsList from '../components/ArtsList'
 import NavAppBar from '../components/NavAppBar';
 import theme from '../components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -9,8 +9,8 @@ import withRoot from '../components/WithRoot';
 function Home(){
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Artists"}/>
-        <ArtistsList/>
+        <NavAppBar title={"  >  Arts"}/>
+        <ArtsList/>
     </ThemeProvider>
     );
 }

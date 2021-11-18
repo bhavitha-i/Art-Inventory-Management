@@ -1,11 +1,11 @@
 var DataTypes = require("sequelize").DataTypes;
 var _Address = require("./Address");
 var _Art = require("./Art");
+var _ArtStatus = require("./ArtStatus");
 var _Art_Exhibition = require("./Art_Exhibition");
 var _Art_For_Rent = require("./Art_For_Rent");
 var _Art_In_Store = require("./Art_In_Store");
 var _Art_Show = require("./Art_Show");
-var _Art_Status = require("./Art_Status");
 var _Art_Styles = require("./Art_Styles");
 var _Art_Supplies = require("./Art_Supplies");
 var _Art_bids = require("./Art_bids");
@@ -32,11 +32,11 @@ var _ZipCode_in_States = require("./ZipCode_in_States");
 function initModels(sequelize) {
   var Address = _Address(sequelize, DataTypes);
   var Art = _Art(sequelize, DataTypes);
+  var ArtStatus = _ArtStatus(sequelize, DataTypes);
   var Art_Exhibition = _Art_Exhibition(sequelize, DataTypes);
   var Art_For_Rent = _Art_For_Rent(sequelize, DataTypes);
   var Art_In_Store = _Art_In_Store(sequelize, DataTypes);
   var Art_Show = _Art_Show(sequelize, DataTypes);
-  var Art_Status = _Art_Status(sequelize, DataTypes);
   var Art_Styles = _Art_Styles(sequelize, DataTypes);
   var Art_Supplies = _Art_Supplies(sequelize, DataTypes);
   var Art_bids = _Art_bids(sequelize, DataTypes);
@@ -82,14 +82,14 @@ function initModels(sequelize) {
   Art.hasMany(Painting_Art, { as: "Painting_Arts", foreignKey: "Art"});
   Sculpture_Art.belongsTo(Art, { as: "Art", foreignKey: "ArtId"});
   Art.hasMany(Sculpture_Art, { as: "Sculpture_Arts", foreignKey: "ArtId"});
+  Art.belongsTo(ArtStatus, { as: "Status_ArtStatus", foreignKey: "Status"});
+  ArtStatus.hasMany(Art, { as: "Arts", foreignKey: "Status"});
   Art_in_Exhibition.belongsTo(Art_Exhibition, { as: "Exhibition_Art_Exhibition", foreignKey: "Exhibition"});
   Art_Exhibition.hasMany(Art_in_Exhibition, { as: "Art_in_Exhibitions", foreignKey: "Exhibition"});
   Art_bids.belongsTo(Art_Show, { as: "ArtShow_Art_Show", foreignKey: "ArtShow"});
   Art_Show.hasMany(Art_bids, { as: "Art_bids", foreignKey: "ArtShow"});
   Art_in_Auction.belongsTo(Art_Show, { as: "AtArtShow_Art_Show", foreignKey: "AtArtShow"});
   Art_Show.hasMany(Art_in_Auction, { as: "Art_in_Auctions", foreignKey: "AtArtShow"});
-  Art.belongsTo(Art_Status, { as: "Status_Art_Status", foreignKey: "Status"});
-  Art_Status.hasMany(Art, { as: "Arts", foreignKey: "Status"});
   Art.belongsTo(Art_Styles, { as: "Style_Art_Style", foreignKey: "Style"});
   Art_Styles.hasMany(Art, { as: "Arts", foreignKey: "Style"});
   Artist.belongsTo(Art_Styles, { as: "FamousStyle_Art_Style", foreignKey: "FamousStyle"});
@@ -146,11 +146,11 @@ function initModels(sequelize) {
   return {
     Address,
     Art,
+    ArtStatus,
     Art_Exhibition,
     Art_For_Rent,
     Art_In_Store,
     Art_Show,
-    Art_Status,
     Art_Styles,
     Art_Supplies,
     Art_bids,

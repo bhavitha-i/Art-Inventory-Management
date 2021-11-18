@@ -33,6 +33,29 @@ City: {
     zipcode: "Zip Code",
     name: "City Name",
     state: "State"
+},
+Art: {
+    art: "Art",
+    id: "ArtId",
+    description: "Description",
+    year: "Year",
+    country: "Country of origin",
+    created: "Created By",
+    style: "Style",
+    status: "Status",
+    title: "Title",
+    image: "Image",
+    type: "Art Type",
+    painting:"Painting",
+    sculpture: "Sculpture",
+    pStyle: "Painting Style",
+    pdrawnOn: "Drawn On",
+    plength: "Length",
+    pwidth: "Width",
+    sheight :"Height",
+    sweight: "Weight",
+    smaterial: "Material",
+    stexture: "Texture/Type"
 }
 }
 

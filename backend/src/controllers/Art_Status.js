@@ -8,7 +8,7 @@ const dbmodels = db.models
 exports.create = (req, res) => {
   const rowData = req.body;
 
-  dbmodels.Art_Status.create(rowData)
+  dbmodels.ArtStatus.create(rowData)
       .then((result) => {
       res.status(200).json({
         status: true,
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art_Status.findAll({})
+  dbmodels.ArtStatus.findAll({})
       .then(result => {
         res.send(result);
       })
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-    dbmodels.Art_Status.findByPk(req.params.id, {
+    dbmodels.ArtStatus.findByPk(req.params.id, {
     })
       .then((result) => {
       res.status(200).json({
@@ -62,8 +62,8 @@ exports.findByPk = (req, res) => {
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;
-  dbmodels.Art_Status.update(req.body,
-    { where: { id_Art_Status: id } }
+  dbmodels.ArtStatus.update(req.body,
+    { where: { Id_Status: id } }
   ).
   then(() => {
     res.status(200).json({
@@ -84,8 +84,8 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
-  dbmodels.Art_Status.destroy({
-    where: { id_Art_Status: id },
+  dbmodels.ArtStatus.destroy({
+    where: { Id_Status: id },
   }).then(() => {
     res.status(200).json({
         status: true,

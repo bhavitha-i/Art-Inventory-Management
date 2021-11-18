@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: true
     },
-    'Drawn on': {
+    Drawn_on: {
       type: DataTypes.STRING(45),
       allowNull: true
     },

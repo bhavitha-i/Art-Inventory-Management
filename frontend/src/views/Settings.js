@@ -6,7 +6,7 @@ import withRoot from '../components/WithRoot';
 import SettingsTabs from '../components/SettingsTabs';
 import { useParams } from "react-router-dom";
 
-function Home( {settings} ){
+function Home( ){
     
     console.log(useParams(), "use param")
     let { index } = useParams();

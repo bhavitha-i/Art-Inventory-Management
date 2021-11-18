@@ -7,14 +7,44 @@ const dbmodels = db.models
 //Create rows in table
 exports.create = (req, res) => {
   const rowData = req.body;
-
-  dbmodels.Art.create(rowData)
+  console.log(rowData, "-- rowdata")
+  dbmodels.Art.create(rowData.inputs)
       .then((result) => {
-      res.status(200).json({
-        status: true,
-        message: "Row created successfully",
-        data:result
-      });
+      
+      // -- creating painting/sculpture
+      if(rowData.inputs.Type == 1 || rowData.inputs.Type == '1'){
+        rowData.typeinputs.Art = result.id_Art
+        console.log(rowData.typeinputs,"--tye")
+            dbmodels.Painting_Art.create(rowData.typeinputs)
+                .then((presult) => {
+                res.status(200).json({
+                  status: true,
+                  message: "Art - painting created successfully",
+                  data:{result,presult}
+                });
+            })
+            .catch(err => {console.log(err)});
+      }else if(rowData.inputs.Type ==2 || rowData.inputs.Type == '2'){
+        rowData.typeinputs.ArtId = result.id_Art
+          dbmodels.Sculpture_Art.create(rowData.typeinputs)
+              .then((sresult) => {
+              res.status(200).json({
+                status: true,
+                message: "Art - scuplture created successfully",
+                data:{result,sresult}
+              });
+          })
+          .catch(err => {console.log(err)});
+
+      }else{
+        console.log("Error getting art type")
+      }
+
+      // res.status(200).json({
+      //   status: true,
+      //   message: "Row created successfully",
+      //   data:result
+      // });
     })
     .catch(err => {
       res.send({
@@ -27,7 +57,23 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art.findAll({})
+  dbmodels.Art.findAll({
+    include: [
+      {
+        model: dbmodels.Art_Styles,
+        as: "Style_Art_Style"
+      },{
+        model: dbmodels.ArtStatus,
+        as: "Status_ArtStatus"
+      },{
+        model: dbmodels.Country,
+        as: "CountryOfOrigin_Country"
+      },{
+        model: dbmodels.Artist,
+        as: "CreatedBy_Artist"
+      }
+    ]
+  })
       .then(result => {
         res.send(result);
       })
@@ -43,6 +89,21 @@ exports.findAll = (req, res) => {
 // Find a Table by Id
 exports.findByPk = (req, res) => {
     dbmodels.Art.findByPk(req.params.id, {
+      include: [
+        {
+          model: dbmodels.Art_Styles,
+          as: "Style_Art_Style"
+        },{
+          model: dbmodels.ArtStatus,
+          as: "Status_ArtStatus"
+        },{
+          model: dbmodels.Country,
+          as: "CountryOfOrigin_Country"
+        },{
+          model: dbmodels.Artist,
+          as: "CreatedBy_Artist"
+        }
+      ]
     })
       .then((result) => {
       res.status(200).json({

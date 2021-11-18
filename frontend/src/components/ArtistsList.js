@@ -18,10 +18,10 @@ import  { useState, useEffect } from "react"
 import axios from "axios";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
 import styles from '../assets/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -35,51 +35,12 @@ import { Box } from '@mui/system';
 // ----------------------------------------------------------------------
 
 
-const Ccard = styled(Card)(({ theme }) => ({
-    maxWidth: 300,
-    margin: "auto",
-    transition: "0.3s",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    "&:hover": {
-      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
-    }
-  }));
 
-
-const Cmedia = styled(CardMedia)(({ theme }) => ({
-    paddingTop: "56.25%"
+const P1TableCell = styled(TableCell)(() => ({
+    textAlign: "center"
 
   }));
 
-const Ccontent = styled(CardContent)(({ theme }) => ({
-    textAlign: "left",
-    padding: theme.spacing.unit * 3    
-  }));
-
-
-  const Cdivider = styled(Divider)(({ theme }) => ({
-    margin: `${theme.spacing.unit * 3}px 0`
-    
-  }));
-  
-  const CHeading = styled(Typography)(({ theme }) => ({
-    fontWeight: "bold"
-    
-  }));
-
-  const CSubtitle = styled(Typography)(({ theme }) => ({
-    lineHeight: 1.8
-    
-  }));
-
-  const CAvatar = styled(Avatar)(({ theme }) => ({
-    display: "inline-block",
-    border: "2px solid white",
-    "&:not(:first-of-type)": {
-      marginLeft: -theme.spacing.unit
-    }
-    
-  }));
 
 // -------------------------------------------------------
 
@@ -212,13 +173,13 @@ const cancelSearch = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box >
+      <Box style={styles.p1Box}>
         <SearchBar
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
         placeholder="Search for Artist"
-        // style={styles.ArtStylesSeach}
+        style={styles.SettingsSearch}
         />
          <Button
               type="submit"
@@ -229,17 +190,17 @@ const cancelSearch = () => {
             Add
           </Button>
       </Box>
-        <TableContainer component={Paper} style={styles.ArtistTableContainer}>
+        <TableContainer component={Paper} style={styles.p1TableContainer}>
       <Table sx={{ minWidth: 650 }} aria-label="Product table">
         <TableHead>
           <TableRow>
-            <TableCell></TableCell>
-            <TableCell >{strings.Artist.id}</TableCell>
-            <TableCell >{strings.Artist.name}</TableCell>
-            <TableCell >{strings.Artist.phone}</TableCell>
-            <TableCell >{strings.Artist.placebirth}</TableCell>
-            <TableCell >{strings.Artist.style}</TableCell>
-            <TableCell></TableCell>
+            <P1TableCell></P1TableCell>
+            {/* <P1TableCell >{strings.Artist.id}</P1TableCell> */}
+            <P1TableCell >{strings.Artist.name}</P1TableCell>
+            <P1TableCell >{strings.Artist.phone}</P1TableCell>
+            <P1TableCell >{strings.Artist.placebirth}</P1TableCell>
+            <P1TableCell >{strings.Artist.style}</P1TableCell>
+            <P1TableCell></P1TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -249,21 +210,21 @@ const cancelSearch = () => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
 
-              <TableCell>
+              <P1TableCell>
                 {console.log(artist.Image,"in map")}
                     <Avatar variant="rounded" src={artist.Image} ></Avatar>
-              </TableCell>
-              <TableCell >{artist.id_Artist}</TableCell>
-              <TableCell >{artist.Name}</TableCell>
-              <TableCell >{artist.Phone}</TableCell>
-              <TableCell >{artist.BirthPlace_Country && artist.BirthPlace_Country.Name}</TableCell>
-              <TableCell >{artist.FamousStyle_Art_Style && artist.FamousStyle_Art_Style.StyleName}</TableCell>
-              <TableCell>
+              </P1TableCell>
+              {/* <P1TableCell >{artist.id_Artist}</P1TableCell> */}
+              <P1TableCell>{artist.Name}</P1TableCell>
+              <P1TableCell >{artist.Phone}</P1TableCell>
+              <P1TableCell >{artist.BirthPlace_Country && artist.BirthPlace_Country.Name}</P1TableCell>
+              <P1TableCell >{artist.FamousStyle_Art_Style && artist.FamousStyle_Art_Style.StyleName}</P1TableCell>
+              <P1TableCell>
                 <Container  style={styles.TableActionIcons}>
                   <EditIcon onClick={() => openEditPopup(artist)}/>
                   <DeleteIcon onClick={() => deleteitem(artist)}/>
                   </Container>
-              </TableCell>
+              </P1TableCell>
               
             </TableRow>
           ))}

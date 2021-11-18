@@ -33,10 +33,9 @@ const Sculpture_ArtRouter = require("./routers/Sculpture_Art");
 const StateRouter = require("./routers/State");
 const StoreRouter = require("./routers/Store");
 const ZipcodeRouter = require("./routers/ZipCode_in_States");
-
 const ArtStyleRouter = require("./routers/Art_Styles")
 const CountryRouter = require("./routers/Country")
-const ImageRouter = require("./routers/images")
+const ImageRouter = require("./routers/images");
 
 
 
@@ -65,6 +64,8 @@ app.use(CountryRouter);
 app.use(ImageRouter);
 app.use(StateRouter)
 app.use(ZipcodeRouter)
+app.use(ArtRouter)
+app.use(Art_StatusRouter)
 
 
 app.listen(port,()=>{

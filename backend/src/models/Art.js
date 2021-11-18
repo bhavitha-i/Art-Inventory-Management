@@ -39,10 +39,11 @@ module.exports = function(sequelize, DataTypes) {
     Status: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      defaultValue: 0,
       comment: "Art availability status is based on where the art is available.\nMovingStatus = 0 ; Not moved anywhere yet\nMovingStatus = 1; Moved to Store\nMovingStatus = 2 ; Moved to Museum\nMovingStatus = 3; Moved to Art Shows",
       references: {
-        model: 'Art_Status',
-        key: 'id_Art_Status'
+        model: 'ArtStatus',
+        key: 'Id_Status'
       }
     },
     Style: {

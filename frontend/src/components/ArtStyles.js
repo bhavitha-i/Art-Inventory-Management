@@ -120,7 +120,7 @@ const cancelSearch = () => {
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Seach for Art Style"
+        placeholder="Search for Art Style"
         style={styles.SettingsSearch}
         />
          <Button
