@@ -22,6 +22,9 @@ import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
 import PopupLarge from './PopupLarge'
 import ArtForm from './ArtForm';
+import PopupAction from './PopupAction';
+import ArtActionForm from './ArtActionForm';
+
 
 // ----------------------------------------------------------------------
 
@@ -253,7 +256,7 @@ const openAddPopup = item => {
                             >
                             {art.CreatedBy_Artist.Name}
                         </CSubtitle>
-                        <Button size="small" variant="outlined"> Move</Button>
+                        <Button size="small" variant="outlined" style={styles.level1ActionButton}> Move</Button>
                         </Box>
                         </Ccontent>
                     </Ccard>
@@ -274,7 +277,20 @@ const openAddPopup = item => {
                     countries={countries}
                     />
                 
-            </PopupLarge>
+        </PopupLarge>
+        {/* <PopupAction
+                title={isEdit?"Edit Art":"Add Art"}
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+             >
+                <ArtActionForm 
+                    recordForEdit={recordForEdit} 
+                    setOpenPopup={setOpenPopup}
+                    status={status}
+
+                />
+                
+        </PopupAction> */}
     </ThemeProvider>
 
   );

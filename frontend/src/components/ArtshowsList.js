@@ -22,6 +22,7 @@ import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
 import Popup from './Popup'
 import ArtForm from './ArtForm';
+import SendIcon from '@mui/icons-material/Send';
 
 
 // -------------------------------------------------------
@@ -117,11 +118,30 @@ const openAddPopup = item => {
       </Box>
       <Container sx={{ py: 1 }} >
           {artshows.length === 0 && <Typography> No Artshows Available</Typography>}
-            {artshows.map(art => (
+            {artshows.map(show => (
             
-             <Box item key={art.id_Art_Show} xs={12} sx={{   border:1,borderRadius:1,}} style={styles.level2Box}>
-               <Typography variant="h5" >{art.Title}</Typography>
-
+             <Box item key={show.id_Art_Show}  sx={{   border:1,borderRadius:1,}} style={styles.level2Box}>
+               <Grid Container style={styles.level2GContainer}>
+               <Grid item xs={7} >
+                  <Typography variant="h5" >{show.Title}</Typography>
+                  <Typography variant="body">
+                     <b>{strings.ArtShow.location}</b> : {show.Location}<br/>
+                  </Typography>
+               </Grid>
+               <Grid item xs={3} >
+                  <Typography variant="body1">
+                      <b>{strings.ArtShow.host}</b> : {show.Host}<br/>
+                      <b>{strings.ArtShow.phone}</b> : {show.Phone}<br/>
+                      <b>{strings.ArtShow.url}</b> : {show.ShowURL}<br/>
+                      <b>{strings.ArtShow.artCount}</b> : {show.ArtCount}<br/>
+                  </Typography>
+               </Grid>
+               <Grid item xs={2}>
+                 <Button variant="outlined" endIcon={<SendIcon />}>
+                          Get into Art Show
+                  </Button>
+               </Grid>
+               </Grid>
               </Box>
             ))}
         </Container>

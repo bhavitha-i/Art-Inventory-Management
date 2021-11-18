@@ -56,6 +56,17 @@ Art: {
     sweight: "Weight",
     smaterial: "Material",
     stexture: "Texture/Type"
+},
+ArtShow:{
+    artshow:"Art Show",
+    host:"Host",
+    location: "Location",
+    phone:"Phone",
+    title:"Title",
+    id:"Id Art Show",
+    url: "Website",
+    artCount: "Art available"
+
 }
 }
 

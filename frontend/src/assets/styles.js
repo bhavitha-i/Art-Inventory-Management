@@ -1,4 +1,4 @@
-import { padding } from "@mui/system"
+import { borderColor, padding } from "@mui/system"
 import theme from "../components/theme"
 
 const HeaderContainer ={
@@ -95,7 +95,19 @@ const AVInfoHeader={
 }
 
 const level2Box={
-  margin: "10px"
+  margin: "10px",
+  borderColor: theme.palette.primary.main
+}
+
+const level2GContainer={
+  display:"flex",
+  padding:"10px"
+}
+
+const level1ActionButton={
+  marginTop:"auto",
+  marginBottom: "auto",
+
 }
 
 
@@ -118,7 +130,9 @@ const level2Box={
     AVInfo:AVInfo,
     AVArtistImage:AVArtistImage,
     AVInfoHeader:AVInfoHeader,
-    level2Box:level2Box
+    level2Box:level2Box,
+    level2GContainer:level2GContainer,
+    level1ActionButton:level1ActionButton
   }
 
 
