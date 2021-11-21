@@ -1,4 +1,4 @@
-import { padding } from "@mui/system"
+import { borderColor, padding } from "@mui/system"
 import theme from "../components/theme"
 
 const HeaderContainer ={
@@ -83,6 +83,12 @@ const AVImage={
   margin:"auto"
 }
 
+const ASVImage={
+  width:"100%",
+  height:"100%",
+  margin:"auto"
+}
+
 const AVInfo={
   textAlign: "left",
   paddingLeft: "10%"
@@ -99,7 +105,38 @@ const AVInfoHeader={
 }
 
 const level2Box={
-  margin: "10px"
+  margin: "10px",
+  borderColor: theme.palette.primary.main
+}
+
+const level2GContainer={
+  display:"flex",
+  padding:"10px"
+}
+
+const level1ActionButton={
+  marginTop:"auto",
+
+}
+
+const paddingBottom10={
+  paddingBottm:"10px"
+}
+
+const MarginAuto={
+  margin:"auto"
+}
+
+const level2ActionGrid={
+  display: "flex",
+  flexDirection: "column",
+  justifyContent:"space-between"
+}
+
+const level2ActionIcons={
+  display: "flex",
+  justifyContent:"flex-end",
+  cursor: "pointer"
 }
 
 const options={
@@ -132,7 +169,14 @@ const options={
     AVInfoHeader:AVInfoHeader,
     level2Box:level2Box,
     options,
-    spaceBetween
+    spaceBetween,
+    level2GContainer:level2GContainer,
+    level1ActionButton:level1ActionButton,
+    paddingBottom10:paddingBottom10,
+    MarginAuto:MarginAuto,
+    level2ActionGrid:level2ActionGrid,
+    level2ActionIcons:level2ActionIcons,
+    ASVImage
   }
 
 

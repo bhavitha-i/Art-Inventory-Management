@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -11,6 +12,7 @@ import Countries from "./Countries"
 import States from "./States"
 import Cities from "./Cities"
 import ArtStatus from "./ArtStatusList"
+import ArtStore_ArtStatus from "./ArtStore_ArtStatus"
 
 
 class SettingsTabs extends React.PureComponent {
@@ -41,6 +43,7 @@ class SettingsTabs extends React.PureComponent {
             <Tab label="State" />
             <Tab label="City" />            
             <Tab label="Art Status" />
+            <Tab label="Art Store - Art Status"/>
 
           </Tabs>
           </Box>
@@ -50,6 +53,7 @@ class SettingsTabs extends React.PureComponent {
           {activeIndex === 2 && <TabContainer> <States/> </TabContainer>}
           {activeIndex === 3 && <TabContainer> <Cities/> </TabContainer>}
           {activeIndex === 4 && <TabContainer> <ArtStatus/> </TabContainer>}
+          {activeIndex === 5 && <TabContainer> <ArtStore_ArtStatus/> </TabContainer>}
 
         </div>
 

@@ -56,7 +56,37 @@ Art: {
     sweight: "Weight",
     smaterial: "Material",
     stexture: "Texture/Type"
+},
+ArtShow:{
+    artshow:"Art Show",
+    host:"Host",
+    location: "Location",
+    phone:"Phone",
+    title:"Title",
+    id:"Id Art Show",
+    url: "Website",
+    artCount: "Art available",
+    price: "Price",
+    startbid: "Starting bid value",
+    chooseshow: "Choose a show",
+    bidValue: "Customer Bid value",
+    customer: "Customer"
+
+},
+ArtStore:{
+    store: "Art Store",
+    price: "Price",
+    rent: "Rent per day",
+    status: "Status",
+    art: "Art",
+    choosestore:"Choose a store"
+
+},
+Museum:{
+    choosemusem:"Choose a Museum",
+    chooseExhibit: "Choose an exhibit"
 }
+
 }
 
 export default Strings

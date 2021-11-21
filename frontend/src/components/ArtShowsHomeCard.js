@@ -1,9 +1,11 @@
 import { Icon } from '@iconify/react';
-import androidFilled from '@iconify/icons-ant-design/android-filled';
+import slideshow2Line from '@iconify/icons-ri/slideshow-2-line';
 import  { useEffect, useState } from "react"
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import MovieIcon from '@mui/icons-material/Movie';
+
 
 // ----------------------------------------------------------------------
 
@@ -13,8 +15,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   padding: theme.spacing(5, 0),
   color: theme.palette.warning.darker,
   backgroundColor: theme.palette.warning.lighter,
-  borderRadius: '16px'
-
+  borderRadius: '16px',
+  cursor: "pointer"
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -48,7 +50,7 @@ export default function ArtShowsHomeCard(props) {
   return (
     <RootStyle onClick={() => handleClick()} >
       <IconWrapperStyle>
-        <Icon icon={androidFilled} width={24} height={24} />
+        <Icon icon={slideshow2Line} width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h4">Art Shows</Typography>
       {/* <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>

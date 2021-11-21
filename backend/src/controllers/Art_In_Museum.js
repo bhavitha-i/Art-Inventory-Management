@@ -1,7 +1,6 @@
 const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
-const Sequelize = require('sequelize');
 
 
 
@@ -9,9 +8,9 @@ const Sequelize = require('sequelize');
 exports.create = (req, res) => {
   const rowData = req.body;
 
-  dbmodels.Art_in_Auction.create(rowData)
+  dbmodels.Art_In_Museum.create(rowData)
       .then((result) => {
-        dbmodels.Art.update({Status:2},
+        dbmodels.Art.update({Status:3},
           { where: { id_Art: rowData.Art } }
         ).then((result) => {
         res.status(200).json({
@@ -32,69 +31,7 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art_in_Auction.findAll({})
-      .then(result => {
-        res.send(result);
-      })
-      .catch(err => {
-        res.send({
-          message:
-            err.message || "Some error occurred while retrieving ."
-        });
-      });
-  };
-
-
-  //Get all from Table
-exports.findCount = (req, res) => {
-
-  console.log("in WHere?")
-  dbmodels.Art_in_Auction.findAll({
-      attributes: [
-          "AtArtShow",
-          [Sequelize.fn("COUNT", Sequelize.col("Art")),"ArtCount"]
-      ],
-      group: ["AtArtShow"]
-      
-  })
-      .then(result => {
-        res.send(result);
-      })
-      .catch(err => {
-        res.send({
-          message:
-            err.message || "Some error occurred while retrieving ."
-        });
-      });
-  };
-
-
-
-//Get arts from artshow from Table
-exports.findArtInShow = (req, res) => {
-
-  dbmodels.Art_in_Auction.findAll({
-      where:{ AtArtShow:req.params.id},
-      include: [
-        {
-          model: dbmodels.Art,
-          as: "Art_Art",
-          include: [
-            {
-              model: dbmodels.Art_Styles,
-              as: "Style_Art_Style"
-            },{
-              model: dbmodels.ArtStatus,
-              as: "Status_ArtStatus"
-            },{
-              model: dbmodels.Artist,
-              as: "CreatedBy_Artist"
-            }
-          ]
-        }
-      ]
-      
-  })
+  dbmodels.Art_In_Museum.findAll({})
       .then(result => {
         res.send(result);
       })
@@ -109,7 +46,7 @@ exports.findArtInShow = (req, res) => {
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-    dbmodels.Art_in_Auction.findByPk(req.params.id, {
+    dbmodels.Art_In_Museum.findByPk(req.params.id, {
     })
       .then((result) => {
       res.status(200).json({
@@ -129,8 +66,8 @@ exports.findByPk = (req, res) => {
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;
-  dbmodels.Art_in_Auction.update(req.body,
-    { where: { id_Art_Auction: id } }
+  dbmodels.Art_In_Museum.update(req.body,
+    { where: { id_Art_In_Museum: id } }
   ).
   then(() => {
     res.status(200).json({
@@ -151,8 +88,8 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
-  dbmodels.Art_in_Auction.destroy({
-    where: { id_Art_Auction: id },
+  dbmodels.Art_In_Museum.destroy({
+    where: { id_Art_In_Museum: id },
   }).then(() => {
     res.status(200).json({
         status: true,
