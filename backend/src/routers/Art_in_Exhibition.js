@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const art_in_exhibition = require("../controllers/Art_Exhibition");
+const art_in_exhibition = require("../controllers/Art_in_Exhibition");
 
 
 router.get("/art_in_exhibition/all",art_in_exhibition.findAll)

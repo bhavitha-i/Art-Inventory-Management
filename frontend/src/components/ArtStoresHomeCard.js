@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import androidFilled from '@iconify/icons-ant-design/android-filled';
+import bxStore from '@iconify/icons-bx/bx-store';
 import  { useEffect, useState } from "react"
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
@@ -41,7 +41,7 @@ export default function ArtStoresHomeCard(props) {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={androidFilled} width={24} height={24} />
+        <Icon icon={bxStore} width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h4">Art Stores</Typography>
       {/* <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>

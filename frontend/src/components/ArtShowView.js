@@ -20,10 +20,9 @@ import { Box, padding, typography } from '@mui/system';
 import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
-import PopupLarge from './PopupLarge'
-import ArtForm from './ArtForm';
 import PopupAction from './PopupAction';
-import ArtActionForm from './ArtActionForm';
+import { useParams } from "react-router-dom";
+import PlaceBidForm from './PlaceBidForm';
 
 
 // ----------------------------------------------------------------------
@@ -82,21 +81,19 @@ const Ccontent = styled(CardContent)(({ theme }) => ({
 
 export default function ArtistsList() {
 
-  const [recordForEdit, setRecordForEdit] = useState(null)
-  const [openPopup, setOpenPopup] = useState(false);
-  const [arts, setArts] = useState([])
+  const [showId,setShowId] =useState(useParams().showId)
+  const [artshows, setArtshows] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
   const [isEdit, setIsEdit] = useState(false)
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
-  const [countries,setCountries] = useState([]);
-  const [status,setStatus] = useState([]);
-  const [artists,setArtists] = useState([]);
-  const [artstyles,setArtstyles] = useState([]);
   const [openActionPopup, setOpenActionPopup] = useState(false);
   const [selectedArt, setSelectedArt] = useState("")
+  const [customers, setCustomers] = useState([])
+
+
 
   function refreshPage() {
     setTimeout(()=>{
@@ -112,61 +109,26 @@ export default function ArtistsList() {
 
   },[]);
 
+
   const getValues = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/artStyle/all')
+    axios.get(process.env.REACT_APP_API_URL+'/customer/all')
           .then(response =>{ 
             const data = response.data
             const options = data.map(s => ({
-              "value" : s.id_Art_Styles,
-              "label" : s.StyleName
+              "value" : s.id_Customer,
+              "label" : s.FirstName + ' ' + s.LastName
         
             }))
-            setArtstyles(options)
-            console.log(options," art sytles from api")})
-          .catch(error => {console.log(error)})
-  
-    axios.get(process.env.REACT_APP_API_URL+'/country/all')
-          .then(response =>{ 
-            const data = response.data
-            const options = data.map(s => ({
-              "value" : s.id_Country,
-              "label" : s.Name
-        
-            }))
-            setCountries(options)
-            console.log(options," countries from api")})
-          .catch(error => {console.log(error)})
-
-    axios.get(process.env.REACT_APP_API_URL+'/art_status/all')
-          .then(response =>{ 
-            const data = response.data
-            const options = data.map(s => ({
-              "value" : s.id_Art_Status,
-              "label" : s.Status
-        
-            }))
-            setStatus(options)
-            console.log(options," art status from api")})
-          .catch(error => {console.log(error)})
-
-    axios.get(process.env.REACT_APP_API_URL+'/artist/all')
-          .then(response =>{ 
-            const data = response.data
-            const options = data.map(s => ({
-              "value" : s.id_Artist,
-              "label" : s.Name
-        
-            }))
-            setArtists(options)
-            console.log(options," artist from api")})
+            setCustomers(options)
+            console.log(options,"customer from api")})
           .catch(error => {console.log(error)})
           
-}; 
+  }; 
 
   const getArts = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/art/all')
+    axios.get(process.env.REACT_APP_API_URL+`/art_in_auction_arts/${showId}`)
           .then(response =>{ 
-            setArts(response.data)
+            setArtshows(response.data)
             setRows(response.data)
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
@@ -176,7 +138,7 @@ const requestSearch = (searchedVal) => {
   const filteredRows = rows.filter((row) => {
     return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
   });
-  setArts(filteredRows);
+  setArtshows(filteredRows);
 };
 
 const cancelSearch = () => {
@@ -184,28 +146,10 @@ const cancelSearch = () => {
     requestSearch(searched);
 };
 
-
-const openEditPopup = item => {
-  setRecordForEdit(item)
-  setOpenPopup(true)
-  setIsEdit(true)
-}
-
-
-const openAddPopup = item => {
-  setOpenPopup(true)
-  setIsEdit(false)
-}
-
-
-
 const openActionPop = item => {
   setOpenActionPopup(true)
   setSelectedArt(item)
 }
-
-
-
 
 
 
@@ -219,55 +163,48 @@ const openActionPop = item => {
         placeholder="Search for Art"
         style={styles.SettingsSearch}
         />
-         <Button
-              type="submit"
-              variant="contained"
-              // style={styles.ArtStylesAddButton}
-              onClick={() => openAddPopup(true)}
-          >
-            Add
-          </Button>
       </Box>
       <Container sx={{ py: 1 }} >
-          {arts.length === 0 && <Typography> No Arts Available</Typography>}
+          {artshows.length === 0 && <Typography> No Arts Available</Typography>}
           <Grid container spacing={4} >
-            {arts.map(art => (
+            {artshows.map(art => (
             
-             <Grid item key={art} xs={3} >
+             <Grid item key={art.Art_Art.id_Art} xs={3} >
                     <Ccard >
                         <Cmedia
-                        image={ art.Image}
+                        image={ art.Art_Art.Image}
                         />
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
-                          href={'/artview/'+art.id_Art}
+                          href={'/artview/'+art.Art_Art.id_Art}
                           color="inherit"
                         >
                         <CHeading
                             variant={"h6"}
                             gutterBottom
                         >
-                            {art.Title}
+                            {art.Art_Art.Title}
                         </CHeading>
                         </Link>
                         <CSubtitle
                             variant={"caption"}
                         >
-                          <b>{strings.Art.country}</b> : {art.CountryOfOrigin_Country.Name}<br/>
-                         {art.Style && <span> <b>{strings.Art.style}</b> : {art.Style_Art_Style.StyleName}</span>}
+                         {art.Art_Art.Style && <span> <b>{strings.Art.style}</b> : {art.Art_Art.Style_Art_Style.StyleName}</span>}<br/>
+                         {<span> <b>{strings.ArtShow.price}</b> : ${art.Price}</span>}  <br/>
+                         {<span> <b>{strings.ArtShow.startbid}</b> : ${art.StartBid}</span>}  <br/>
+
                         </CSubtitle>
                         <Cdivider light />
                           <Box style={styles.flexStart}>
-                            <CAvatar  src={art.CreatedBy_Artist.Image} />
-                            <CSubtitle
-                            variant={"caption"}
+                           { art.Art_Art.CreatedBy && <CAvatar src={art.Art_Art.CreatedBy_Artist.Image} /> }
+                           {art.Art_Art.CreatedBy && <CSubtitle
+                            variant={"body1"}
                             style={styles.leftM0}
                             >
-                            {art.CreatedBy_Artist.Name}
-                        </CSubtitle>
-                        {art.Status === 0  && <Button size="small" variant="outlined" onClick={() => openActionPop(art)} style={styles.level1ActionButton}> Move</Button> }
-                        {art.Status !== 0 && <Typography variant="body1" color="primary" style={styles.MarginAuto}><b>{art.Status_ArtStatus.Status}</b></Typography>}
+                            {art.Art_Art.CreatedBy_Artist.Name}  
+                        </CSubtitle> }
+                        <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Place Bid</Button>
                         </Box>
                         </Ccontent>
                     </Ccard>
@@ -275,33 +212,19 @@ const openActionPop = item => {
             ))}
           </Grid>
         </Container>
-        <PopupLarge
-                title={isEdit?"Edit Art":"Add Art"}
-                openPopup={openPopup}
-                setOpenPopup={setOpenPopup}
-             >
-                <ArtForm 
-                    recordForEdit={recordForEdit} 
-                    setOpenPopup={setOpenPopup}
-                    artists={artists}
-                    artstyles={artstyles}
-                    countries={countries}
-                    />
-                
-        </PopupLarge>
         <PopupAction
-                title="Move Art from Inventory"
+                title="Place Bid"
                 openActionPopup={openActionPopup}
                 setOpenActionPopup={setOpenActionPopup}
              >
-                <ArtActionForm 
+                <PlaceBidForm 
+                    customers = {customers}
                     openActionPopup={openActionPopup}
-                    status={status}
                     art={selectedArt}
-
                 />
                 
         </PopupAction>
+
     </ThemeProvider>
 
   );

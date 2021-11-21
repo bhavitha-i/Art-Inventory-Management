@@ -7,21 +7,14 @@ const dbmodels = db.models
 //Create rows in table
 exports.create = (req, res) => {
   const rowData = req.body;
-  console.log(rowData)
-  if(rowData.Status == null || rowData.Status == ''){
-    rowData.Status=0
-  }
-  dbmodels.Art_In_Store.create(rowData)
+
+  dbmodels.Art_in_Exhibition.create(rowData)
       .then((result) => {
-        dbmodels.Art.update({Status:1},
-          { where: { id_Art: rowData.Art } }
-        ).then((result) => {
-        res.status(200).json({
-          status: true,
-          message: "Row created successfully",
-          data:result
-        });
-      })
+      res.status(200).json({
+        status: true,
+        message: "Row created successfully",
+        data:result
+      });
     })
     .catch(err => {
       res.send({
@@ -34,7 +27,7 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art_In_Store.findAll({})
+  dbmodels.Art_in_Exhibition.findAll({})
       .then(result => {
         res.send(result);
       })
@@ -49,7 +42,7 @@ exports.findAll = (req, res) => {
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-    dbmodels.Art_In_Store.findByPk(req.params.id, {
+    dbmodels.Art_in_Exhibition.findByPk(req.params.id, {
     })
       .then((result) => {
       res.status(200).json({
@@ -69,8 +62,8 @@ exports.findByPk = (req, res) => {
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;
-  dbmodels.Art_In_Store.update(req.body,
-    { where: { id_Art_In_Store: id } }
+  dbmodels.Art_in_Exhibition.update(req.body,
+    { where: { id_Art_in_Exhibition: id } }
   ).
   then(() => {
     res.status(200).json({
@@ -91,8 +84,8 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
-  dbmodels.Art_In_Store.destroy({
-    where: { id_Art_In_Store: id },
+  dbmodels.Art_in_Exhibition.destroy({
+    where: { id_Art_in_Exhibition: id },
   }).then(() => {
     res.status(200).json({
         status: true,
