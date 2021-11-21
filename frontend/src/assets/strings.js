@@ -70,7 +70,8 @@ ArtShow:{
     startbid: "Starting bid value",
     chooseshow: "Choose a show",
     bidValue: "Customer Bid value",
-    customer: "Customer"
+    customer: "Customer",
+    bid: "Bid Value"
 
 },
 ArtStore:{
