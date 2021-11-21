@@ -44,13 +44,7 @@ module.exports = function(sequelize, DataTypes) {
           { name: "id_Art_Supplies" },
         ]
       },
-      {
-        name: "Art_Supplies.StoreId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "AtStore" },
-        ]
-      },
+     
     ]
   });
 };

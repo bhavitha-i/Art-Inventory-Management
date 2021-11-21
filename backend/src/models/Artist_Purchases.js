@@ -51,28 +51,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "idArtist_Purchases" },
         ]
-      },
-      {
-        name: "Artist_Purchases.orderId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Order" },
-        ]
-      },
-      {
-        name: "Artist_Purchases.ArtistId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Artist" },
-        ]
-      },
-      {
-        name: "Artist_Purchases.ArtSuppliesId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "ArtSupplies" },
-        ]
-      },
+      }
     ]
   });
 };

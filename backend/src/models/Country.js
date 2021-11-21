@@ -24,15 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Country" },
         ]
-      },
-      {
-        name: "Name_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "Name" },
-        ]
-      },
+      }
     ]
   });
 };

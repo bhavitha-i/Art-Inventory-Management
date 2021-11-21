@@ -16,6 +16,7 @@ import Divider from "@material-ui/core/Divider";
 import { styled } from '@mui/material/styles';
 import  { useState, useEffect } from "react"
 import axios from "axios";
+
 import { Box, padding } from '@mui/system';
 import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
@@ -23,8 +24,10 @@ import { Link } from '@mui/material';
 import PopupLarge from './PopupLarge'
 import ArtForm from './ArtForm';
 
+
 // ----------------------------------------------------------------------
 
+const ITEM_HEIGHT = 48;
 
 const Ccard = styled(Card)(({ theme }) => ({
     maxWidth: 300,
@@ -79,6 +82,7 @@ const Ccontent = styled(CardContent)(({ theme }) => ({
 
 export default function ArtistsList() {
 
+
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
   const [arts, setArts] = useState([])
@@ -92,6 +96,8 @@ export default function ArtistsList() {
   const [status,setStatus] = useState([]);
   const [artists,setArtists] = useState([]);
   const [artstyles,setArtstyles] = useState([]);
+
+
 
 
   function refreshPage() {
@@ -222,14 +228,17 @@ const openAddPopup = item => {
             
              <Grid item key={art} xs={3} >
                     <Ccard >
-                        <Cmedia
+                      
+                   
+                         <Cmedia
                         image={ art.Image}
-                        />
+                        /> 
+                        
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
                           href={'/artview/'+art.id_Art}
-                          color="inherit"
+                          color="inherit"Created
                         >
                         <CHeading
                             variant={"h6"}
@@ -237,6 +246,7 @@ const openAddPopup = item => {
                         >
                             {art.Title}
                         </CHeading>
+                        
                         </Link>
                         <CSubtitle
                             variant={"caption"}
@@ -260,6 +270,8 @@ const openAddPopup = item => {
               </Grid>
             ))}
           </Grid>
+
+          
         </Container>
         <PopupLarge
                 title={isEdit?"Edit Art":"Add Art"}

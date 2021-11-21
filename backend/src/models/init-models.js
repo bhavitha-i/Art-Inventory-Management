@@ -27,6 +27,7 @@ var _Purchase_Types = require("./Purchase_Types");
 var _Sculpture_Art = require("./Sculpture_Art");
 var _State = require("./State");
 var _Store = require("./Store");
+var _Art_In_Museum = require("./Art_In_Museum");
 var _ZipCode_in_States = require("./ZipCode_in_States");
 
 function initModels(sequelize) {
@@ -41,6 +42,7 @@ function initModels(sequelize) {
   var Art_Supplies = _Art_Supplies(sequelize, DataTypes);
   var Art_bids = _Art_bids(sequelize, DataTypes);
   var Art_in_Auction = _Art_in_Auction(sequelize, DataTypes);
+  var Art_In_Museum = _Art_In_Museum(sequelize, DataTypes);
   var Art_in_Exhibition = _Art_in_Exhibition(sequelize, DataTypes);
   var Artist = _Artist(sequelize, DataTypes);
   var Artist_Purchases = _Artist_Purchases(sequelize, DataTypes);
@@ -142,6 +144,10 @@ function initModels(sequelize) {
   Store.hasMany(Art_Supplies, { as: "Art_Supplies", foreignKey: "AtStore"});
   Address.belongsTo(ZipCode_in_States, { as: "ZipCode_ZipCode_in_State", foreignKey: "ZipCode"});
   ZipCode_in_States.hasMany(Address, { as: "Addresses", foreignKey: "ZipCode"});
+  Art_In_Museum.belongsTo(Art, { as: "Art_Art", foreignKey: "Art"});
+  Art.hasMany(Art_In_Museum, { as: "Art_In_Museums", foreignKey: "Art"});
+  Art_In_Museum.belongsTo(Museum, { as: "Musem_Museum", foreignKey: "Musem"});
+  Museum.hasMany(Art_In_Museum, { as: "Art_In_Museums", foreignKey: "Musem"});
 
   return {
     Address,
@@ -173,6 +179,7 @@ function initModels(sequelize) {
     State,
     Store,
     ZipCode_in_States,
+    Art_In_Museum,
   };
 }
 module.exports = initModels;

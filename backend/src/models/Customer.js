@@ -48,14 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Customer" },
         ]
-      },
-      {
-        name: "Customer.Address_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Address" },
-        ]
-      },
+      }
     ]
   });
 };

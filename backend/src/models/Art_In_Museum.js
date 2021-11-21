@@ -1,19 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Art_in_Auction', {
-    id_Art_Auction: {
+  return sequelize.define('Art_In_Museum', {
+    id_Art_In_Museum: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    AtArtShow: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Art_Show',
-        key: 'id_Art_Show'
-      }
     },
     Art: {
       type: DataTypes.INTEGER,
@@ -23,17 +15,17 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_Art'
       }
     },
-    Price: {
-      type: DataTypes.DECIMAL(10,2),
-      allowNull: true
-    },
-    StartBid: {
-      type: DataTypes.DECIMAL(10,2),
-      allowNull: true
+    Musem: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Museum',
+        key: 'id_Museum'
+      }
     }
   }, {
     sequelize,
-    tableName: 'Art_in_Auction',
+    tableName: 'Art_In_Museum',
     timestamps: false,
     indexes: [
       {
@@ -41,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_Art_Auction" },
+          { name: "id_Art_In_Museum" },
         ]
       }
     ]

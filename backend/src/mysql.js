@@ -9,6 +9,8 @@ const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_
   dialect: process.env.DATABASE_DIALECT
 });
 
+
+
 // Connect all the models/tables in the database to a db object, 
 //so everything is accessible via one object
 const db = {};
@@ -19,5 +21,10 @@ db.sequelize = sequelize;
 var initModels = require("./models/init-models");
 db.models = initModels(sequelize);
 
+
+
+async function initialize() {
+  await sequelize.sync();
+}
 
 module.exports = db;

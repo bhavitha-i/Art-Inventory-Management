@@ -21,6 +21,9 @@ import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
 import { useParams } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 // ----------------------------------------------------------------------
 
@@ -151,7 +154,7 @@ export default function ArtView() {
                   </Box>
             </Grid>
 
-            <Grid item xs={4} >
+            <Grid item xs={3} >
               {artInfo.CreatedBy && 
               <Avatar large style={styles.AVArtistImage}
                 src={artInfo.CreatedBy_Artist.Image} 
@@ -164,11 +167,22 @@ export default function ArtView() {
               </Box>
               }
             </Grid>
+            <Grid item xs={1}>
+            <Box>
+                  <EditIcon onClick={() => console.log("edit") }/>
+                 
+                  </Box>
+          </Grid>
 
             <Grid item xs={12} >
               <Box style={styles.AVInfoHeader}>
-              <Typography variant="h5">{artType}</Typography>
+                <Box style={styles.spaceBetween}>
+                  <Typography variant="h5">{artType}</Typography>
+                  <EditIcon/>
+                </Box>
               <Cdivider/>
+
+              
               {artType == "Painting" && 
                   <CSubtitle
                   variant={"body1"}
@@ -194,6 +208,7 @@ export default function ArtView() {
 
               </Box>
             </Grid>
+           
                    
           </Grid>
         </Ccontainer>

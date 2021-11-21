@@ -35,14 +35,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Address" },
         ]
-      },
-      {
-        name: "ZipCode_id_idx",
-        using: "BTREE",
-        fields: [
-          { name: "ZipCode" },
-        ]
-      },
+      }
     ]
   });
 };

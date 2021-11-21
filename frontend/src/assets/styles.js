@@ -44,6 +44,10 @@ const SettingsSearch={
 const SettingsAddButton={
   // justifyContent: "flex-end",
 }
+const spaceBetween={
+  justifyContent: "space-between",
+  display: "flex",
+}
 
 const TableActionIcons={
   justifyContent: "space-around",
@@ -98,6 +102,14 @@ const level2Box={
   margin: "10px"
 }
 
+const options={
+
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end"
+
+}
+
 
 
   const styles = {
@@ -118,7 +130,9 @@ const level2Box={
     AVInfo:AVInfo,
     AVArtistImage:AVArtistImage,
     AVInfoHeader:AVInfoHeader,
-    level2Box:level2Box
+    level2Box:level2Box,
+    options,
+    spaceBetween
   }
 
 

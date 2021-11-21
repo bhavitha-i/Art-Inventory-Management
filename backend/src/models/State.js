@@ -34,22 +34,7 @@ module.exports = function(sequelize, DataTypes) {
           { name: "id_State" },
           { name: "Country_id" },
         ]
-      },
-      {
-        name: "Name_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "Name" },
-        ]
-      },
-      {
-        name: "Country_id_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Country_id" },
-        ]
-      },
+      }
     ]
   });
 };
