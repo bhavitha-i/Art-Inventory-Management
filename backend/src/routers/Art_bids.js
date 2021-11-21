@@ -14,6 +14,8 @@ router.put("/art_bids/:id", art_bids.update);
 router.delete("/art_bids/:id", art_bids.delete);
 
 
+router.get("/art_bids_artbids/:Art/:AtArtShow",art_bids.findsBids)
+
 
 module.exports = router;
 

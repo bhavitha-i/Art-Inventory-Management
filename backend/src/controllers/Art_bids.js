@@ -24,6 +24,38 @@ exports.create = (req, res) => {
     });
   };
 
+
+// Get bids on condition
+
+exports.findsBids = (req, res) => {
+  console.log(req.params, "--body")
+
+    dbmodels.Art_bids.findAll({
+      include: [
+        {
+          model: dbmodels.Customer,
+          as: "Customer_Customer"
+        }
+      ],
+      where:{ Art: req.params.Art, 
+            ArtShow: req.params.AtArtShow  
+      },
+      order:[
+        [sequelize.fn('max', sequelize.col('BidValue')), 'DESC'],
+      ]
+    })
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      res.send({
+        message:
+          err.message || "Some error occurred while retrieving ."
+      });
+    });
+  
+}
+
 //Get all from Table
 exports.findAll = (req, res) => {
 
