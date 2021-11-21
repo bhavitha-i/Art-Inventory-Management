@@ -21,8 +21,10 @@ import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
 import Popup from './Popup'
-import ArtForm from './ArtForm';
+import ArtShowForm from './ArtShowForm';
 import SendIcon from '@mui/icons-material/Send';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 // -------------------------------------------------------
@@ -40,10 +42,9 @@ export default function ArtshowsList() {
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
-  const [countries,setCountries] = useState([]);
-  const [status,setStatus] = useState([]);
-  const [artists,setArtists] = useState([]);
-  const [artstyles,setArtstyles] = useState([]);
+  const [showIcon, setShowIcon] = useState(false)
+  const [artcount, setArtcount] = useState([])
+
 
 
   function refreshPage() {
@@ -56,17 +57,26 @@ export default function ArtshowsList() {
 
   useEffect(() => {     
         getArtShows()
-
+        getArtCount()
   },[]);
 
 
-  const getArtShows = async () => {
+const getArtShows = async () => {
     axios.get(process.env.REACT_APP_API_URL+'/art_show/all')
           .then(response =>{ 
             setArtshows(response.data)
             setRows(response.data)
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
+};  
+
+
+const getArtCount = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/art_in_auction_artCount')
+        .then(response =>{ 
+          setArtcount(response.data)
+          console.log(response.data,"from api")})
+        .catch(error => {console.log(error)})
 };  
 
 const requestSearch = (searchedVal) => {
@@ -94,6 +104,32 @@ const openAddPopup = item => {
   setIsEdit(false)
 }
 
+const openShowArts = item => {
+  console.log(item)
+    window.location.assign(`/artshow/${item.id_Art_Show}`)
+}
+
+
+function deleteitem(record){
+
+  axios.delete(process.env.REACT_APP_API_URL+'/art_show/'+record.id_Art_Show)
+  .then(response =>{ 
+      console.log(response.data,"from api")
+      setCallFlag(true)
+      setErrAlert("success")
+      setMessage("Record Deleted")
+      refreshPage()
+      
+  })
+  .catch(error => {
+      console.log(error)
+      setCallFlag(true)
+      setErrAlert("error")
+      setMessage("Error while deleting Record")
+  })
+  
+
+}
 
 
 
@@ -120,7 +156,13 @@ const openAddPopup = item => {
           {artshows.length === 0 && <Typography> No Artshows Available</Typography>}
             {artshows.map(show => (
             
-             <Box item key={show.id_Art_Show}  sx={{   border:1,borderRadius:1,}} style={styles.level2Box}>
+             <Box item 
+                key={show.id_Art_Show}  
+                sx={{   border:1,borderRadius:1,}} 
+                style={styles.level2Box}
+                onMouseEnter={() => setShowIcon(true)}
+                onMouseLeave={() => setShowIcon(false)}
+                >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
                   <Typography variant="h5" >{show.Title}</Typography>
@@ -136,13 +178,20 @@ const openAddPopup = item => {
                       <b>{strings.ArtShow.artCount}</b> : {show.ArtCount}<br/>
                   </Typography>
                </Grid>
-               <Grid item xs={2}>
-                 <Button variant="outlined" endIcon={<SendIcon />}>
+               <Grid item xs={2} style={styles.level2ActionGrid}>
+                 <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openShowArts(show)}>
                           Get into Art Show
                   </Button>
+                  {showIcon &&
+                    <Box style={styles.level2ActionIcons}>
+                      <EditIcon  onClick={() => openEditPopup(show)}/>
+                      <DeleteIcon  onClick={() => deleteitem(show)}/>
+                    </Box>
+                  }
                </Grid>
                </Grid>
               </Box>
+              
             ))}
         </Container>
         <Popup
@@ -150,12 +199,9 @@ const openAddPopup = item => {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
              >
-                <ArtForm 
+                <ArtShowForm 
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
-                    artists={artists}
-                    artstyles={artstyles}
-                    countries={countries}
                     />
                 
             </Popup>

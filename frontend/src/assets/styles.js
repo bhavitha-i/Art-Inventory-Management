@@ -79,6 +79,12 @@ const AVImage={
   margin:"auto"
 }
 
+const ASVImage={
+  width:"100%",
+  height:"100%",
+  margin:"auto"
+}
+
 const AVInfo={
   textAlign: "left",
   paddingLeft: "10%"
@@ -106,8 +112,27 @@ const level2GContainer={
 
 const level1ActionButton={
   marginTop:"auto",
-  marginBottom: "auto",
 
+}
+
+const paddingBottom10={
+  paddingBottm:"10px"
+}
+
+const MarginAuto={
+  margin:"auto"
+}
+
+const level2ActionGrid={
+  display: "flex",
+  flexDirection: "column",
+  justifyContent:"space-between"
+}
+
+const level2ActionIcons={
+  display: "flex",
+  justifyContent:"flex-end",
+  cursor: "pointer"
 }
 
 
@@ -132,7 +157,12 @@ const level1ActionButton={
     AVInfoHeader:AVInfoHeader,
     level2Box:level2Box,
     level2GContainer:level2GContainer,
-    level1ActionButton:level1ActionButton
+    level1ActionButton:level1ActionButton,
+    paddingBottom10:paddingBottom10,
+    MarginAuto:MarginAuto,
+    level2ActionGrid:level2ActionGrid,
+    level2ActionIcons:level2ActionIcons,
+    ASVImage
   }
 
 

@@ -12,7 +12,6 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 import strings from '../assets/strings';
 import SnackBar from './SnackBar';
-import Avatar from '@mui/material/Avatar';
 import styles from '../assets/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -21,6 +20,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import Select from '@mui/material/Select';
 
 
 
@@ -36,6 +36,8 @@ function ArtistForm(props)  {
     const [stores, setStores] = useState([])
     const [shows, setShows] = useState([])
     const [musuems, setMusuems] = useState([])
+    const [moveTo, setMoveTo] = useState(1)
+
 
 
     function refreshPage() {
@@ -87,14 +89,66 @@ function ArtistForm(props)  {
               setShows(options)
               console.log(options," shows from api")})
             .catch(error => {console.log(error)})
+      
             
     }; 
 
 
     async function handleSubmit(event){
       event.preventDefault()
-      console.log(inputs,"++++++++++")
- 
+      console.log(inputs,moveTo,"++++++++++")
+      if(moveTo == 1){
+        inputs.Art = props.art.id_Art
+          axios.post(process.env.REACT_APP_API_URL+'/art_in_store/add',inputs)
+          .then(response =>{ 
+              console.log(response.data,"from api")
+              setCallFlag(true)
+              setErrAlert("success")
+              setMessage("Art moved to art store.")
+              // refreshPage()
+              
+          })
+          .catch(error => {
+              console.log(error)
+              setCallFlag(true)
+              setErrAlert("error")
+              setMessage("Error while adding Art")
+          })
+        }else if(moveTo == 2){
+          inputs.Art = props.art.id_Art
+          axios.post(process.env.REACT_APP_API_URL+'/art_in_auction/add',inputs)
+          .then(response =>{ 
+              console.log(response.data,"from api")
+              setCallFlag(true)
+              setErrAlert("success")
+              setMessage("Art moved to art show")
+              // refreshPage()
+              
+          })
+          .catch(error => {
+              console.log(error)
+              setCallFlag(true)
+              setErrAlert("error")
+              setMessage("Error while adding Art")
+          })
+        }else if(moveTo == 3){
+          inputs.Art = props.art.id_Art
+          axios.post(process.env.REACT_APP_API_URL+'/art_in_museum/add',inputs)
+          .then(response =>{ 
+              console.log(response.data,"from api")
+              setCallFlag(true)
+              setErrAlert("success")
+              setMessage("Art moved to exhibition in Museum")
+              // refreshPage()
+              
+          })
+          .catch(error => {
+              console.log(error)
+              setCallFlag(true)
+              setErrAlert("error")
+              setMessage("Error while adding Art")
+          })
+        }
         
     }
     
@@ -103,6 +157,10 @@ function ArtistForm(props)  {
         // event.persist();
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
         console.log(event,"---", inputs)
+        if(event.target.name == "MoveTo"){
+          console.log("move to set",event.target.value)
+          setMoveTo(event.target.value)
+        }
       }
 
 
@@ -138,12 +196,11 @@ function ArtistForm(props)  {
               }
         </Grid>
             
-        <Grid item xs={12}>
+        <Grid item xs={12} >
         <FormControl component="fieldset">
           <FormLabel required component="legend" variant="body1">Move to</FormLabel>
           <RadioGroup
             row
-            aria-label="gender"
             name="MoveTo"
             value={inputs.MoveTo}
             onChange={handleInputChange}
@@ -159,6 +216,119 @@ function ArtistForm(props)  {
         </FormControl>
 
         </Grid>
+
+        {moveTo == 1 && <Grid item xs={12} sm={7}>
+            <InputLabel required htmlFor="select-label">{strings.ArtStore.choosestore}</InputLabel>
+            <Select
+              required
+              input={<Input id="select-label" />}
+              value={inputs.AtStore || ''}
+              onChange={handleInputChange}
+              id="AtStore" 
+              name="AtStore"
+              fullWidth
+              label={strings.ArtStore.choosestore}
+            >
+                              
+             {stores.map(st => (
+                <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
+            ))} 
+
+            </Select>
+        </Grid>}
+
+        {moveTo == 1 &&  <Grid item xs={12} sm={7}>
+          <TextField
+            id="Price"
+            name="Price"
+            label={strings.ArtStore.price}
+            variant="standard"
+            onChange={handleInputChange}
+            value={inputs.Price|| ''}
+            fullWidth
+            required
+          />
+        </Grid>}
+
+        {moveTo == 1 &&  <Grid item xs={12} sm={7}>
+          <TextField
+            id="RentPerDay"
+            name="RentPerDay"
+            label={strings.ArtStore.rent}
+            variant="standard"
+            onChange={handleInputChange}
+            value={inputs.RentPerDay|| ''}
+            fullWidth
+            required
+          />
+        </Grid>}
+
+        {moveTo == 2 && <Grid item xs={12} sm={7}>
+            <InputLabel required htmlFor="select-label">{strings.ArtShow.chooseshow}</InputLabel>
+            <Select
+              required
+              input={<Input id="select-label" />}
+              value={inputs.AtArtShow || ''}
+              onChange={handleInputChange}
+              id="AtArtShow" 
+              name="AtArtShow"
+              fullWidth
+              label={strings.ArtShow.chooseshow}
+            >
+                              
+             {shows.map(st => (
+                <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
+            ))} 
+
+            </Select>
+        </Grid>}
+
+        {moveTo == 2 &&  <Grid item xs={12} sm={7}>
+          <TextField
+            id="Price"
+            name="Price"
+            label={strings.ArtShow.price}
+            variant="standard"
+            onChange={handleInputChange}
+            value={inputs.Price|| ''}
+            fullWidth
+            required
+          />
+        </Grid>}
+
+        {moveTo == 2 &&  <Grid item xs={12} sm={7}>
+          <TextField
+            id="StartBid"
+            name="StartBid"
+            label={strings.ArtShow.startbid}
+            variant="standard"
+            onChange={handleInputChange}
+            value={inputs.StartBid|| ''}
+            fullWidth
+            required
+          />
+        </Grid>}
+
+
+        {moveTo == 3 && <Grid item xs={12} sm={7}>
+            <InputLabel required htmlFor="select-label">{strings.Museum.choosemusem}</InputLabel>
+            <Select
+              required
+              input={<Input id="select-label" />}
+              value={inputs.Museum || ''}
+              onChange={handleInputChange}
+              id="Museum" 
+              name="Museum"
+              fullWidth
+              label={strings.Museum.choosemusem}
+            >
+                              
+             {musuems.map(st => (
+                <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
+            ))} 
+
+            </Select>
+        </Grid>}
 
       
 

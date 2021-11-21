@@ -36,7 +36,7 @@ const ZipcodeRouter = require("./routers/ZipCode_in_States");
 const ArtStyleRouter = require("./routers/Art_Styles")
 const CountryRouter = require("./routers/Country")
 const ImageRouter = require("./routers/images");
-const Store = require('./models/Store');
+const Art_In_MuseumRouter = require("./routers/Art_In_Museum")
 
 
 
@@ -72,6 +72,13 @@ app.use(InStore_Art_StatusRouter)
 app.use(StoreRouter)
 app.use(Art_ShowRouter)
 app.use(MuseumRouter)
+app.use(Art_In_StoreRouter)
+app.use(Art_in_AuctionRouter)
+app.use(Art_in_ExhibitionRouter)
+app.use(Art_ExhibitionRouter)
+app.use(Art_In_MuseumRouter)
+app.use(CustomerRouter)
+app.use(Art_bidsRouter)
 
 
 app.listen(port,()=>{
