@@ -108,7 +108,17 @@ exports.findByPk = (req, res) => {
         },{
           model: dbmodels.Sculpture_Art,
           as: "Sculpture_Arts"
-        }
+        },{
+          model: dbmodels.Art_in_Auction,
+          as: "Art_in_Auctions",
+          include: [
+            {
+              model: dbmodels.Art_Show,
+              as: "AtArtShow_Art_Show",
+            }
+          ]
+        },
+
       ]
     })
       .then((result) => {

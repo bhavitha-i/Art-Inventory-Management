@@ -73,8 +73,10 @@ const getArtShows = async () => {
 
 const getArtCount = async () => {
   axios.get(process.env.REACT_APP_API_URL+'/art_in_auction_artCount')
-        .then(response =>{ 
-          setArtcount(response.data)
+        .then(response =>{
+          response.data.map(item => {
+                artcount[item.AtArtShow] = item.ArtCount
+          })
           console.log(response.data,"from api")})
         .catch(error => {console.log(error)})
 };  
@@ -175,7 +177,8 @@ function deleteitem(record){
                       <b>{strings.ArtShow.host}</b> : {show.Host}<br/>
                       <b>{strings.ArtShow.phone}</b> : {show.Phone}<br/>
                       <b>{strings.ArtShow.url}</b> : {show.ShowURL}<br/>
-                      <b>{strings.ArtShow.artCount}</b> : {show.ArtCount}<br/>
+                      {console.log(artcount,artcount[show.id_Art_Show],"----")}
+                     {artcount.length>0 ? <span><b>{strings.ArtShow.artCount}</b> : {artcount[show.id_Art_Show]}</span> : 0}<br/>
                   </Typography>
                </Grid>
                <Grid item xs={2} style={styles.level2ActionGrid}>

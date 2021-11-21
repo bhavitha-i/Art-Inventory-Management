@@ -71,7 +71,9 @@ ArtShow:{
     chooseshow: "Choose a show",
     bidValue: "Customer Bid value",
     customer: "Customer",
-    bid: "Bid Value"
+    bid: "Bid Value",
+    higgestedbid: "Highest Bid",
+    highbidby: "Highest Bid by"
 
 },
 ArtStore:{

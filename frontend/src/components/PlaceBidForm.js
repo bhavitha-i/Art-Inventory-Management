@@ -38,8 +38,9 @@ const Cdivider = styled(Divider)(() => ({
 }));
 
 const CTableCell = styled(TableCell)(() => ({
-  borderBottom : 0
-  
+  borderBottom : 0,
+  // variant:"body1"
+  fontSize: "small"
 }));
 
 
@@ -83,7 +84,7 @@ function PlaceBidForm(props)  {
        
       // options.Art = props.art.Art
       // options.AtArtShow = props.art.AtArtShow
-      axios.get(process.env.REACT_APP_API_URL+`/art_bids_artbids/${options.Art}/${options.AtArtShow}`)
+      axios.get(process.env.REACT_APP_API_URL+`/art_bids_artbids/${options.Art}`)
             .then(response =>{ 
               setBids(response.data)
               setHighbid(response.data[0])
@@ -94,7 +95,8 @@ function PlaceBidForm(props)  {
 
 
     function checkBidValue(){
-        if(inputs.BidValue <= highbid.BidValue){
+      console.log(inputs.BidValue, "   ----  ",highbid.BidValue)
+        if(inputs.BidValue >= highbid.BidValue){
             return true
         }else{
           return false
@@ -104,11 +106,10 @@ function PlaceBidForm(props)  {
 
     async function handleSubmit(event){
       event.preventDefault()
-      console.log(inputs,"++++++++++")
       inputs.ArtShow = props.art.AtArtShow
       inputs.Art = props.art.Art
 
-      if(checkBidValue){
+      if(checkBidValue()){
       axios.post(process.env.REACT_APP_API_URL+'/art_bids/add',inputs)
       .then(response =>{ 
         if(response.status == 200){
@@ -116,13 +117,13 @@ function PlaceBidForm(props)  {
             setMessage("Bid added on the art!")
             setErrAlert("success")
             setCallFlag(true)
-            refreshPage()
+            // refreshPage()
         }
         console.log(response.data,"from api")})
       .catch(error => {console.log(error)})
       }else{
         setMessage("Bid value must be greater than the Highest bid")
-        setErrAlert("erroe")
+        setErrAlert("error")
         setCallFlag(true)
       }
         
@@ -182,7 +183,7 @@ function PlaceBidForm(props)  {
 
         <Cdivider light/>
 
-        <Grid item xs ={12}>
+        <Grid item xs ={12} style={styles.padding10}>
         {bids.length >0  ?
           <Accordion
               expanded={expanded === 'panel1'}
@@ -202,8 +203,8 @@ function PlaceBidForm(props)  {
                 <Table sx={{ minWidth: 650 }} aria-label="Bids table">
                   <TableHead>
                     <TableRow>
-                      <TableCell >{strings.ArtShow.customer}</TableCell>
-                      <TableCell >{strings.ArtShow.bid}</TableCell>
+                      <TableCell size="small">{strings.ArtShow.customer}</TableCell>
+                      <TableCell size="small">{strings.ArtShow.bid}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -221,11 +222,12 @@ function PlaceBidForm(props)  {
               </TableContainer>
               </AccordionDetails>
             </Accordion>
+            
          : 
         <Typography>No bids Available</Typography>}
         </Grid>
 
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} sm={7} >
             <InputLabel required htmlFor="select-label">{strings.ArtShow.customer}</InputLabel>
             <Select
               required
