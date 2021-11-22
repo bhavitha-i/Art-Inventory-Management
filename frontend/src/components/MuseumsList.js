@@ -4,27 +4,19 @@ import Typography from '@mui/material/Typography';
 import strings from '../assets/strings';
 import theme from './theme'
 import { ThemeProvider } from '@material-ui/core/styles';
-import { Button, getNativeSelectUtilityClasses } from '@mui/material';
+import { Button } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import { withStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import Divider from "@material-ui/core/Divider";
-import { styled } from '@mui/material/styles';
 import  { useState, useEffect } from "react"
 import axios from "axios";
-import { Box, padding } from '@mui/system';
+import { Box} from '@mui/system';
 import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
-import { Link } from '@mui/material';
 import Popup from './Popup'
-import ArtShowForm from './ArtShowForm';
 import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import MusuemForm from './MusuemForm';
 
 
 // -------------------------------------------------------
@@ -35,7 +27,7 @@ export default function ArtshowsList() {
 
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
-  const [artshows, setArtshows] = useState([])
+  const [museums, setMuseums] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
   const [isEdit, setIsEdit] = useState(false)
@@ -44,7 +36,7 @@ export default function ArtshowsList() {
   const [message,setMessage] = useState("");
   const [showIcon, setShowIcon] = useState(false)
   const [artcount, setArtcount] = useState([])
-
+  const [exhibitCount, SetExhibitCount] = useState([])
 
 
   function refreshPage() {
@@ -56,15 +48,17 @@ export default function ArtshowsList() {
 
 
   useEffect(() => {     
-        getArtShows()
+        getMuseums()
         getArtCount()
+        getExhibitCount()
+
   },[]);
 
 
-const getArtShows = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/art_show/all')
+const getMuseums = async () => {
+    axios.get(process.env.REACT_APP_API_URL+'/museum/all')
           .then(response =>{ 
-            setArtshows(response.data)
+            setMuseums(response.data)
             setRows(response.data)
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
@@ -72,10 +66,20 @@ const getArtShows = async () => {
 
 
 const getArtCount = async () => {
-  axios.get(process.env.REACT_APP_API_URL+'/art_in_auction_artCount')
+  axios.get(process.env.REACT_APP_API_URL+'/art_in_museum_artCount')
         .then(response =>{
           response.data.map(item => {
-                artcount[item.AtArtShow] = item.ArtCount
+                artcount[item.Musem] = item.ArtCount
+          })
+          console.log(response.data,"from api")})
+        .catch(error => {console.log(error)})
+};  
+
+const getExhibitCount = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/art_in_exhibition_count')
+        .then(response =>{
+          response.data.map(item => {
+                exhibitCount[item.Museum] = item.ExhibitCount
           })
           console.log(response.data,"from api")})
         .catch(error => {console.log(error)})
@@ -83,9 +87,9 @@ const getArtCount = async () => {
 
 const requestSearch = (searchedVal) => {
   const filteredRows = rows.filter((row) => {
-    return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
+    return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
   });
-  setArtshows(filteredRows);
+  setMuseums(filteredRows);
 };
 
 const cancelSearch = () => {
@@ -106,28 +110,25 @@ const openAddPopup = item => {
   setIsEdit(false)
 }
 
-const openShowArts = item => {
-  console.log(item)
-    window.location.assign(`/artshow/${item.id_Art_Show}`)
-}
 
 
 function deleteitem(record){
 
-  axios.delete(process.env.REACT_APP_API_URL+'/art_show/'+record.id_Art_Show)
+  axios.delete(process.env.REACT_APP_API_URL+'/museum/'+record.id_Museum)
   .then(response =>{ 
-      console.log(response.data,"from api")
-      setCallFlag(true)
+      console.log(response,"from api")
       setErrAlert("success")
       setMessage("Record Deleted")
-      refreshPage()
+      setCallFlag(true)
+      // refreshPage()
       
   })
   .catch(error => {
       console.log(error)
-      setCallFlag(true)
       setErrAlert("error")
       setMessage("Error while deleting Record")
+      setCallFlag(true)
+
   })
   
 
@@ -142,7 +143,7 @@ function deleteitem(record){
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Search for Artshows"
+        placeholder="Search for Museums"
         style={styles.SettingsSearch}
         />
          <Button
@@ -155,11 +156,11 @@ function deleteitem(record){
           </Button>
       </Box>
       <Container sx={{ py: 1 }} >
-          {artshows.length === 0 && <Typography> No Artshows Available</Typography>}
-            {artshows.map(show => (
+          {museums.length === 0 && <Typography> No Museums Available</Typography>}
+            {museums.map(show => (
             
              <Box item 
-                key={show.id_Art_Show}  
+                key={show.id_Museum}  
                 sx={{   border:1,borderRadius:1,}} 
                 style={styles.level2Box}
                 onMouseEnter={() => setShowIcon(true)}
@@ -167,23 +168,23 @@ function deleteitem(record){
                 >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
-                  <Typography variant="h5" >{show.Title}</Typography>
-                  <Typography variant="body">
-                     <b>{strings.ArtShow.location}</b> : {show.Location}<br/>
+                  <Typography variant="h5" >{show.Name}</Typography>
+                  <Typography variant="body1">
+                    <b>{strings.Museum.location}</b> : {show.Location}<br/>
+
                   </Typography>
                </Grid>
                <Grid item xs={3} >
                   <Typography variant="body1">
-                      <b>{strings.ArtShow.host}</b> : {show.Host}<br/>
-                      <b>{strings.ArtShow.phone}</b> : {show.Phone}<br/>
-                      <b>{strings.ArtShow.url}</b> : {show.ShowURL}<br/>
-                      {console.log(artcount,artcount[show.id_Art_Show],"----")}
-                     {artcount.length>0 ? <span><b>{strings.ArtShow.artCount}</b> : {artcount[show.id_Art_Show]}</span> : 0}<br/>
+                  <b>{strings.Museum.found}</b> : {show.FoundedBy}<br/>
+                  <b>{strings.Museum.artCount}</b> : {artcount[show.id_Museum]}<br/>
+                  <b>{strings.Museum.exhibitcount}</b> : {exhibitCount[show.id_Museum]}<br/>
                   </Typography>
                </Grid>
-               <Grid item xs={2} style={styles.level2ActionGrid}>
-                 <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openShowArts(show)}>
-                          Get into Art Show
+
+               <Grid item xs={3} style={styles.level2ActionGrid}>
+                 <Button variant="outlined" endIcon={<SendIcon />} >
+                          Get into Museum
                   </Button>
                   {showIcon &&
                     <Box style={styles.level2ActionIcons}>
@@ -198,11 +199,11 @@ function deleteitem(record){
             ))}
         </Container>
         <Popup
-                title={isEdit?"Edit Art Show":"Add Art Show"}
+                title={isEdit?"Edit Museum":"Add Museum"}
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
              >
-                <ArtShowForm 
+                <MusuemForm 
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
                     />

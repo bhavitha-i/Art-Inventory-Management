@@ -138,7 +138,7 @@ function ArtistForm(props)  {
               console.log(response.data,"from api")
               setCallFlag(true)
               setErrAlert("success")
-              setMessage("Art moved to exhibition in Museum")
+              setMessage("Art moved to  Museum")
               // refreshPage()
               
           })
@@ -315,10 +315,10 @@ function ArtistForm(props)  {
             <Select
               required
               input={<Input id="select-label" />}
-              value={inputs.Museum || ''}
+              value={inputs.Musem || ''}
               onChange={handleInputChange}
-              id="Museum" 
-              name="Museum"
+              id="Musem" 
+              name="Musem"
               fullWidth
               label={strings.Museum.choosemusem}
             >

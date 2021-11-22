@@ -1,4 +1,3 @@
-import { borderColor, padding } from "@mui/system"
 import theme from "../components/theme"
 
 const HeaderContainer ={
@@ -135,6 +134,23 @@ const level2ActionIcons={
   cursor: "pointer"
 }
 
+const padding10={
+  padding:"10px"
+}
+
+const disaplyFlex={
+  display:"Flex"
+}
+
+const AVbidlist={
+  padding:"10px",
+  margin:"auto",
+  maxWidth:"95%"
+}
+
+const MenuIcon={
+  position: "absolute", color: "white",top: 10,left: "90%",transform: "translateX(-50%)"
+}
 
 
   const styles = {
@@ -162,7 +178,11 @@ const level2ActionIcons={
     MarginAuto:MarginAuto,
     level2ActionGrid:level2ActionGrid,
     level2ActionIcons:level2ActionIcons,
-    ASVImage
+    ASVImage,
+    padding10,
+    disaplyFlex,
+    AVbidlist,
+    MenuIcon
   }
 
 

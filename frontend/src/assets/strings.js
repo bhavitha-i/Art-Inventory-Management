@@ -71,7 +71,9 @@ ArtShow:{
     chooseshow: "Choose a show",
     bidValue: "Customer Bid value",
     customer: "Customer",
-    bid: "Bid Value"
+    bid: "Bid Value",
+    higgestedbid: "Highest Bid",
+    highbidby: "Highest Bid by"
 
 },
 ArtStore:{
@@ -85,7 +87,13 @@ ArtStore:{
 },
 Museum:{
     choosemusem:"Choose a Museum",
-    chooseExhibit: "Choose an exhibit"
+    chooseExhibit: "Choose an exhibit",
+    name: "Name",
+    found: "Founded by",
+    location: "Location",
+    artCount: "Art Available",
+    exhibitcount: "Number of Exhibitions"
+
 }
 
 }

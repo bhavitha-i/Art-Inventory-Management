@@ -1,13 +1,14 @@
 const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
+const Sequelize = require('sequelize');
 
 
 
 //Create rows in table
 exports.create = (req, res) => {
   const rowData = req.body;
-
+  console.log(req.body)
   dbmodels.Art_In_Museum.create(rowData)
       .then((result) => {
         dbmodels.Art.update({Status:3},
@@ -27,6 +28,30 @@ exports.create = (req, res) => {
       });
     });
   };
+
+
+  //Get all from Table
+  exports.findCount = (req, res) => {
+
+    dbmodels.Art_In_Museum.findAll({
+        attributes: [
+            "Musem",
+            [Sequelize.fn("COUNT", Sequelize.col("Art")),"ArtCount"]
+        ],
+        group: ["Musem"]
+        
+    })
+        .then(result => {
+          res.send(result);
+        })
+        .catch(err => {
+          res.send({
+            message:
+              err.message || "Some error occurred while retrieving ."
+          });
+        });
+    };
+  
 
 //Get all from Table
 exports.findAll = (req, res) => {
@@ -90,7 +115,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
   dbmodels.Art_In_Museum.destroy({
     where: { id_Art_In_Museum: id },
-  }).then(() => {
+  }).then((result) => {
     res.status(200).json({
         status: true,
         message: "Deleted successfully with id = " + id
