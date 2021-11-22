@@ -240,8 +240,8 @@ const getHighBid = async () => {
                       <Grid item xs ={12} sm={6}>
                         <b>{strings.ArtShow.price}</b> : ${artInfo.Art_in_Auctions[0].Price}<br/>
                         <b>{strings.ArtShow.startbid}</b> : ${artInfo.Art_in_Auctions[0].StartBid}<br/>
-                        <b>{strings.ArtShow.higgestedbid}</b> : ${bidInfo.BidValue}<br/>
-                       {bidInfo.Customer && <span><b>{strings.ArtShow.highbidby}</b> : {bidInfo.Customer_Customer.FirstName} {bidInfo.Customer_Customer.LastName}</span>}<br/>
+                        {bidInfo && <span><b>{strings.ArtShow.higgestedbid}</b> : ${bidInfo.BidValue}<br/></span> }
+                       {bidInfo && bidInfo.Customer && <span><b>{strings.ArtShow.highbidby}</b> : {bidInfo.Customer_Customer.FirstName} {bidInfo.Customer_Customer.LastName}<br/></span>}
                       </Grid>
                       <Grid item xs ={12} sm={6}>
                         {artInfo.Art_in_Auctions[0].AtArtShow != null && 
@@ -301,7 +301,7 @@ const getHighBid = async () => {
               </Accordion>
               
           : 
-          <Typography>No bids Available</Typography>}
+          <Typography style={styles.padding10}>No bids Available</Typography>}
           </Grid>
         }
 

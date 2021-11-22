@@ -4,7 +4,6 @@ import  { useEffect, useState } from "react"
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import MovieIcon from '@mui/icons-material/Movie';
 
 
 // ----------------------------------------------------------------------

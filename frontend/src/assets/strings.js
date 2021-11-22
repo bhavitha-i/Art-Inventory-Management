@@ -87,7 +87,13 @@ ArtStore:{
 },
 Museum:{
     choosemusem:"Choose a Museum",
-    chooseExhibit: "Choose an exhibit"
+    chooseExhibit: "Choose an exhibit",
+    name: "Name",
+    found: "Founded by",
+    location: "Location",
+    artCount: "Art Available",
+    exhibitcount: "Number of Exhibitions"
+
 }
 
 }

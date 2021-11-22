@@ -12,6 +12,7 @@ import Settings from './views/Settings';
 import ArtView from './components/ArtView'
 import ArtShowView from './components/ArtShowView'
 import ArtShows from './views/Artshows'
+import Museums from './views/Museums';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route  path="/artshow/:showId" element={<ArtShowView />} />
 
         <Route  path="/artshow" element={<ArtShows />} />
+        <Route  path="/museum" element={<Museums />} />
 
         <Route  path="/settings" element={<Settings />} />
         <Route  path="/settings/:index" element={<Settings />} />
