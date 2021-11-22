@@ -27,6 +27,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
 
 
 //----------------------------------------------------------------------------------
@@ -47,7 +48,7 @@ const CTableCell = styled(TableCell)(() => ({
 //-----------------------------------------------------------------------------------
 
 
-function PlaceBidForm(props)  {
+function CloseBidConfirm(props)  {
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
@@ -94,53 +95,30 @@ function PlaceBidForm(props)  {
 
 
 
-    function checkBidValue(){
-      console.log(inputs.BidValue, "   ----  ",highbid.BidValue)
-        if(inputs.BidValue >= highbid.BidValue){
-            return true
-        }else{
-          return false
-        }
-    }
-
 
     async function handleSubmit(event){
       event.preventDefault()
-      inputs.ArtShow = props.art.AtArtShow
-      inputs.Art = props.art.Art
 
-      if(checkBidValue()){
-      axios.post(process.env.REACT_APP_API_URL+'/art_bids/add',inputs)
+      axios.put(process.env.REACT_APP_API_URL+'/art_bids',{id:highbid.id_Art_Bids,Art:props.art.Art })
       .then(response =>{ 
         if(response.status == 200){
             console.log("INto thos")
-            setMessage("Bid added on the art!")
+            setMessage("Bid Closed for this Art Successfully")
             setErrAlert("success")
             setCallFlag(true)
             // refreshPage()
         }
         console.log(response.data,"from api")})
       .catch(error => {console.log(error)})
-      }else{
-        setMessage("Bid value must be greater than the Highest bid")
-        setErrAlert("error")
-        setCallFlag(true)
-      }
+
         
     }
     
-
-      const handleInputChange = (event) => {
-        // event.persist();
-        setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
-        // console.log(event,"---", inputs)
-      }
 
 
   return (
     <ThemeProvider theme={theme}>
           { callFlag && <SnackBar errAlert={errAlert} message={message}  /> }
-          {console.log("props in placebid",props)}
     <Container component="main" maxWidth="90%" >
         <Box
           sx={{
@@ -179,7 +157,11 @@ function PlaceBidForm(props)  {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography> <b>Highest Bid : </b>${highbid.BidValue}</Typography>
+          <Typography> <b>Highest Bid : </b>${(highbid != null) ? highbid.BidValue : 0}</Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography> <b>Highest Bid by: </b>{(highbid != null && highbid.Customer) ? (highbid.Customer_Customer.FirstName + ' ' +highbid.Customer_Customer.LastName)  : ""}</Typography>
         </Grid>
 
         <Cdivider light/>
@@ -228,52 +210,17 @@ function PlaceBidForm(props)  {
         <Typography>No bids Available</Typography>}
         </Grid>
 
-        <Grid item xs={12} sm={7} >
-            <InputLabel required htmlFor="select-label">{strings.ArtShow.customer}</InputLabel>
-            <Select
-              required
-              input={<Input id="select-label" />}
-              value={inputs.Customer || ''}
-              onChange={handleInputChange}
-              id="Customer" 
-              name="Customer"
-              fullWidth
-              label={strings.ArtShow.customer}
-            >
-                              
-             {props.customers.map(st => (
-                <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
-            ))} 
+        <Grid item xs={12}>
 
-            </Select>
+        <Alert severity="info" fullWidth>Art Bid will be given to Customer with highest bid value!</Alert>
+                    
         </Grid>
-        
-        <Grid item xs={12} sm={7}>
-          <TextField
-              required
-              id="BidValue"
-              name="BidValue"
-              label={strings.ArtShow.bidValue}
-              fullWidth
-              variant="standard"
-              onChange={handleInputChange}
-              value={inputs.BidValue|| ''}
-            />
-        </Grid>
-
-
-        <Grid item xs={12} >
-            {props.art.Status != null && 
-              <Typography>Status : {props.art.Status_ArtStatus.Status}</Typography>
-              }
-        </Grid>
-            
-        
       
 
 
         <Grid item xs={12}>
         <Button
+              disabled={bids.length<=0}
               type="submit"
               fullWidth
               variant="contained"
@@ -289,4 +236,4 @@ function PlaceBidForm(props)  {
   );
 }
 
-export default withRoot(PlaceBidForm);
+export default withRoot(CloseBidConfirm);

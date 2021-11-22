@@ -14,6 +14,9 @@ router.put("/art_in_exhibition/:id", art_in_exhibition.update);
 router.delete("/art_in_exhibition/:id", art_in_exhibition.delete);
 
 
+router.get("/art_in_exhibition_count", art_in_exhibition.findExhibitCount);
+
+
 
 module.exports = router;
 

@@ -84,6 +84,7 @@ app.use(Customer_PurchasesRouter)
 app.use(Art_bidsRouter)
 
 
+
 app.listen(port,()=>{
     console.log('server is up on port '+ port)
 })

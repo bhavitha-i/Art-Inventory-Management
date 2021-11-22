@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react';
-import androidFilled from '@iconify/icons-ant-design/android-filled';
-import  { useEffect, useState } from "react"
+import buildingBank48Filled from '@iconify/icons-fluent/building-bank-48-filled';
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +13,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   padding: theme.spacing(5, 0),
   color: theme.palette.primary.darker,
   backgroundColor: theme.palette.primary.lighter,
-  borderRadius: '16px'
+  borderRadius: '16px',
+  cursor: "pointer"
 
 }));
 
@@ -37,10 +39,16 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function MuseumHomeCard(props) {
 
+  const navigate = useNavigate();
+
+  function handleClick(){
+    navigate("/museum")
+  }
+
   return (
-    <RootStyle>
+    <RootStyle onClick={() => handleClick()}>
       <IconWrapperStyle>
-        <Icon icon={androidFilled} width={24} height={24} />
+        <Icon icon={buildingBank48Filled} width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h4">Museums</Typography>
       {/* <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>

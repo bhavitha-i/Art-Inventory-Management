@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import strings from '../assets/strings';
 import theme from './theme'
 import { ThemeProvider } from '@material-ui/core/styles';
-import { Button, getNativeSelectUtilityClasses } from '@mui/material';
+import { Button } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { withStyles } from "@material-ui/core/styles";
