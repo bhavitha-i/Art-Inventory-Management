@@ -198,7 +198,7 @@ const openActionPop = item => {
                         >
                          {art.Art_Art.Style && <span> <b>{strings.Art.style}</b> : {art.Art_Art.Style_Art_Style.StyleName}</span>}<br/>
                          {<span> <b>Price</b> : ${art.Price}</span>}  <br/>
-                         {<span> <b>Rent</b> : ${art.Rent}</span>}  <br/>
+                         {<span> <b>Rent</b> : ${art.RentPerDay}</span>}  <br/>
 
                         </CSubtitle>
                         <Cdivider light />
