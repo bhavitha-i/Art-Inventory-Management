@@ -3,6 +3,7 @@ import bxStore from '@iconify/icons-bx/bx-store';
 import  { useEffect, useState } from "react"
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +13,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   padding: theme.spacing(5, 0),
   color: theme.palette.error.darker,
   backgroundColor: theme.palette.error.lighter,
-  borderRadius: '16px'
+  borderRadius: '16px',
+  cursor: "pointer"
 
 }));
 
@@ -38,8 +40,14 @@ const TOTAL = 714000;
 
 export default function ArtStoresHomeCard(props) {
 
+  const navigate = useNavigate();
+
+  function handleClick(){
+    navigate("/artstore")
+  }
+
   return (
-    <RootStyle>
+    <RootStyle onClick={() => handleClick()} >
       <IconWrapperStyle>
         <Icon icon={bxStore} width={24} height={24} />
       </IconWrapperStyle>

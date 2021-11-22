@@ -16,6 +16,13 @@ import styles from '../assets/styles';
 import Avatar from "@material-ui/core/Avatar";
 import { styled } from '@mui/material/styles';
 import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
+
 
 
 
@@ -31,11 +38,14 @@ const Cdivider = styled(Divider)(() => ({
 //-----------------------------------------------------------------------------------
 
 
-function PlaceBidForm(props)  {
+function RentBuyForm(props)  {
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
     const [message,setMessage] = useState("");
+    const [custs,setCusts] = useState(props.customers);
+    const [value, setValue] = React.useState([null, null]);
+    const [enDate,setEmDate]= useState("")
 
 
 
@@ -57,28 +67,62 @@ function PlaceBidForm(props)  {
     async function handleSubmit(event){
       event.preventDefault()
       console.log(inputs,"++++++++++")
-      inputs.ArtShow = props.art.AtArtShow
+      inputs.price = props.art.Price
+      inputs.rent = props.art.RentPerDay
+    
       inputs.Art = props.art.Art
 
-      axios.post(process.env.REACT_APP_API_URL+'/art_bids/add',inputs)
+      console.log(inputs,"inside submit")
+
+      axios.put(process.env.REACT_APP_API_URL+`/customer_purchases_art_store/${inputs.Art}`,inputs)
       .then(response =>{ 
         console.log(response.data,"from api")})
       .catch(error => {console.log(error)})
-        
+
+
+    //   axios.put(process.enc.REACT_APP_API_URL+'',"".then(response=>{
+    //       console.log(response.date,"from api")}))
+    //     .catch(error => {console.log(error)})
     }
     
 
       const handleInputChange = (event) => {
         // event.persist();
+        console.log(custs,"============usestate props")
+        console.log(inputs.RentFrom,"Dates")
+        console.log(event.target.value,"------events in rent/buy")
+
+        // const filteredRows = rows.filter((row) => {
+        //     return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
+        //   });
+
+        if(event.target.value == 2){
+            setEmDate(true)
+            const premCust = props.customers.filter((c) =>{
+                console.log(c); 
+                return c.isprem == 1
+            })
+            console.log(premCust,"++++++++++++++++only prem")
+            setCusts(premCust)
+           
+        }else{
+            setEmDate(false)
+            setCusts(props.customers)
+        }
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
         // console.log(event,"---", inputs)
+      }
+
+      const handleDate = (event) =>{
+        setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
+        console.log(inputs,"--------in Handle Date")
       }
 
 
   return (
     <ThemeProvider theme={theme}>
           { callFlag && <SnackBar errAlert={errAlert} message={message}  /> }
-          {console.log("props in placebid",props)}
+          {console.log("props in rent/buy",props)}
     <Container component="main" maxWidth="90%" >
         <Box
           sx={{
@@ -111,13 +155,64 @@ function PlaceBidForm(props)  {
         <Grid item xs={12} >
           <Typography> <b>Price : </b>${props.art.Price}</Typography>
         </Grid>
-
-        <Grid item xs={12}>
-          <Typography> <b>Starting Bid : </b>${props.art.StartBid}</Typography>
+        <Grid item xs={12} >
+          <Typography> <b>Rent per Day : </b>${props.art.RentPerDay}</Typography>
         </Grid>
 
-        <Grid item xs={12}>
-          <Typography> <b>Highest Bid : </b>$</Typography>
+        <Grid item xs={12} >
+        <FormControl component="fieldset">
+          <FormLabel required component="legend" variant="body1">Rent/Buy</FormLabel>
+          <RadioGroup
+            row
+            name="RentorBuy"
+            value={inputs.RentorBuy}
+            onChange={handleInputChange}
+            required
+            defaultValue={1}
+          >
+            <FormControlLabel value="1" control={<Radio />} label="Buy" />
+            <FormControlLabel value="2" control={<Radio />} label="Rent" />
+
+
+          </RadioGroup>
+        
+        </FormControl>
+
+        {enDate && <Grid>
+        <Grid item xs={5}>
+           <TextField
+            id="Rent Start Date"
+            label="From"
+            type="date"
+            fullWidth   
+            name="RentFrom"         
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={handleDate}
+            value={inputs.RentFrom|| ''}
+          />
+        </Grid>
+        
+        <Grid item xs={5}>
+           <TextField
+            id="Rent end Date"
+            label="To"
+            type="date"
+            fullWidth   
+            name="RentTo"         
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={handleDate}
+            value={inputs.RentTo|| ''}
+          />
+        </Grid>
+        </Grid>
+}
+
         </Grid>
 
         <Cdivider light/>
@@ -136,30 +231,19 @@ function PlaceBidForm(props)  {
               label={strings.ArtShow.customer}
             >
                               
-             {props.customers.map(st => (
+             {custs.map(st => (
                 <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
             ))} 
 
             </Select>
         </Grid>
         
-        <Grid item xs={12} sm={7}>
-          <TextField
-              required
-              id="BidValue"
-              name="BidValue"
-              label={strings.ArtShow.bidValue}
-              fullWidth
-              variant="standard"
-              onChange={handleInputChange}
-              value={inputs.BidValue|| ''}
-            />
-        </Grid>
+ 
 
 
         <Grid item xs={12} >
             {props.art.Status != null && 
-              <Typography>Status : {props.art.Status_ArtStatus.Status}</Typography>
+              <Typography>Status : {props.art.Art_Art.Status}</Typography>
               }
         </Grid>
             
@@ -184,4 +268,4 @@ function PlaceBidForm(props)  {
   );
 }
 
-export default withRoot(PlaceBidForm);
+export default withRoot(RentBuyForm);

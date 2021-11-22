@@ -99,6 +99,7 @@ function ArtistForm(props)  {
       console.log(inputs,moveTo,"++++++++++")
       if(moveTo == 1){
         inputs.Art = props.art.id_Art
+      
           axios.post(process.env.REACT_APP_API_URL+'/art_in_store/add',inputs)
           .then(response =>{ 
               console.log(response.data,"from api")
@@ -116,6 +117,7 @@ function ArtistForm(props)  {
           })
         }else if(moveTo == 2){
           inputs.Art = props.art.id_Art
+          console.log("Inputs from art",inputs)
           axios.post(process.env.REACT_APP_API_URL+'/art_in_auction/add',inputs)
           .then(response =>{ 
               console.log(response.data,"from api")

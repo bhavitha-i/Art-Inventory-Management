@@ -80,6 +80,7 @@ app.use(Art_in_ExhibitionRouter)
 app.use(Art_ExhibitionRouter)
 app.use(Art_In_MuseumRouter)
 app.use(CustomerRouter)
+app.use(Customer_PurchasesRouter)
 app.use(Art_bidsRouter)
 
 
