@@ -267,9 +267,9 @@ function ArtistForm(props)  {
 
         <TrapFocus close disableAutoFocus>
         <Grid item xs={12}>
-            <InputLabel htmlFor="select-label">{strings.Artist.placebirth}</InputLabel>
+            <InputLabel required htmlFor="select-label">{strings.Artist.placebirth}</InputLabel>
             <Select
-              
+              required
               input={<Input id="select-label" />}
               value={inputs.BirthPlace || ''}
               onChange={handleInputChange}
@@ -282,8 +282,7 @@ function ArtistForm(props)  {
              {props.countries.map(ct => (
                 <MenuItem key={ct.value} value={ct.value}>{ct.label}</MenuItem>
             ))} 
-                <MenuItem key={0} value={0} >None</MenuItem>
-
+               
             </Select>
         </Grid> 
 

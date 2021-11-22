@@ -35,21 +35,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Art_In_Museum" },
         ]
-      },
-      {
-        name: "Art_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Art" },
-        ]
-      },
-      {
-        name: "Museum_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Musem" },
-        ]
-      },
+      }
     ]
   });
 };

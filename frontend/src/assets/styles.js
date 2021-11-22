@@ -43,6 +43,10 @@ const SettingsSearch={
 const SettingsAddButton={
   // justifyContent: "flex-end",
 }
+const spaceBetween={
+  justifyContent: "space-between",
+  display: "flex",
+}
 
 const TableActionIcons={
   justifyContent: "space-around",
@@ -134,6 +138,14 @@ const level2ActionIcons={
   cursor: "pointer"
 }
 
+const options={
+
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end"
+
+}
+
 const padding10={
   padding:"10px"
 }
@@ -172,6 +184,8 @@ const MenuIcon={
     AVArtistImage:AVArtistImage,
     AVInfoHeader:AVInfoHeader,
     level2Box:level2Box,
+    options,
+    spaceBetween,
     level2GContainer:level2GContainer,
     level1ActionButton:level1ActionButton,
     paddingBottom10:paddingBottom10,

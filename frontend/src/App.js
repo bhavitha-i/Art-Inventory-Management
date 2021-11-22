@@ -13,6 +13,9 @@ import ArtView from './components/ArtView'
 import ArtShowView from './components/ArtShowView'
 import ArtShows from './views/Artshows'
 import Museums from './views/Museums';
+import ArtStores from './views/ArtStores';
+import ArtStoreView from './components/ArtstoreView'
+
 
 
 function App() {
@@ -25,8 +28,10 @@ function App() {
         <Route  path="/art" element={<Art />} />
         <Route  path="/artview/:artId" element={<ArtView />} />
         <Route  path="/artshow/:showId" element={<ArtShowView />} />
+        <Route  path="/artstore/:storeId" element={<ArtStoreView />} />
 
         <Route  path="/artshow" element={<ArtShows />} />
+   	<Route  path="/artstore" element={<ArtStores />} />
         <Route  path="/museum" element={<Museums />} />
 
         <Route  path="/settings" element={<Settings />} />

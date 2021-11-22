@@ -20,4 +20,9 @@ var initModels = require("./models/init-models");
 db.models = initModels(sequelize);
 
 
+
+async function initialize() {
+  await sequelize.sync();
+}
+
 module.exports = db;

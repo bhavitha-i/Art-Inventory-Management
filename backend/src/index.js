@@ -40,6 +40,8 @@ const Art_In_MuseumRouter = require("./routers/Art_In_Museum")
 
 
 
+
+
 const app = express()
 const port = process.env.PORT || 5000
 app.set('port', port);
@@ -78,6 +80,7 @@ app.use(Art_in_ExhibitionRouter)
 app.use(Art_ExhibitionRouter)
 app.use(Art_In_MuseumRouter)
 app.use(CustomerRouter)
+app.use(Customer_PurchasesRouter)
 app.use(Art_bidsRouter)
 
 

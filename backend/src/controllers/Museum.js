@@ -86,15 +86,13 @@ exports.delete = (req, res) => {
   const id = req.params.id;
   dbmodels.Museum.destroy({
     where: { id_Museum: id },
-  }).then((result) => {
-    console.log(result)
+  }).then(() => {
     res.status(200).json({
         status: true,
         message: "Deleted successfully with id = " + id
     });
   })
   .catch(err => {
-    console.log(err)
     res.send({
       message:
         err.message || "Some error occurred while deleting."

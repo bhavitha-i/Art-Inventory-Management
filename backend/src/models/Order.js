@@ -43,21 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Order" },
         ]
-      },
-      {
-        name: "Order.CustomerId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Customer" },
-        ]
-      },
-      {
-        name: "Order.PayemntStatus_idx",
-        using: "BTREE",
-        fields: [
-          { name: "PaymentStatus" },
-        ]
-      },
+      }
     ]
   });
 };

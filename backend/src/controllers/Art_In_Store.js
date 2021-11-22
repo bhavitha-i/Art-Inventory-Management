@@ -9,13 +9,18 @@ exports.create = (req, res) => {
   const rowData = req.body;
   console.log(rowData)
   if(rowData.Status == null || rowData.Status == ''){
+    
     rowData.Status=0
+    console.log(rowData,"inside rowData")
   }
+  
   dbmodels.Art_In_Store.create(rowData)
       .then((result) => {
+        console.log(result,"result outside")
         dbmodels.Art.update({Status:1},
           { where: { id_Art: rowData.Art } }
         ).then((result) => {
+           console.log(result,"result inside")
         res.status(200).json({
           status: true,
           message: "Row created successfully",
@@ -106,3 +111,66 @@ exports.delete = (req, res) => {
     });
   });
 };
+
+
+
+exports.findCount = (req, res) => {
+
+  console.log("in Where?")
+  dbmodels.Art_In_Store.findAll({
+      attributes: [
+          "AtStore",
+          [Sequelize.fn("COUNT", Sequelize.col("Art")),"ArtCount"]
+      ],
+      group: ["AtStore"]
+      
+  })
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        res.send({
+          message:
+            err.message || "Some error occurred while retrieving ."
+        });
+      });
+  };
+
+
+
+//Get arts from artshow from Table
+exports.findArtInStore = (req, res) => {
+
+  dbmodels.Art_In_Store.findAll({
+      where:{ AtStore:req.params.id},
+      include: [
+        {
+          model: dbmodels.Art,
+          as: "Art_Art",
+          include: [
+            {
+              model: dbmodels.Art_Styles,
+              as: "Style_Art_Style"
+            },{
+              model: dbmodels.ArtStatus,
+              as: "Status_ArtStatus"
+            },{
+              model: dbmodels.Artist,
+              as: "CreatedBy_Artist"
+            }
+          ]
+        }
+      ],
+      
+  })
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        res.send({
+          message:
+            err.message || "Some error occurred while retrieving ."
+        });
+      });
+  };
+
