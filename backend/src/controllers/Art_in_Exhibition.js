@@ -41,29 +41,32 @@ exports.findAll = (req, res) => {
   };
 
 
-exports.findExhibitCount = (req,res) => {
 
-    dbmodels.Art_Exhibition.findAll({
-        attributes: [
-            "Museum",
-            [Sequelize.fn("COUNT", Sequelize.col("Title")),"ExhibitCount"]
-        ],
-        group: ["Museum"]
-        
-    })
+
+
+  //Get all from Table
+  exports.findArtCountExhibit = (req, res) => {
+
+    const museumId = req.params.id
+    dbmodels.Art_in_Exhibition.findAll({
+            attributes: [
+              "Exhibition",
+              [Sequelize.fn("COUNT", Sequelize.col("Art")),"ArtCount"]
+          ],
+          group: ["Exhibition"]
+          })
         .then(result => {
           res.send(result);
-          console.log(result)
         })
         .catch(err => {
-          console.log(err)
           res.send({
             message:
               err.message || "Some error occurred while retrieving ."
           });
         });
-};
-
+    };
+  
+  
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {

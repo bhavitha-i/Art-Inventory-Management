@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     StartTime: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     EndTime: {
       type: DataTypes.DATE,

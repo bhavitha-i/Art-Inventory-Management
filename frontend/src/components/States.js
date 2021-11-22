@@ -8,14 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Link from '@mui/material/Link';
 import  { useState, useEffect } from "react"
 import axios from "axios";
-import SnackBar from './SnackBar';
 import strings from '../assets/strings'
 import styles from '../assets/styles';
-import trimWords from 'trim-words';
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import SearchBar from "material-ui-search-bar";
 import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
