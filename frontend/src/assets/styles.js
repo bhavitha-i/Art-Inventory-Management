@@ -148,6 +148,10 @@ const AVbidlist={
   maxWidth:"95%"
 }
 
+const MenuIcon={
+  position: "absolute", color: "white",top: 10,left: "90%",transform: "translateX(-50%)"
+}
+
 
   const styles = {
     HeaderContainer: HeaderContainer,
@@ -177,7 +181,8 @@ const AVbidlist={
     ASVImage,
     padding10,
     disaplyFlex,
-    AVbidlist
+    AVbidlist,
+    MenuIcon
   }
 
 

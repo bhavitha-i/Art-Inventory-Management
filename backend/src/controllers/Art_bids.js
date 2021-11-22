@@ -2,6 +2,8 @@ const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
 const Sequelize = require('sequelize');
+const { Op } = require("sequelize");
+
 
 
 
@@ -127,18 +129,42 @@ exports.findByPk = (req, res) => {
 };
 
 
+
+
 // Update a Table
 exports.update = (req, res) => {
-  const id = req.params.id;
-  dbmodels.Art_bids.update(req.body,
+  const id = req.body.id;
+  dbmodels.Art_bids.update(
+    {
+      Status :2
+    },
     { where: { id_Art_Bids: id } }
   ).
   then(() => {
-    res.status(200).json({
-        status: true,
-        message: "Updated successfully with id = " + id,
-    });
-  })
+      dbmodels.Art_bids.update(
+        { Status:1 },
+        { where: 
+          { 
+            Art: req.body.Art,
+            [Op.not]:[ {id_Art_Bids : id}]
+          }
+        }
+      ).
+      then(() => {
+        res.status(200).json({
+            status: true,
+            message: "Updated successfully",
+        });
+      })
+
+      dbmodels.Art.update({Status:6},
+        { where: { id_Art: req.body.Art } }
+      ).then((result) => {
+            console.log(result, "-- art status updated")
+    })
+  }
+  
+  )
   .catch(err => {
     res.send({
       message:
@@ -146,6 +172,7 @@ exports.update = (req, res) => {
     });
   });
 };
+
 
 
 

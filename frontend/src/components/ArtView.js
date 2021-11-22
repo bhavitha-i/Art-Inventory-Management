@@ -105,10 +105,9 @@ export default function ArtView() {
 
   useEffect(() => {     
         getArtDetails()
-        getHighBid()
+        // getHighBid()
         getBidvalues()
         
-
   },[]);
 
  
@@ -117,12 +116,10 @@ export default function ArtView() {
       "Art" :artId
     }
      
-    // options.Art = props.art.Art
-    // options.AtArtShow = props.art.AtArtShow
     axios.get(process.env.REACT_APP_API_URL+`/art_bids_artbids/${options.Art}`)
           .then(response =>{ 
             setBids(response.data)
-            // setHighbid(response.data[0])
+            setBidInfo(response.data[0])
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
   };
@@ -231,7 +228,7 @@ const getHighBid = async () => {
             </Grid>
 
 
-            {artInfo.Status == 2 && artInfo.Art_in_Auctions.length >0 &&
+            {(artInfo.Status == 2 || artInfo.Status == 6) && artInfo.Art_in_Auctions.length >0 &&
             <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}>
               <Typography variant="h5">Art Show : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.Title}</Typography>
@@ -244,13 +241,14 @@ const getHighBid = async () => {
                         <b>{strings.ArtShow.price}</b> : ${artInfo.Art_in_Auctions[0].Price}<br/>
                         <b>{strings.ArtShow.startbid}</b> : ${artInfo.Art_in_Auctions[0].StartBid}<br/>
                         <b>{strings.ArtShow.higgestedbid}</b> : ${bidInfo.BidValue}<br/>
-                       {bidInfo.Customer && <span><b>{strings.ArtShow.highbidby}</b> : ${bidInfo.Customer_Customer.FirstName} {bidInfo.Customer_Customer.LastName}</span>}<br/>
+                       {bidInfo.Customer && <span><b>{strings.ArtShow.highbidby}</b> : {bidInfo.Customer_Customer.FirstName} {bidInfo.Customer_Customer.LastName}</span>}<br/>
                       </Grid>
                       <Grid item xs ={12} sm={6}>
-                        {bidInfo.ArtShow_Art_Show && <Box>
-                        <b>{strings.ArtShow.host}</b> : {bidInfo.ArtShow_Art_Show.Host}<br/>
-                        <b>{strings.ArtShow.phone}</b> : {bidInfo.ArtShow_Art_Show.Phone}<br/>
-                        <b>{strings.ArtShow.url}</b> : {bidInfo.ArtShow_Art_Show.ShowURL}<br/>
+                        {artInfo.Art_in_Auctions[0].AtArtShow != null && 
+                        <Box>
+                        <b>{strings.ArtShow.host}</b> : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.Host}<br/>
+                        <b>{strings.ArtShow.phone}</b> : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.Phone}<br/>
+                        <b>{strings.ArtShow.url}</b> : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.ShowURL}<br/>
                         </Box>
                         }
                       
@@ -263,7 +261,7 @@ const getHighBid = async () => {
             }
 
 
-        {artInfo.Status == 2 && artInfo.Art_in_Auctions.length >0 &&
+        {(artInfo.Status == 2 || artInfo.Status == 6) && artInfo.Art_in_Auctions.length >0 &&
 
           <Grid item xs ={12} style={styles.AVbidlist}>
           {bids.length >0  ?
@@ -306,6 +304,38 @@ const getHighBid = async () => {
           <Typography>No bids Available</Typography>}
           </Grid>
         }
+
+
+        {(artInfo.Status == 1) && artInfo.Art_In_Stores.length >0 &&
+            <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Art Store : {artInfo.Art_In_Stores[0].AtStore_Store.Name}</Typography>
+              <Cdivider/>
+                  <CSubtitle
+                  variant={"body1"}
+                  >
+                    <Grid Container style={styles.disaplyFlex}>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Manager</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Manager}<br/>
+                        <b>Phone</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Phone}<br/>
+                        <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/>
+                      </Grid>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Price</b> : ${artInfo.Art_In_Stores[0].Price}<br/>
+                        <b>Rent for day</b> : ${artInfo.Art_In_Stores[0].RentPerDay}<br/>
+                      </Grid>
+
+                    </Grid> 
+                </CSubtitle>
+              
+                </Box>
+            </Grid>
+            }   
+
+
+      
                    
           </Grid>
         </Ccontainer>

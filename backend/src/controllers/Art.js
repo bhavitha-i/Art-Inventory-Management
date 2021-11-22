@@ -118,6 +118,16 @@ exports.findByPk = (req, res) => {
             }
           ]
         },
+        {
+          model: dbmodels.Art_In_Store,
+          as: "Art_In_Stores",
+          include: [
+            {
+              model: dbmodels.Store,
+              as: "AtStore_Store",
+            }
+          ]
+        },
 
       ]
     })
@@ -128,6 +138,7 @@ exports.findByPk = (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err)
       res.send({
         message:
           err.message || "Some error occurred while retrieving ."
