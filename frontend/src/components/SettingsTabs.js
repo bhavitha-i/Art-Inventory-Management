@@ -43,7 +43,6 @@ class SettingsTabs extends React.PureComponent {
             <Tab label="State" />
             <Tab label="City" />            
             <Tab label="Art Status" />
-            <Tab label="Art Store - Art Status"/>
 
           </Tabs>
           </Box>
@@ -53,7 +52,6 @@ class SettingsTabs extends React.PureComponent {
           {activeIndex === 2 && <TabContainer> <States/> </TabContainer>}
           {activeIndex === 3 && <TabContainer> <Cities/> </TabContainer>}
           {activeIndex === 4 && <TabContainer> <ArtStatus/> </TabContainer>}
-          {activeIndex === 5 && <TabContainer> <ArtStore_ArtStatus/> </TabContainer>}
 
         </div>
 

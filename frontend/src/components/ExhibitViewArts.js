@@ -150,9 +150,7 @@ const openAddPopup = item => {
           cols={4} gap={6}
           // variant="masonry"
           >
-              {/* <ImageListItem key="Subheader" cols={2}>
-                <ListSubheader component="div">December</ListSubheader>
-              </ImageListItem> */}
+
               {arts.map((item) => (
                 <ImageListItem key={item.id_Art}>
                   <img

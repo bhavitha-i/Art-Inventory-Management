@@ -128,6 +128,26 @@ exports.findByPk = (req, res) => {
             }
           ]
         },
+        {
+          model: dbmodels.Art_In_Museum,
+          as: "Art_In_Museums",
+          include: [
+            {
+              model: dbmodels.Museum,
+              as: "Musem_Museum",
+            }
+          ]
+        },
+        {
+          model: dbmodels.Art_in_Exhibition,
+          as: "Art_in_Exhibitions",
+          include: [
+            {
+              model: dbmodels.Art_Exhibition,
+              as: "Exhibition_Art_Exhibition",
+            }
+          ]
+        },
 
       ]
     })
