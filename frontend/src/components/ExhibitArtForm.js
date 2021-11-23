@@ -62,14 +62,18 @@ function ExhibitArtForm(props)  {
           console.log(addarray,"--add")
           console.log(deletearray,"--del")
 
-          // inputs.Museum = props.exhibitId
 
-
-            // axios.put(process.env.REACT_APP_API_URL+`/art_in_exhibition_manage/${props.exhibitId}`,inputs)
-            //   .then(response =>{ 
-            //     console.log(response.data," Response from api")})
-            //   .catch(error => {console.log(error)
-            //   })
+          axios.put(process.env.REACT_APP_API_URL+`/art_in_exhibition_manage/${props.exhibitId}`,{addarray,deletearray})
+              .then(response =>{ 
+                if(response.status== 200){
+                  setErrAlert("success")
+                  setMessage("Arts updated")
+                  setCallFlag(true)
+                }
+                console.log(response.data," Response from api")})
+                refreshPage()
+              .catch(error => {console.log(error)
+              })
           }
     }
     

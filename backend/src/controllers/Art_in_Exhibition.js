@@ -2,6 +2,7 @@ const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 
@@ -150,21 +151,50 @@ exports.manageArt = (req, res) => {
   const id = req.params.id;
   const values = req.body
   console.log(id, values, "-here")
-  // dbmodels.Art_in_Exhibition.update(req.body,
-  //   { where: { id_Art_in_Exhibition: id } }
-  // ).
-  // then(() => {
-  //   res.status(200).json({
-  //       status: true,
-  //       message: "Updated successfully with id = " + id,
-  //   });
-  // })
-  // .catch(err => {
-  //   res.send({
-  //     message:
-  //       err.message || "Some error occurred while retrieving ."
-  //   });
-  // });
+  var addList=[]
+  var delList=[]
+
+  var deletearray = req.body.deletearray
+  var add
+  if(req.body.addarray.length >0){
+    req.body.addarray.forEach(element => {
+      var obj = {
+        Exhibition:id,
+        Art:parseInt(element)
+      }
+      addList.push(obj)
+    });
+
+    dbmodels.Art_in_Exhibition.bulkCreate(addList,{})
+    .then((res) =>{
+        console.log(res,'-- adding result')
+    })
+    .catch(err => { console.log(err)});
+  }
+
+  if(req.body.deletearray.length >0){
+    req.body.deletearray.forEach(element => {
+      delList.push(parseInt(element))
+    });
+    console.log(delList)
+
+      dbmodels.Art_in_Exhibition.destroy({
+          where:{
+            Exhibition: id,
+            Art:{
+              [Op.in]: req.body.deletearray,
+            }
+          }
+      }).then((res) =>{
+        console.log(res,'-- deleting result')
+      })
+      .catch(err => { console.log(err)});
+      res.status(200).json({
+        status: true,
+        message: "Art in exhibitons updated",
+      });
+  }
+
 };
 
 
