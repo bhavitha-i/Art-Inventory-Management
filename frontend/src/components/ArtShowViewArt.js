@@ -105,23 +105,22 @@ export default function ArtShowViewArt(props) {
 
   useEffect(() => {     
         // getArts()
-        getValues()
+        // getValues()
 
   },[]);
 
 
   const getValues = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/customer/all')
-          .then(response =>{ 
-            const data = response.data
-            const options = data.map(s => ({
+            console.log(props.customers,"--------------->in artshow art")
+            const options = props.customers.map(s => ({
               "value" : s.id_Customer,
-              "label" : s.FirstName + ' ' + s.LastName
+              "label" : s.FirstName + ' ' + s.LastName,
+              "isPremium":s.isPremium
         
             }))
             setCustomers(options)
-            console.log(options,"customer from api")})
-          .catch(error => {console.log(error)})
+            console.log(options,"customer from api")
+     
           
   }; 
 
@@ -136,6 +135,11 @@ const handleCloseMenu = (event,item) => {
   if(event.currentTarget.value == 1){
     openCloseBidPop(item)
   }
+ 
+
+
+
+
   
 };
 
@@ -240,7 +244,7 @@ const openCloseBidPop = item => {
              >
                {popopen == "PlaceBid" &&
                 <PlaceBidForm 
-                  customers = {customers}
+                  customers = {props.customers}
                   openActionPopup={openActionPopup}
                   art={selectedArt}
                 />

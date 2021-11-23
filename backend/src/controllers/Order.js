@@ -27,7 +27,18 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Order.findAll({})
+  dbmodels.Order.findAll({
+    include:[
+      {
+        model:dbmodels.Customer,
+        as:"Customer_Customer"
+      },
+      {
+        model: dbmodels.Payment_Status,
+        as:"PaymentStatus_Payment_Status"
+      }
+    ]
+  })
       .then(result => {
         res.send(result);
       })
