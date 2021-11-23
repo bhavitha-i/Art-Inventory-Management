@@ -69,6 +69,40 @@ exports.findAll = (req, res) => {
   };
 
 
+  //Get all from Table
+exports.findAllinMuseum = (req, res) => {
+
+  dbmodels.Art_In_Museum.findAll({
+    include: [
+      {
+        model: dbmodels.Art,
+        as: "Art_Art",
+        include: [
+          {
+            model: dbmodels.Art_Styles,
+            as: "Style_Art_Style"
+          },{
+            model: dbmodels.Artist,
+            as: "CreatedBy_Artist"
+          }
+        ]
+      }
+    ],
+    where:{
+      Musem:req.params.id
+    }
+  })
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        res.send({
+          message:
+            err.message || "Some error occurred while retrieving ."
+        });
+      });
+  };
+
 // Find a Table by Id
 exports.findByPk = (req, res) => {
     dbmodels.Art_In_Museum.findByPk(req.params.id, {

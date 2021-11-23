@@ -37,7 +37,6 @@ export default function MuseumExhibits(props) {
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
   const [artcount, setArtcount] = useState([])
-  const [exhibitCount, SetExhibitCount] = useState([])
   const [exhibits, setExhibits] = useState([])
 
 
@@ -51,7 +50,7 @@ export default function MuseumExhibits(props) {
 
   useEffect(() => {     
         getMuseumExhibits()
-        
+        getArtCount()
 
   },[]);
 
@@ -65,6 +64,18 @@ const getMuseumExhibits = async () => {
           .catch(error => {console.log(error)})
 };  
 
+
+const getArtCount = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/art_in_exhibition_artcount')
+        .then(response =>{
+          var options=[]
+          response.data.map(item => {
+            options[item.Exhibition] = item.ArtCount
+          })
+          setArtcount(options)
+          console.log(response.data,options,"from api")})
+        .catch(error => {console.log(error)})
+};  
 
 
 const requestSearch = (searchedVal) => {
@@ -90,6 +101,11 @@ const openEditPopup = item => {
 const openAddPopup = item => {
   setOpenPopup(true)
   setIsEdit(false)
+}
+
+const openExhibit = item => {
+  console.log(item)
+    window.location.assign(`/exhibit/${item.id_Art_Exhibition}`)
 }
 
 
@@ -152,18 +168,19 @@ function deleteitem(record){
                   <Typography variant="h5" >{show.Title}</Typography>
                   <Typography variant="body1">
                     <b>Description</b> : {show.Description}<br/>
-                    <b>Ticket Price</b> : {show.TicketPrice}<br/>
+                    <b>Ticket Price</b> : ${show.TicketPrice}<br/>
                   </Typography>
                </Grid>
                <Grid item xs={3} >
                   <Typography variant="body1">
                   <b>Start Time</b> : {show.StartTime && moment(show.StartTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
                   <b>Last Time</b> : {show.EndTime && moment(show.EndTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                  <b>Art Count</b> : {(artcount[show.id_Art_Exhibition] >0) ? artcount[show.id_Art_Exhibition] : 0}<br/>
                   </Typography>
                </Grid>
 
                <Grid item xs={3} style={styles.level2ActionGrid}>
-                 <Button variant="outlined" endIcon={<SendIcon />} >
+                 <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openExhibit(show)}>
                           Get into Exhibit
                   </Button>
                   

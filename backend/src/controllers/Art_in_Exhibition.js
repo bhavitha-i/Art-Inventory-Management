@@ -28,7 +28,43 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art_in_Exhibition.findAll({})
+  dbmodels.Art_in_Exhibition.findAll({
+  })
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        res.send({
+          message:
+            err.message || "Some error occurred while retrieving ."
+        });
+      });
+  };
+
+
+//Get all from Table
+exports.findArtinExhibit = (req, res) => {
+
+  dbmodels.Art_in_Exhibition.findAll({
+    where:{
+      Exhibition: req.params.id
+    },
+    include: [
+      {
+        model: dbmodels.Art,
+        as: "Art_Art",
+        include: [
+          {
+            model: dbmodels.Art_Styles,
+            as: "Style_Art_Style"
+          },{
+            model: dbmodels.Artist,
+            as: "CreatedBy_Artist"
+          }
+        ]
+      }
+    ]
+  })
       .then(result => {
         res.send(result);
       })
@@ -107,6 +143,29 @@ exports.update = (req, res) => {
   });
 };
 
+
+
+// Manage art in exhibtion
+exports.manageArt = (req, res) => {
+  const id = req.params.id;
+  const values = req.body
+  console.log(id, values, "-here")
+  // dbmodels.Art_in_Exhibition.update(req.body,
+  //   { where: { id_Art_in_Exhibition: id } }
+  // ).
+  // then(() => {
+  //   res.status(200).json({
+  //       status: true,
+  //       message: "Updated successfully with id = " + id,
+  //   });
+  // })
+  // .catch(err => {
+  //   res.send({
+  //     message:
+  //       err.message || "Some error occurred while retrieving ."
+  //   });
+  // });
+};
 
 
 // Delete a Artist by Id

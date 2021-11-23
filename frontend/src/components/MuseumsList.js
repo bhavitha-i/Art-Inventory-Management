@@ -34,7 +34,6 @@ export default function MuseumList() {
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
-  const [showIcon, setShowIcon] = useState(false)
   const [artcount, setArtcount] = useState([])
   const [exhibitCount, SetExhibitCount] = useState([])
 
@@ -68,9 +67,11 @@ const getMuseums = async () => {
 const getArtCount = async () => {
   axios.get(process.env.REACT_APP_API_URL+'/art_in_museum_artCount')
         .then(response =>{
+          var options=[]
           response.data.map(item => {
-                artcount[item.Musem] = item.ArtCount
+            options[item.Musem] = item.ArtCount
           })
+          setArtcount(options)
           console.log(response.data,"from api")})
         .catch(error => {console.log(error)})
 };  
@@ -78,10 +79,14 @@ const getArtCount = async () => {
 const getExhibitCount = async () => {
   axios.get(process.env.REACT_APP_API_URL+'/art_exhibition_count')
         .then(response =>{
+          var options=[]
           response.data.map(item => {
-                exhibitCount[item.Museum] = item.ExhibitCount
+            options[item.Museum] = item.ExhibitCount
           })
-          console.log(response.data,"from api")})
+          SetExhibitCount(options)
+          console.log(response.data," exhibit count from api")
+          console.log(exhibitCount," exhibit count formatted")
+        })
         .catch(error => {console.log(error)})
 };  
 
@@ -167,8 +172,6 @@ function deleteitem(record){
                 key={show.id_Museum}  
                 sx={{   border:1,borderRadius:1,}} 
                 style={styles.level2Box}
-                onMouseEnter={() => setShowIcon(true)}
-                onMouseLeave={() => setShowIcon(false)}
                 >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
@@ -190,12 +193,12 @@ function deleteitem(record){
                  <Button variant="outlined" endIcon={<SendIcon /> } onClick={() => openExhibits(show)}>
                           Get into Museum
                   </Button>
-                  {showIcon &&
+
                     <Box style={styles.level2ActionIcons}>
                       <EditIcon  onClick={() => openEditPopup(show)}/>
                       <DeleteIcon  onClick={() => deleteitem(show)}/>
                     </Box>
-                  }
+                  
                </Grid>
                </Grid>
               </Box>

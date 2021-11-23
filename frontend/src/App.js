@@ -16,6 +16,7 @@ import Museums from './views/Museums';
 import ArtStores from './views/ArtStores';
 import ArtStoreView from './components/ArtstoreView'
 import Exhibits from './views/Exhibits';
+import ExhibitView from './views/ExhibitView';
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route  path="/artshow/:showId" element={<ArtShowView />} />
         <Route  path="/artstore/:storeId" element={<ArtStoreView />} />
         <Route  path="/museum/:Id" element={<Exhibits />} />
+        <Route  path="/exhibit/:Id" element={<ExhibitView />} />
 
 
         <Route  path="/artshow" element={<ArtShows />} />
