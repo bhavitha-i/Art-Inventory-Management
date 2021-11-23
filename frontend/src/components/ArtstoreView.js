@@ -210,7 +210,10 @@ const openActionPop = item => {
                             >
                             {art.Art_Art.CreatedBy_Artist.Name}  
                         </CSubtitle> }
-                        <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Buy/Rent</Button>
+                        {console.log(art.Art_Art,"________________________")}
+                        {art.Art_Art && art.Art_Art.Status  === 1  && <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Buy/Rent</Button> }
+                        {art.Art_Art && art.Art_Art.Status !== 1 && <Typography variant="body1" color="primary" style={styles.MarginAuto}><b>{art.Art_Art.Status_ArtStatus.Status}</b></Typography>}
+                        
                         </Box>
                         </Ccontent>
                     </Ccard>

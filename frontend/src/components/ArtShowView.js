@@ -118,9 +118,12 @@ export default function ArtShowView() {
     axios.get(process.env.REACT_APP_API_URL+'/customer/all')
           .then(response =>{ 
             const data = response.data
+            console.log(data,"axios----------custs")
             const options = data.map(s => ({
               "value" : s.id_Customer,
-              "label" : s.FirstName + ' ' + s.LastName
+              "label" : s.FirstName + ' ' + s.LastName,
+              "isPremium":s.isPremium
+             
         
             }))
             setCustomers(options)
@@ -196,34 +199,11 @@ const openCloseBidPop = item => {
             {artshows.map(art => (
             
              <Grid item key={art.Art_Art.id_Art} xs={3} >
-                    <ArtShowViewArt art={art}/>
+                    <ArtShowViewArt art={art} customers ={customers}/>
               </Grid>
             ))}
           </Grid>
         </Container>
-        <PopupAction
-                title= {popopen == "PlaceBid" ? "Place Bid" : "Close bid" }
-                openActionPopup={openActionPopup}
-                setOpenActionPopup={setOpenActionPopup}
-             >
-               {popopen == "PlaceBid" &&
-                <PlaceBidForm 
-                  customers = {customers}
-                  openActionPopup={openActionPopup}
-                  art={selectedArt}
-                />
-               }
-
-              {popopen == "CloseBid" &&
-                <CloseBidConfirm 
-
-                  openActionPopup={openActionPopup}
-                  art={selectedArt}
-                />
-               }
-                
-                
-        </PopupAction>
 
     </ThemeProvider>
 

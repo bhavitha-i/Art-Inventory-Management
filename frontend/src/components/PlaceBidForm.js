@@ -55,6 +55,7 @@ function PlaceBidForm(props)  {
     const [bids, setBids]= useState([])
     const [expanded, setExpanded] = useState(false);
     const [highbid, setHighbid] = useState("");
+    const [custs,setCusts]= useState(props.Customer)
 
 
 
@@ -95,7 +96,10 @@ function PlaceBidForm(props)  {
 
 
     function checkBidValue(){
-      console.log(inputs.BidValue, "   ----  ",highbid.BidValue)
+  
+      if(!highbid){
+        return true
+      }
         if(inputs.BidValue >= highbid.BidValue){
             return true
         }else{
@@ -179,7 +183,7 @@ function PlaceBidForm(props)  {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography> <b>Highest Bid : </b>${highbid.BidValue}</Typography>
+          {highbid && <Typography> <b>Highest Bid : </b>${highbid.BidValue}</Typography>}
         </Grid>
 
         <Cdivider light/>
@@ -240,10 +244,26 @@ function PlaceBidForm(props)  {
               fullWidth
               label={strings.ArtShow.customer}
             >
-                              
-             {props.customers.map(st => (
-                <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
-            ))} 
+  {/* const filteredRows = rows.filter((row) => {
+    return row.Art_Art.Title.toLowerCase().includes(searchedVal.toLowerCase());
+  }); */}
+  
+
+
+             {props.customers.filter( (cus) => {
+                return cus.isPremium == 1
+             }).map(st => (
+               
+
+              <MenuItem key={st.value} value={st.value}>{st.label}</MenuItem>
+                   
+                
+            
+                  
+                ))}
+             
+             
+            
 
             </Select>
         </Grid>
