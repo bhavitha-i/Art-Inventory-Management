@@ -173,6 +173,13 @@ const ml20={
   marginLeft:"20px"
 }
 
+const AVEBox={
+  margin: "10px",
+  borderColor: theme.palette.primary.light,
+  borderRadius:5,
+  padding:10
+}
+
 
   const styles = {
     HeaderContainer: HeaderContainer,
@@ -207,7 +214,8 @@ const ml20={
     AVbidlist,
     MenuIcon,
     HeiWid50,
-    ml20
+    ml20,
+    AVEBox
   }
 
 

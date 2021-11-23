@@ -35,6 +35,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import moment from 'moment'
+import { green } from '@mui/material/colors';
+
 
 // ----------------------------------------------------------------------
 
@@ -108,7 +111,6 @@ export default function ArtView() {
 
   useEffect(() => {     
         getArtDetails()
-        // getHighBid()
         getBidvalues()
         
   },[]);
@@ -348,6 +350,53 @@ const getHighBid = async () => {
             </Grid>
             }   
 
+
+            {artInfo.Status == 3 && 
+             <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Museum : {artInfo.Art_In_Museums[0].Musem_Museum.Name}</Typography>
+              <Cdivider/>
+                  <CSubtitle
+                  variant={"body1"}
+                  >
+                        <b>{strings.Museum.found}</b> : {artInfo.Art_In_Museums[0].Musem_Museum.FoundedBy}<br/>
+                        <b>Location</b> : {artInfo.Art_In_Museums[0].Musem_Museum.Location}<br/>
+
+                </CSubtitle>
+              
+                </Box>
+            </Grid>
+            }
+
+            {artInfo.Status == 3 && artInfo.Art_in_Exhibitions.length >0 &&
+             <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Exhibits</Typography>
+              <Cdivider/>
+              <Grid Container style={styles.disaplyFlex}>
+               {artInfo.Art_in_Exhibitions.map( exhibit =>  (
+                 <Grid item xs={12} sm={6}>
+                  <Box 
+                    style={styles.AVEBox}
+                    sx={{   border:1,}}
+                  >
+                    <Typography variant="h6">{exhibit.Exhibition_Art_Exhibition.Title}</Typography>
+                  <CSubtitle
+                    variant={"body1"}
+                  >
+                      <b>{strings.Museum.desc}</b> : {exhibit.Exhibition_Art_Exhibition.Description}<br/>
+                      <b>{strings.Museum.ticketPrice}</b> : ${exhibit.Exhibition_Art_Exhibition.TicketPrice}<br/>
+                      <b>{strings.Museum.starttime}</b> : {exhibit.Exhibition_Art_Exhibition.StartTime && moment(exhibit.Exhibition_Art_Exhibition.StartTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                      <b>{strings.Museum.endtine}</b> : {exhibit.Exhibition_Art_Exhibition.EndTime && moment(exhibit.Exhibition_Art_Exhibition.EndTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
+
+                  </CSubtitle>
+                  </Box>  
+                  </Grid>
+                ))}
+                </Grid>
+                </Box>
+            </Grid>
+            }   
 
       
                    
