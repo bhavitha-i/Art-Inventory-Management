@@ -144,8 +144,12 @@ const openAddPopup = item => {
       <Container sx={{ py: 1 }} >
           {arts.length === 0 && <Typography> No Arts Available</Typography>}
 
-
-          <ImageList sx={{ width: 500, height: 450 }}>
+          <Box sx={{ overflowY: 'scroll' }}>
+          <ImageList 
+          // sx={{ width: 500, height: 400 }} 
+          cols={4} gap={6}
+          // variant="masonry"
+          >
               {/* <ImageListItem key="Subheader" cols={2}>
                 <ListSubheader component="div">December</ListSubheader>
               </ImageListItem> */}
@@ -153,7 +157,6 @@ const openAddPopup = item => {
                 <ImageListItem key={item.id_Art}>
                   <img
                     src={`${item.Image}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.Image}?w=248&fit=crop&auto=format&dpr=2 2x`}
                     alt={item.title}
                     loading="lazy"
                   />
@@ -172,6 +175,7 @@ const openAddPopup = item => {
               </ImageListItem>
                 ))}
             </ImageList>
+            </Box>
         </Container>
         <Popup
                 title="Manage Art in this Exhibition"
