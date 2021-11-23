@@ -10,7 +10,7 @@ import ArtShowsHomeCard from './ArtShowsHomeCard'
 import ArtStoresHomeCard from './ArtStoresHomeCard'
 import CustomersHomeCard from './CustomersHomeCard'
 import MuseumHomeCard from './MuseumHomeCard'
-
+import OrderCard from './OrderCard'
 
 
 // ----------------------------------------------------------------------
@@ -38,6 +38,9 @@ export default function App() {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <MuseumHomeCard />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <OrderCard />
           </Grid>
 
 

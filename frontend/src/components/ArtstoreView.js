@@ -198,7 +198,7 @@ const openActionPop = item => {
                         >
                          {art.Art_Art.Style && <span> <b>{strings.Art.style}</b> : {art.Art_Art.Style_Art_Style.StyleName}</span>}<br/>
                          {<span> <b>Price</b> : ${art.Price}</span>}  <br/>
-                         {<span> <b>Rent</b> : ${art.Rent}</span>}  <br/>
+                         {<span> <b>Rent</b> : ${art.RentPerDay}</span>}  <br/>
 
                         </CSubtitle>
                         <Cdivider light />
@@ -210,7 +210,10 @@ const openActionPop = item => {
                             >
                             {art.Art_Art.CreatedBy_Artist.Name}  
                         </CSubtitle> }
-                        <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Buy/Rent</Button>
+                        {console.log(art.Art_Art,"________________________")}
+                        {art.Art_Art && art.Art_Art.Status  === 1  && <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Buy/Rent</Button> }
+                        {art.Art_Art && art.Art_Art.Status !== 1 && <Typography variant="body1" color="primary" style={styles.MarginAuto}><b>{art.Art_Art.Status_ArtStatus.Status}</b></Typography>}
+                        
                         </Box>
                         </Ccontent>
                     </Ccard>

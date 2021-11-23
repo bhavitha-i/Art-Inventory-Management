@@ -111,6 +111,21 @@ function CloseBidConfirm(props)  {
         console.log(response.data,"from api")})
       .catch(error => {console.log(error)})
 
+      console.log(highbid,"------------------>after close bid")
+
+      var bidData ={
+        "Customer":highbid.Customer,
+        "price":highbid.BidValue,
+
+
+      }
+    
+      axios.put(process.env.REACT_APP_API_URL+`/customer_purchases/close/${highbid.Art}`,bidData)
+      .then(response =>{ 
+        console.log(response.data,"from api")})
+      .catch(error => {console.log(error)})
+    
+
         
     }
     

@@ -26,8 +26,10 @@ import PopupAction from './PopupAction';
 import ArtActionForm from './ArtActionForm';
 
 
+
 // ----------------------------------------------------------------------
 
+const ITEM_HEIGHT = 48;
 
 const Ccard = styled(Card)(({ theme }) => ({
     maxWidth: 300,
@@ -82,6 +84,7 @@ const Ccontent = styled(CardContent)(({ theme }) => ({
 
 export default function ArtistsList() {
 
+
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
   const [arts, setArts] = useState([])
@@ -97,6 +100,8 @@ export default function ArtistsList() {
   const [artstyles,setArtstyles] = useState([]);
   const [openActionPopup, setOpenActionPopup] = useState(false);
   const [selectedArt, setSelectedArt] = useState("")
+
+
 
   function refreshPage() {
     setTimeout(()=>{
@@ -235,14 +240,17 @@ const openActionPop = item => {
             
              <Grid item key={art} xs={3} >
                     <Ccard >
-                        <Cmedia
+                      
+                   
+                         <Cmedia
                         image={ art.Image}
-                        />
+                        /> 
+                        
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
                           href={'/artview/'+art.id_Art}
-                          color="inherit"
+                          color="inherit"Created
                         >
                         <CHeading
                             variant={"h6"}
@@ -250,6 +258,7 @@ const openActionPop = item => {
                         >
                             {art.Title}
                         </CHeading>
+                        
                         </Link>
                         <CSubtitle
                             variant={"caption"}
@@ -274,6 +283,8 @@ const openActionPop = item => {
               </Grid>
             ))}
           </Grid>
+
+          
         </Container>
         <PopupLarge
                 title={isEdit?"Edit Art":"Add Art"}

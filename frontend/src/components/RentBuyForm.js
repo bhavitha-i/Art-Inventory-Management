@@ -21,6 +21,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { useParams } from 'react-router';
 
 
 
@@ -39,6 +40,7 @@ const Cdivider = styled(Divider)(() => ({
 
 
 function RentBuyForm(props)  {
+    const [storeId,setStoreId] =useState(useParams().storeId)
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
@@ -46,6 +48,7 @@ function RentBuyForm(props)  {
     const [custs,setCusts] = useState(props.customers);
     const [value, setValue] = React.useState([null, null]);
     const [enDate,setEmDate]= useState("")
+    const [isRent,setIsRent] = useState(false)
 
 
 
@@ -69,10 +72,23 @@ function RentBuyForm(props)  {
       console.log(inputs,"++++++++++")
       inputs.price = props.art.Price
       inputs.rent = props.art.RentPerDay
-    
+      inputs.store = storeId
       inputs.Art = props.art.Art
+      var days = ((new Date(inputs.RentFrom).getTime() - new Date(inputs.RentTo).getTime())/(1000*3600*24),"+++++++++++++")
+      
+      inputs.TotalRentValue = days * inputs.rent
+    
 
       console.log(inputs,"inside submit")
+
+
+      if(isRent){
+        axios.put(process.env.REACT_APP_API_URL+`/customer_purchases_art_store/rent/${inputs.Art}`,inputs)
+        .then(response =>{ 
+          console.log(response.data,"from api")})
+        .catch(error => {console.log(error)})
+
+      }
 
       axios.put(process.env.REACT_APP_API_URL+`/customer_purchases_art_store/${inputs.Art}`,inputs)
       .then(response =>{ 
@@ -97,6 +113,7 @@ function RentBuyForm(props)  {
         //   });
 
         if(event.target.value == 2){
+          setIsRent(true)
             setEmDate(true)
             const premCust = props.customers.filter((c) =>{
                 console.log(c); 
