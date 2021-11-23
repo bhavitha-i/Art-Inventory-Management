@@ -16,6 +16,9 @@ router.delete("/art_in_museum/:id", art_in_museum.delete);
 router.get("/art_in_museum_artCount",art_in_museum.findCount)
 
 
+router.get("/artlist_in_museum/:id", art_in_museum.findAllinMuseum);
+
+
 module.exports = router;
 
 

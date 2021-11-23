@@ -92,7 +92,13 @@ Museum:{
     found: "Founded by",
     location: "Location",
     artCount: "Art Available",
-    exhibitcount: "Number of Exhibitions"
+    exhibitcount: "Number of Exhibits",
+    exhibit: "Exhibit",
+    exhibitTit: "Title",
+    desc:"Description",
+    starttime: "Start time",
+    endtine: "End time",
+    ticketPrice: "Ticket Price"
 
 }
 

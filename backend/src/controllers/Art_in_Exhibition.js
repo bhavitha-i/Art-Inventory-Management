@@ -2,6 +2,7 @@ const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 
@@ -28,7 +29,8 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art_in_Exhibition.findAll({})
+  dbmodels.Art_in_Exhibition.findAll({
+  })
       .then(result => {
         res.send(result);
       })
@@ -41,29 +43,67 @@ exports.findAll = (req, res) => {
   };
 
 
-exports.findExhibitCount = (req,res) => {
+//Get all from Table
+exports.findArtinExhibit = (req, res) => {
 
-    dbmodels.Art_Exhibition.findAll({
-        attributes: [
-            "Museum",
-            [Sequelize.fn("COUNT", Sequelize.col("Title")),"ExhibitCount"]
-        ],
-        group: ["Museum"]
-        
-    })
+  dbmodels.Art_in_Exhibition.findAll({
+    where:{
+      Exhibition: req.params.id
+    },
+    include: [
+      {
+        model: dbmodels.Art,
+        as: "Art_Art",
+        include: [
+          {
+            model: dbmodels.Art_Styles,
+            as: "Style_Art_Style"
+          },{
+            model: dbmodels.Artist,
+            as: "CreatedBy_Artist"
+          }
+        ]
+      }
+    ]
+  })
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        res.send({
+          message:
+            err.message || "Some error occurred while retrieving ."
+        });
+      });
+  };
+
+
+
+
+
+  //Get all from Table
+  exports.findArtCountExhibit = (req, res) => {
+
+    const museumId = req.params.id
+    dbmodels.Art_in_Exhibition.findAll({
+            attributes: [
+              "Exhibition",
+              [Sequelize.fn("COUNT", Sequelize.col("Art")),"ArtCount"]
+          ],
+          group: ["Exhibition"]
+          })
         .then(result => {
           res.send(result);
-          console.log(result)
         })
         .catch(err => {
-          console.log(err)
           res.send({
             message:
               err.message || "Some error occurred while retrieving ."
           });
         });
-};
-
+    };
+  
+  
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
@@ -104,6 +144,58 @@ exports.update = (req, res) => {
   });
 };
 
+
+
+// Manage art in exhibtion
+exports.manageArt = (req, res) => {
+  const id = req.params.id;
+  const values = req.body
+  console.log(id, values, "-here")
+  var addList=[]
+  var delList=[]
+
+  var deletearray = req.body.deletearray
+  var add
+  if(req.body.addarray.length >0){
+    req.body.addarray.forEach(element => {
+      var obj = {
+        Exhibition:id,
+        Art:parseInt(element)
+      }
+      addList.push(obj)
+    });
+
+    dbmodels.Art_in_Exhibition.bulkCreate(addList,{})
+    .then((res) =>{
+        console.log(res,'-- adding result')
+    })
+    .catch(err => { console.log(err)});
+  }
+
+  if(req.body.deletearray.length >0){
+    req.body.deletearray.forEach(element => {
+      delList.push(parseInt(element))
+    });
+    console.log(delList)
+
+      dbmodels.Art_in_Exhibition.destroy({
+          where:{
+            Exhibition: id,
+            Art:{
+              [Op.in]: req.body.deletearray,
+            }
+          }
+      }).then((res) =>{
+        console.log(res,'-- deleting result')
+      })
+      .catch(err => { console.log(err)});
+      res.status(200).json({
+        status: true,
+        message: "Art in exhibitons updated",
+      });
+  }
+
+};
 
 
 // Delete a Artist by Id

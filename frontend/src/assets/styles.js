@@ -164,6 +164,15 @@ const MenuIcon={
   position: "absolute", color: "white",top: 10,left: "90%",transform: "translateX(-50%)"
 }
 
+const HeiWid50={
+  width:"50px",
+  height:"50px",
+}
+
+const ml20={
+  marginLeft:"20px"
+}
+
 
   const styles = {
     HeaderContainer: HeaderContainer,
@@ -196,7 +205,9 @@ const MenuIcon={
     padding10,
     disaplyFlex,
     AVbidlist,
-    MenuIcon
+    MenuIcon,
+    HeiWid50,
+    ml20
   }
 
 

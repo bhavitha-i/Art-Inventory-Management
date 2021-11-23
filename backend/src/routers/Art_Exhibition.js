@@ -13,6 +13,10 @@ router.put("/art_exhibition/:id", art_exhibition.update);
 
 router.delete("/art_exhibition/:id", art_exhibition.delete);
 
+router.get("/art_exhibition_museum/:id", art_exhibition.findMuseumExhibit);
+
+router.get("/art_exhibition_count", art_exhibition.findExhibitCount);
+
 
 
 module.exports = router;

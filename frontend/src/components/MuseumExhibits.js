@@ -16,18 +16,20 @@ import Popup from './Popup'
 import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import MusuemForm from './MusuemForm';
+import ExhibitionForm from './ExhibitionForm';
+import moment from 'moment'
+
 
 
 // -------------------------------------------------------
 
 
 
-export default function MuseumList() {
+export default function MuseumExhibits(props) {
 
+  const [museumId,setMuseumId] =useState(props.id)
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [openPopup, setOpenPopup] = useState(false);
-  const [museums, setMuseums] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
   const [isEdit, setIsEdit] = useState(false)
@@ -35,7 +37,7 @@ export default function MuseumList() {
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
   const [artcount, setArtcount] = useState([])
-  const [exhibitCount, SetExhibitCount] = useState([])
+  const [exhibits, setExhibits] = useState([])
 
 
   function refreshPage() {
@@ -47,17 +49,16 @@ export default function MuseumList() {
 
 
   useEffect(() => {     
-        getMuseums()
+        getMuseumExhibits()
         getArtCount()
-        getExhibitCount()
 
   },[]);
 
 
-const getMuseums = async () => {
-    axios.get(process.env.REACT_APP_API_URL+'/museum/all')
-          .then(response =>{ 
-            setMuseums(response.data)
+const getMuseumExhibits = async () => {
+  axios.get(process.env.REACT_APP_API_URL+`/art_exhibition_museum/${museumId}`)
+        .then(response =>{ 
+            setExhibits(response.data)
             setRows(response.data)
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
@@ -65,36 +66,23 @@ const getMuseums = async () => {
 
 
 const getArtCount = async () => {
-  axios.get(process.env.REACT_APP_API_URL+'/art_in_museum_artCount')
+  axios.get(process.env.REACT_APP_API_URL+'/art_in_exhibition_artcount')
         .then(response =>{
           var options=[]
           response.data.map(item => {
-            options[item.Musem] = item.ArtCount
+            options[item.Exhibition] = item.ArtCount
           })
           setArtcount(options)
-          console.log(response.data,"from api")})
+          console.log(response.data,options,"from api")})
         .catch(error => {console.log(error)})
 };  
 
-const getExhibitCount = async () => {
-  axios.get(process.env.REACT_APP_API_URL+'/art_exhibition_count')
-        .then(response =>{
-          var options=[]
-          response.data.map(item => {
-            options[item.Museum] = item.ExhibitCount
-          })
-          SetExhibitCount(options)
-          console.log(response.data," exhibit count from api")
-          console.log(exhibitCount," exhibit count formatted")
-        })
-        .catch(error => {console.log(error)})
-};  
 
 const requestSearch = (searchedVal) => {
   const filteredRows = rows.filter((row) => {
-    return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
+    return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
   });
-  setMuseums(filteredRows);
+  setExhibits(filteredRows);
 };
 
 const cancelSearch = () => {
@@ -115,15 +103,17 @@ const openAddPopup = item => {
   setIsEdit(false)
 }
 
-const openExhibits = item => {
+const openExhibit = item => {
   console.log(item)
-    window.location.assign(`/museum/${item.id_Museum}`)
+    window.location.assign(`/exhibit/${item.id_Art_Exhibition}`)
 }
+
+
 
 
 function deleteitem(record){
 
-  axios.delete(process.env.REACT_APP_API_URL+'/museum/'+record.id_Museum)
+  axios.delete(process.env.REACT_APP_API_URL+'/art_exhibition/'+record.id_Art_Exhibition)
   .then(response =>{ 
       console.log(response,"from api")
       setErrAlert("success")
@@ -152,7 +142,7 @@ function deleteitem(record){
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Search for Museums"
+        placeholder="Search for Exhibtions"
         style={styles.SettingsSearch}
         />
          <Button
@@ -165,35 +155,35 @@ function deleteitem(record){
           </Button>
       </Box>
       <Container sx={{ py: 1 }} >
-          {museums.length === 0 && <Typography> No Museums Available</Typography>}
-            {museums.map(show => (
+          {exhibits.length === 0 && <Typography> No Exhibits Available</Typography>}
+            {exhibits.map(show => (
             
              <Box item 
-                key={show.id_Museum}  
+                key={show.id_Art_Exhibition}  
                 sx={{   border:1,borderRadius:1,}} 
                 style={styles.level2Box}
                 >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
-                  <Typography variant="h5" >{show.Name}</Typography>
+                  <Typography variant="h5" >{show.Title}</Typography>
                   <Typography variant="body1">
-                    <b>{strings.Museum.location}</b> : {show.Location}<br/>
-
+                    <b>Description</b> : {show.Description}<br/>
+                    <b>Ticket Price</b> : ${show.TicketPrice}<br/>
                   </Typography>
                </Grid>
                <Grid item xs={3} >
                   <Typography variant="body1">
-                  <b>{strings.Museum.found}</b> : {show.FoundedBy}<br/>
-                  <b>{strings.Museum.artCount}</b> : {artcount[show.id_Museum]}<br/>
-                  <b>{strings.Museum.exhibitcount}</b> : {exhibitCount[show.id_Museum]}<br/>
+                  <b>Start Time</b> : {show.StartTime && moment(show.StartTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                  <b>Last Time</b> : {show.EndTime && moment(show.EndTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                  <b>Art Count</b> : {(artcount[show.id_Art_Exhibition] >0) ? artcount[show.id_Art_Exhibition] : 0}<br/>
                   </Typography>
                </Grid>
 
                <Grid item xs={3} style={styles.level2ActionGrid}>
-                 <Button variant="outlined" endIcon={<SendIcon /> } onClick={() => openExhibits(show)}>
-                          Get into Museum
+                 <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openExhibit(show)}>
+                          Get into Exhibit
                   </Button>
-
+                  
                     <Box style={styles.level2ActionIcons}>
                       <EditIcon  onClick={() => openEditPopup(show)}/>
                       <DeleteIcon  onClick={() => deleteitem(show)}/>
@@ -206,11 +196,12 @@ function deleteitem(record){
             ))}
         </Container>
         <Popup
-                title={isEdit?"Edit Museum":"Add Museum"}
+                title={isEdit?"Edit Exhibtion":"Add Exhibtion"}
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
              >
-                <MusuemForm 
+                <ExhibitionForm 
+                    museumId={museumId}
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
                     />

@@ -1,6 +1,7 @@
 const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
+const Sequelize = require('sequelize');
 
 
 
@@ -38,6 +39,50 @@ exports.findAll = (req, res) => {
         });
       });
   };
+
+
+  //Get all from Table
+exports.findMuseumExhibit = (req, res) => {
+
+  const museumId = req.params.id
+  dbmodels.Art_Exhibition.findAll({
+          where:{
+            Museum: museumId
+          }
+        })
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        res.send({
+          message:
+            err.message || "Some error occurred while retrieving ."
+        });
+      });
+  };
+
+
+  exports.findExhibitCount = (req,res) => {
+
+    dbmodels.Art_Exhibition.findAll({
+        attributes: [
+            "Museum",
+            [Sequelize.fn("COUNT", Sequelize.col("Title")),"ExhibitCount"]
+        ],
+        group: ["Museum"]
+        
+          })
+        .then(result => {
+          res.send(result);
+        })
+        .catch(err => {
+          console.log(err)
+          res.send({
+            message:
+              err.message || "Some error occurred while retrieving ."
+          });
+        });
+};
 
 
 // Find a Table by Id
