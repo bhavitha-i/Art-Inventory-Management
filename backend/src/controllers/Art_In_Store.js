@@ -1,6 +1,7 @@
 const db = require("../mysql");
 const dbmodels = db.models
 // const Op = db.Sequelize.Op;
+const Sequelize = require('sequelize');
 
 
 
