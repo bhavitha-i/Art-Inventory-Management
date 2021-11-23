@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExhibitionForm from './ExhibitionForm';
 import moment from 'moment'
+import TickerForm from './TicketForm';
 
 
 
@@ -38,6 +39,8 @@ export default function MuseumExhibits(props) {
   const [message,setMessage] = useState("");
   const [artcount, setArtcount] = useState([])
   const [exhibits, setExhibits] = useState([])
+  const [customers,setCustomers] = useState("")
+  const [openPopupTix, setOpenPopupTix] = useState(false);
 
 
   function refreshPage() {
@@ -51,9 +54,19 @@ export default function MuseumExhibits(props) {
   useEffect(() => {     
         getMuseumExhibits()
         getArtCount()
+        getValues()
 
   },[]);
 
+  const getValues = async() =>{
+    axios.get(process.env.REACT_APP_API_URL+`/customer/all`)
+    .then(response =>{ 
+        setCustomers(response.data)
+
+        console.log(response.data,"from api")})
+      .catch(error => {console.log(error)})
+
+  }
 
 const getMuseumExhibits = async () => {
   axios.get(process.env.REACT_APP_API_URL+`/art_exhibition_museum/${museumId}`)
@@ -96,6 +109,10 @@ const openEditPopup = item => {
   setOpenPopup(true)
   setIsEdit(true)
 }
+const openAddPopupTix = item => {
+  setOpenPopupTix(true)
+  
+}
 
 
 const openAddPopup = item => {
@@ -137,6 +154,7 @@ function deleteitem(record){
 
   return (
     <ThemeProvider theme={theme}>
+       
       <Box style={styles.p1Box}>
         <SearchBar
         value={searched}
@@ -145,6 +163,17 @@ function deleteitem(record){
         placeholder="Search for Exhibtions"
         style={styles.SettingsSearch}
         />
+            <Box style={styles.p2Box}>
+      
+      <Button
+           type="submit"
+           variant="outlined"
+           // style={styles.ArtStylesAddButton}
+           onClick={() => openAddPopupTix(true)}
+       >
+         Sell Tickets
+       </Button>
+   </Box>
          <Button
               type="submit"
               variant="contained"
@@ -204,6 +233,20 @@ function deleteitem(record){
                     museumId={museumId}
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
+                    />
+                
+            </Popup>
+
+            <Popup
+                title="Just Tickets"
+                openPopup={openPopupTix}
+                setOpenPopup={setOpenPopupTix}
+             >
+                <TickerForm 
+                customers = {customers}
+                exhibits ={exhibits}
+               
+                    setOpenPopup={setOpenPopupTix}
                     />
                 
             </Popup>

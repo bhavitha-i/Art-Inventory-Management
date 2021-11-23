@@ -261,16 +261,12 @@ exports.closebid = (req, res) => {
 
   dbmodels.Order.create(rowData)
     .then((result) => {
-
-
-
-
       newDataRow = {
         "Customer": req.body.Customer,
         "Order": result.id_Order,
-        "Type": 1,
+        "Type": 3,
         "Price": req.body.price,
-        "Purchase_Ref_Id": id
+        "Purchase_Ref_Id": req.body.exhibit
 
       }
 
@@ -295,10 +291,58 @@ exports.closebid = (req, res) => {
       });
     });
 
-
-
-
-
 };
+
+exports.tickets = (req, res) => {
+  console.log(req.body)
+
+  rowData = {
+    "Customer": req.body.Customer,
+    "Value": req.body.price,
+    "PaymentStatus": 0,
+    "Date": Date.now()
+  }
+
+  dbmodels.Order.create(rowData)
+  .then((result) => {
+    console.log("In order suc")
+    newDataRow = {
+      "Customer": req.body.Customer,
+      "Order": result.id_Order,
+      "Type": 4,
+      "Price": req.body.price,
+      "Purchase_Ref_Id": req.body.exhibit
+
+    }
+
+    console.log(newDataRow, "helo----------------")
+
+    dbmodels.Customer_Purchases.create(newDataRow)
+      .then((result) => {
+        console.log("row added in customer purchases")
+      })
+      .catch(err => {
+        console.log("in purchases failed")
+        res.send({
+          message:
+            err.message || "Some error occurred while adding data."
+        });
+      });
+
+  })
+  .catch(err => {
+    res.send({
+      message:
+        err.message || "Some error occurred while adding data."
+    });
+  });
+
+
+
+}
+
+
+
+
 
 

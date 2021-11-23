@@ -38,6 +38,8 @@ export default function MuseumList() {
   const [exhibitCount, SetExhibitCount] = useState([])
 
 
+
+
   function refreshPage() {
     setTimeout(()=>{
         window.location.reload(true);
@@ -50,6 +52,7 @@ export default function MuseumList() {
         getMuseums()
         getArtCount()
         getExhibitCount()
+  
 
   },[]);
 
@@ -110,6 +113,7 @@ const openEditPopup = item => {
 }
 
 
+
 const openAddPopup = item => {
   setOpenPopup(true)
   setIsEdit(false)
@@ -155,6 +159,7 @@ function deleteitem(record){
         placeholder="Search for Museums"
         style={styles.SettingsSearch}
         />
+    
          <Button
               type="submit"
               variant="contained"
@@ -216,6 +221,8 @@ function deleteitem(record){
                     />
                 
             </Popup>
+
+            
     </ThemeProvider>
 
   );
