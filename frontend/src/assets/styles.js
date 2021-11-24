@@ -224,6 +224,10 @@ const p20={
   padding:"20px"
 }
 
+const mb20={
+  marginBottom:"20px"
+}
+
   const styles = {
     HeaderContainer: HeaderContainer,
     MyProfileTabsBox:MyProfileTabsBox,
@@ -265,6 +269,7 @@ const p20={
     AVL2Button,
     p20,
     p2Box,
+    mb20,
  
   }
 
