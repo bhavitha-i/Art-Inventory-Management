@@ -1,3 +1,4 @@
+import { green } from "@mui/material/colors"
 import theme from "../components/theme"
 
 const HeaderContainer ={
@@ -66,7 +67,10 @@ const p1TableContainer={
   width: "80%",
   margin: "auto"
 }
-
+const p2TableContainer={
+  width: "60",
+  margin: "auto"
+}
 const flexCentered ={
   display: "flex",
   justifyContent :"center"
@@ -145,6 +149,10 @@ const level2ActionIcons={
   display: "flex",
   justifyContent:"flex-end",
   cursor: "pointer"
+}
+
+const tickethead={
+  background:theme.palette.primary.light
 }
 
 const options={
@@ -265,6 +273,8 @@ const p20={
     AVL2Button,
     p20,
     p2Box,
+    p2TableContainer,
+    tickethead
  
   }
 

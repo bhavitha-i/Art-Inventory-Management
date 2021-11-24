@@ -56,35 +56,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Customer_Purchases" },
         ]
-      },
-      {
-        name: "Customer_Purchases.Customer_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Customer" },
-        ]
-      },
-      {
-        name: "Customer_Purchases.OrderId_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Order" },
-        ]
-      },
-      {
-        name: "Customer_Purchases.Type_idx",
-        using: "BTREE",
-        fields: [
-          { name: "Type" },
-        ]
-      },
-      {
-        name: "Purchase_Ref_Id",
-        using: "BTREE",
-        fields: [
-          { name: "Purchase_Ref_Id" },
-        ]
-      },
+      }
     ]
   });
 };

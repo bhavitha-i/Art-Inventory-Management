@@ -110,3 +110,67 @@ exports.delete = (req, res) => {
     });
   });
 };
+
+
+
+exports.buy = (req, res) => {
+
+  console.log("inside order")
+  console.log(req.body)
+  const id = req.params.id;
+  dbmodels.Art.update({ Status: 4 },
+    { where: { id_Art: id } }
+  ).then((result) => {
+    console.log(result, "updated art status --buy")
+  })
+
+  console.log(req.body.Customer, "---------")
+  rowData = {
+    "Customer": req.body.Customer,
+    "Value": req.body.price,
+    "PaymentStatus": 0,
+    "Date": Date.now()
+  }
+
+  dbmodels.Order.create(rowData)
+    .then((result) => {
+
+
+
+      console.log( "Order created --buy")
+      newDataRow = {
+        "Customer": req.body.Customer,
+        "Order": result.id_Order,
+        "Type": 1,
+        "Price": req.body.price,
+        "Purchase_Ref_Id": 1
+
+      }
+
+ 
+
+      dbmodels.Customer_Art_Purchases.create(newDataRow)
+        .then((result) => {
+          console.log("customer art purhcases --buy")
+          res.status(200).json({
+            status: true,
+            message: "Row created successfully",
+            data: result
+          });
+        })
+        .catch(err => {
+          res.send({
+            message:
+              err.message || "Some error occurred while adding data."
+          });
+        });
+
+    })
+    .catch(err => {
+      res.send({
+        message:
+          err.message || "Some error occurred while adding data."
+      });
+    });
+
+}

@@ -11,8 +11,7 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 import strings from '../assets/strings';
 import SnackBar from './SnackBar';
-import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
-import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment'
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import TrapFocus from '@mui/material/Unstable_TrapFocus';
@@ -56,8 +55,8 @@ function TicketForm(props)  {
     async function handleSubmit(event){
         if (event) {
           event.preventDefault();
-       
-          inputs.Museum = props.museumId
+       //Exhibit value assinged to Museum due to column name changes in db
+          inputs.Museum = selExh[0].id_Art_Exhibition
 
           inputs.price=selExh[0].TicketPrice
           inputs.exhibit = selExh[0].id_Art_Exhibition
@@ -209,7 +208,7 @@ function TicketForm(props)  {
             fullWidth
             variant="filled"
                 
-            value={selExh && selExh[0].StartTime}
+            value={selExh && moment(selExh[0].StartTime).format('DD/MM/YYYY h:mm:ss a')}
           />
         </Grid>
         <Grid item xs={12}>
@@ -221,8 +220,8 @@ function TicketForm(props)  {
              label="Exhibit Ends on"
              fullWidth
              variant="filled"
-                 
-             value={selExh && selExh[0].EndTime}
+             value={selExh && moment(selExh[0].EndTime).format('DD/MM/YYYY h:mm:ss a')}
+           
            />
          </Grid>
 

@@ -86,6 +86,7 @@ app.use(Premium_CustomerRouter)
 app.use(OrderRouter)
 app.use(Painting_ArtRouter)
 app.use(Sculpture_ArtRouter)
+app.use(Exhibition_TicketsRouter)
 
 
 

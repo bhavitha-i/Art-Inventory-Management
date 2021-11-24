@@ -26,7 +26,9 @@ import Paper from '@mui/material/Paper';
 import styles from '../assets/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Link from '@mui/material/Link';
+import { Icon } from '@iconify/react';
+import InfoIcon from '@mui/icons-material/Info';
+import { Link } from 'react-router-dom'
 import Popup from './Popup'
 import ArtistForm from './ArtistForm';
 import SearchBar from "material-ui-search-bar";
@@ -58,6 +60,8 @@ export default function ArtistsList() {
   const [message,setMessage] = useState("");
   const [artStyles, setArtStyles] = useState([]);
   const [countries, setCountires] = useState();
+ 
+  const [artsBy,setArtsBy] =  useState();
 
   function refreshPage() {
     setTimeout(()=>{
@@ -124,6 +128,11 @@ const cancelSearch = () => {
   setSearched("");
   requestSearch(searched);
 };
+
+const openArtPopup = item =>{
+  setArtsBy(item.Arts)
+
+}
 
 
   const openEditPopup = item => {
@@ -209,11 +218,13 @@ const cancelSearch = () => {
               key={artist.id_Artist}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-
+           
               <P1TableCell>
-                {console.log(artist.Image,"in map")}
+              <Link to={`/artistView/${artist.id_Artist}`} >
                     <Avatar variant="rounded" src={artist.Image} ></Avatar>
+                    </Link>
               </P1TableCell>
+              
               {/* <P1TableCell >{artist.id_Artist}</P1TableCell> */}
               <P1TableCell>{artist.Name}</P1TableCell>
               <P1TableCell >{artist.Phone}</P1TableCell>
@@ -223,6 +234,9 @@ const cancelSearch = () => {
                 <Container  style={styles.TableActionIcons}>
                   <EditIcon onClick={() => openEditPopup(artist)}/>
                   <DeleteIcon onClick={() => deleteitem(artist)}/>
+            
+                
+                  
                   </Container>
               </P1TableCell>
               
@@ -244,6 +258,9 @@ const cancelSearch = () => {
                     />
                 
             </Popup>
+
+
+          
     </ThemeProvider>
 
   );

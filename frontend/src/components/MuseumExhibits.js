@@ -245,6 +245,8 @@ function deleteitem(record){
                 <TickerForm 
                 customers = {customers}
                 exhibits ={exhibits}
+
+                museumId = {museumId}
                
                     setOpenPopup={setOpenPopupTix}
                     />

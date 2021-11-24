@@ -13,6 +13,8 @@ router.put("/order/:id", order.update);
 
 router.delete("/order/:id", order.delete);
 
+router.put("/order/buy/:id",order.buy)
+
 
 
 module.exports = router;

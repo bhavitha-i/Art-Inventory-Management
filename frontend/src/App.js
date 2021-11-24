@@ -19,6 +19,7 @@ import Customer from './views/Customer'
 import Orders from './components/Orders'
 import Exhibits from './views/Exhibits';
 import ExhibitView from './views/ExhibitView';
+import ArtsByList from './components/ArtsByList';
 
 
 
@@ -36,6 +37,8 @@ function App() {
         <Route  path="/artstore/:Id" element={<ArtStoreView />} />
         <Route  path="/museum/:Id" element={<Exhibits />} />
         <Route  path="/exhibit/:Id" element={<ExhibitView />} />
+        <Route  path="/artistView/:Id" element={<ArtsByList />} />
+
 
 
         <Route  path="/artshow" element={<ArtShows />} />

@@ -8,7 +8,7 @@ const dbmodels = db.models
 exports.create = (req, res) => {
   const rowData = req.body;
 
-  dbmodels.Customer_Purchases.create(rowData)
+  dbmodels.Customer_Art_Purchases.create(rowData)
     .then((result) => {
       res.status(200).json({
         status: true,
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Customer_Purchases.findAll({})
+  dbmodels.Customer_Art_Purchases.findAll({})
     .then(result => {
       res.send(result);
     })
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-  dbmodels.Customer_Purchases.findByPk(req.params.id, {
+  dbmodels.Customer_Art_Purchases.findByPk(req.params.id, {
   })
     .then((result) => {
       res.status(200).json({
@@ -62,8 +62,8 @@ exports.findByPk = (req, res) => {
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;
-  dbmodels.Customer_Purchases.update(req.body,
-    { where: { id_Customer_Purchases: id } }
+  dbmodels.Customer_Art_Purchases.update(req.body,
+    { where: { id_Customer_Art_Purchases: id } }
   ).
     then(() => {
       res.status(200).json({
@@ -84,8 +84,8 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
-  dbmodels.Customer_Purchases.destroy({
-    where: { id_Customer_Purchases: id },
+  dbmodels.Customer_Art_Purchases.destroy({
+    where: { id_Customer_Art_Purchases: id },
   }).then(() => {
     res.status(200).json({
       status: true,
@@ -100,65 +100,7 @@ exports.delete = (req, res) => {
     });
 };
 
-exports.order = (req, res) => {
 
-  console.log("inside order")
-  const id = req.params.id;
-  dbmodels.Art.update({ Status: 4 },
-    { where: { id_Art: id } }
-  ).then((result) => {
-    console.log(result, "updated art status")
-  })
-
-  console.log(req.body.Customer, "---------")
-  rowData = {
-    "Customer": req.body.Customer,
-    "Value": req.body.price,
-    "PaymentStatus": 0,
-    "Date": Date.now()
-  }
-
-  dbmodels.Order.create(rowData)
-    .then((result) => {
-
-
-
-
-      newDataRow = {
-        "Customer": req.body.Customer,
-        "Order": result.id_Order,
-        "Type": 1,
-        "Price": req.body.price,
-        "Purchase_Ref_Id": 1
-
-      }
-
-      console.log(newDataRow, "helo----------------")
-
-      dbmodels.Customer_Purchases.create(newDataRow)
-        .then((result) => {
-          res.status(200).json({
-            status: true,
-            message: "Row created successfully",
-            data: result
-          });
-        })
-        .catch(err => {
-          res.send({
-            message:
-              err.message || "Some error occurred while adding data."
-          });
-        });
-
-    })
-    .catch(err => {
-      res.send({
-        message:
-          err.message || "Some error occurred while adding data."
-      });
-    });
-
-}
 
 exports.rent = (req, res) => {
 
@@ -167,7 +109,7 @@ exports.rent = (req, res) => {
   dbmodels.Art.update({ Status: 5 },
     { where: { id_Art: id } }
   ).then((result) => {
-    console.log(result, "updated art status")
+    console.log(result, "updated art status ---rent")
   })
 
   rowData = {
@@ -181,13 +123,13 @@ exports.rent = (req, res) => {
   dbmodels.Order.create(rowData)
     .then((result) => {
 
-
+        console.log(result,'--res')
 
 
       newDataRow = {
         "Customer": req.body.Customer,
         "Order": result.id_Order,
-        "Type": 1,
+        "Type": 0,
         "Price": req.body.price,
         "Purchase_Ref_Id": id
 
@@ -195,23 +137,18 @@ exports.rent = (req, res) => {
 
       console.log(newDataRow, "helo----------------")
 
-      dbmodels.Customer_Purchases.create(newDataRow)
+      dbmodels.Customer_Art_Purchases.create(newDataRow)
         .then((result) => {
           console.log("row added in customer purchases")
         })
         .catch(err => {
-          res.send({
-            message:
-              err.message || "Some error occurred while adding data."
-          });
+            console.log(err)
         });
 
     })
     .catch(err => {
-      res.send({
-        message:
-          err.message || "Some error occurred while adding data."
-      });
+      console.log(err)
+
     });
 
 
@@ -225,13 +162,18 @@ exports.rent = (req, res) => {
     "TotalRentValue": req.body.TotalRentValue
   }
 
+ 
+
   dbmodels.Art_For_Rent.create(rentData)
     .then((result) => {
+      console.log("art in rent created sux")
       res.status(200).json({
         status: true,
         message: "Row created successfully",
         data: result
+        
       });
+      
     })
     .catch(err => {
       res.send({
@@ -241,6 +183,11 @@ exports.rent = (req, res) => {
     });
 
 };
+
+
+
+
+//=============================
 
 exports.closebid = (req, res) => {
   const id = req.params.id;
@@ -272,7 +219,7 @@ exports.closebid = (req, res) => {
 
       console.log(newDataRow, "helo----------------")
 
-      dbmodels.Customer_Purchases.create(newDataRow)
+      dbmodels.Customer_Art_Purchases.create(newDataRow)
         .then((result) => {
           console.log("row added in customer purchases")
         })
@@ -317,7 +264,7 @@ exports.tickets = (req, res) => {
 
     console.log(newDataRow, "helo----------------")
 
-    dbmodels.Customer_Purchases.create(newDataRow)
+    dbmodels.Customer_Art_Purchases.create(newDataRow)
       .then((result) => {
         console.log("row added in customer purchases")
       })
@@ -338,8 +285,34 @@ exports.tickets = (req, res) => {
   });
 
 
+  ticketRow = {
+    Museum:req.body.Museum,
+    Customer:req.body.Customer,
+    TotalPrice:req.body.price
+
+  }
+  dbmodels.Exhibition_Tickets.create(ticketRow)
+  .then((result) => {
+    res.status(200).json({
+      status: true,
+      message: "Ticket Row created successfully",
+      data: result
+    });
+  })
+  .catch(err => {
+    res.send({
+      message:
+        err.message || "Some error occurred while adding data."
+    });
+  });
+
+
+
+
+
 
 }
+
 
 
 
