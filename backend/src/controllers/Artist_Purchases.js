@@ -10,11 +10,21 @@ exports.create = (req, res) => {
 
   dbmodels.Artist_Purchases.create(rowData)
       .then((result) => {
-      res.status(200).json({
-        status: true,
-        message: "Row created successfully",
-        data:result
-      });
+        console.log(result)
+        dbmodels.Art_Supplies.update(
+        {
+          Quantity: req.body.ASQuntityUpdate
+        },
+          { 
+            where: { id_Art_Supplies: req.body.ArtSupplies } 
+          }
+        ).
+        then(() => {
+          res.status(200).json({
+              status: true,
+              message: "Artist sale completed"
+          });
+        })
     })
     .catch(err => {
       res.send({

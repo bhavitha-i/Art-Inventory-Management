@@ -148,6 +148,20 @@ exports.findByPk = (req, res) => {
             }
           ]
         },
+        {
+          model: dbmodels.Customer_Art_Purchases,
+          as: "Customer_Art_Purchases",
+          include: [
+            {
+              model: dbmodels.Customer,
+              as: "Customer_Customer",
+            }
+          ]
+        },
+        {
+          model: dbmodels.Art_For_Rent,
+          as: "Art_For_Rents",
+        },
 
       ]
     })

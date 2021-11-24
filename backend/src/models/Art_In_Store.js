@@ -19,10 +19,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
-    // Name: {
-    //   type: DataTypes.STRING(45),
-    //   allowNull: true
-    // },
     RentPerDay: {
       type: DataTypes.DECIMAL(10,2),
       allowNull: true

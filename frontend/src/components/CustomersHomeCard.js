@@ -4,6 +4,8 @@ import  { useEffect, useState } from "react"
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import PeopleOutlineSharpIcon from '@mui/icons-material/PeopleOutlineSharp';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -49,7 +51,7 @@ export default function CusotmersHomeCard(props) {
   return (
     <RootStyle onClick={() => handleClick()}>
       <IconWrapperStyle>
-        <Icon icon={androidFilled} width={24} height={24} />
+        <PeopleOutlineSharpIcon width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h4">Customers</Typography>
       {/* <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
