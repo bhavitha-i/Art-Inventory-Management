@@ -37,7 +37,6 @@ export default function ArtstoresList() {
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
-  const [showIcon, setShowIcon] = useState(false)
   const [artcount, setArtcount] = useState([])
 
 
@@ -69,14 +68,18 @@ const getArtStores = async () => {
 const getArtCount = async () => {
   axios.get(process.env.REACT_APP_API_URL+'/art_in_store_artCount')
         .then(response =>{ 
-          setArtcount(response.data)
-          console.log(response.data,"from api")})
+          var list=[]
+          response.data.map(item => {
+              list[item.AtStore] = item.ArtCount
+          })
+          setArtcount(list)
+          console.log(list,"count from api")})
         .catch(error => {console.log(error)})
 };  
 
 const requestSearch = (searchedVal) => {
   const filteredRows = rows.filter((row) => {
-    return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
+    return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
   });
   setArtstores(filteredRows);
 };
@@ -135,7 +138,7 @@ function deleteitem(record){
         value={searched}
         onChange={(searchVal) => requestSearch(searchVal)}
         onCancelSearch={() => cancelSearch()}
-        placeholder="Search for Artstores"
+        placeholder="Search for Art store"
         style={styles.SettingsSearch}
         />
          <Button
@@ -153,10 +156,8 @@ function deleteitem(record){
             
              <Box item 
                 key={store.id_Store}  
-                sx={{   border:1,borderRadius:1,}} 
-                style={styles.level2Box}
-                onMouseEnter={() => setShowIcon(true)}
-                onMouseLeave={() => setShowIcon(false)}
+                // sx={{   border:1,borderRadius:1,}} 
+                style={styles.BoxLeve2}
                 >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
@@ -169,20 +170,18 @@ function deleteitem(record){
                   <Typography variant="body1">
                       <b>Manager</b> : {store.Manager}<br/>
                       <b>Phone</b> : {store.Phone}<br/>
-                     
-                      <b>Number of Art in Store</b> : {store.ArtCount}<br/>
+                      <b>Number of Art in Store</b> : {artcount[store.id_Store]>0 ? artcount[store.id_Store] : 0 }<br/>
                   </Typography>
                </Grid>
                <Grid item xs={2} style={styles.level2ActionGrid}>
                  <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openStoreArts(store)}>
                           Get into Art Store
                   </Button>
-                  {showIcon &&
                     <Box style={styles.level2ActionIcons}>
-                      <EditIcon  onClick={() => openEditPopup(store)}/>
-                      <DeleteIcon  onClick={() => deleteitem(store)}/>
+                      <EditIcon fontSize="small" onClick={() => openEditPopup(store)}/>
+                      <DeleteIcon fontSize="small" onClick={() => deleteitem(store)}/>
                     </Box>
-                  }
+                  
                </Grid>
                </Grid>
               </Box>

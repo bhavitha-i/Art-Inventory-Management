@@ -26,6 +26,9 @@ import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+// -------------------------------------------------------
+
+
 
 // -------------------------------------------------------
 
@@ -42,7 +45,6 @@ export default function ArtshowsList() {
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
-  const [showIcon, setShowIcon] = useState(false)
   const [artcount, setArtcount] = useState([])
 
 
@@ -74,10 +76,12 @@ const getArtShows = async () => {
 const getArtCount = async () => {
   axios.get(process.env.REACT_APP_API_URL+'/art_in_auction_artCount')
         .then(response =>{
+          var list=[]
           response.data.map(item => {
-                artcount[item.AtArtShow] = item.ArtCount
+              list[item.AtArtShow] = item.ArtCount
           })
-          console.log(response.data,"from api")})
+          setArtcount(list)
+          console.log(list,"count from api")})
         .catch(error => {console.log(error)})
 };  
 
@@ -154,16 +158,14 @@ function deleteitem(record){
             Add
           </Button>
       </Box>
-      <Container sx={{ py: 1 }} >
+      <Container sx={{ py: 1 }} spacing={4}>
           {artshows.length === 0 && <Typography> No Artshows Available</Typography>}
             {artshows.map(show => (
-            
+            // <Card style={styles.BoxLeve2}>
              <Box item 
                 key={show.id_Art_Show}  
-                sx={{   border:1,borderRadius:1,}} 
-                style={styles.level2Box}
-                onMouseEnter={() => setShowIcon(true)}
-                onMouseLeave={() => setShowIcon(false)}
+                // sx={{   border:1,borderRadius:1,}} 
+                style={styles.BoxLeve2}
                 >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
@@ -185,15 +187,15 @@ function deleteitem(record){
                  <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openShowArts(show)}>
                           Get into Art Show
                   </Button>
-                  {showIcon &&
                     <Box style={styles.level2ActionIcons}>
-                      <EditIcon  onClick={() => openEditPopup(show)}/>
-                      <DeleteIcon  onClick={() => deleteitem(show)}/>
+                      <EditIcon  fontSize="small" onClick={() => openEditPopup(show)}/>
+                      <DeleteIcon fontSize="small" onClick={() => deleteitem(show)}/>
                     </Box>
-                  }
+                  
                </Grid>
                </Grid>
               </Box>
+              // </Card>
               
             ))}
         </Container>

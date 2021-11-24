@@ -11,8 +11,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Museum',
-        key: 'id_Museum'
+        model: 'Art_Exhibition',
+        key: 'id_Art_Exhibition'
       }
     },
     Customer: {
@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Exhibition_Tickets" },
         ]
-      }
+      },
     ]
   });
 };

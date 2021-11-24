@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Customer_Purchases', {
+  return sequelize.define('Customer_Art_Purchases', {
     id_Customer_Purchases: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -38,11 +38,15 @@ module.exports = function(sequelize, DataTypes) {
     Purchase_Ref_Id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      comment: "Art Id\nArt Supplies Id\nExhibition Ticket id"
+      comment: "Art Id\nArt Supplies Id\nExhibition Ticket id",
+      references: {
+        model: 'Art',
+        key: 'id_Art'
+      }
     }
   }, {
     sequelize,
-    tableName: 'Customer_Purchases',
+    tableName: 'Customer_Art_Purchases',
     timestamps: false,
     indexes: [
       {
@@ -52,7 +56,35 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Customer_Purchases" },
         ]
-      }
+      },
+      {
+        name: "Customer_Purchases.Customer_idx",
+        using: "BTREE",
+        fields: [
+          { name: "Customer" },
+        ]
+      },
+      {
+        name: "Customer_Purchases.OrderId_idx",
+        using: "BTREE",
+        fields: [
+          { name: "Order" },
+        ]
+      },
+      {
+        name: "Customer_Purchases.Type_idx",
+        using: "BTREE",
+        fields: [
+          { name: "Type" },
+        ]
+      },
+      {
+        name: "Purchase_Ref_Id",
+        using: "BTREE",
+        fields: [
+          { name: "Purchase_Ref_Id" },
+        ]
+      },
     ]
   });
 };

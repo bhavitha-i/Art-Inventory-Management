@@ -51,9 +51,10 @@ const SettingsSearch={
 const SettingsAddButton={
   // justifyContent: "flex-end",
 }
-const spaceBetween={
+const spaceBetweenFlexEnd={
   justifyContent: "space-between",
   display: "flex",
+  alignItems:"flex-end"
 }
 
 const TableActionIcons={
@@ -188,6 +189,40 @@ const AVEBox={
   padding:10
 }
 
+const BoxLeve2={
+  position: 'relative',
+  borderRadius:5,
+  boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+  // transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
+  // "&:hover": {
+  //   boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
+  // },
+  marginTop: "1rem",
+  marginBottom: "1rem",
+
+}
+
+
+const flexstrech={
+  display:"flex",
+  flexDirection:"column",
+  alignItems:"stretch"
+}
+
+const AVL1Button={
+  marginBottom:"10px",
+  minWidth:"6pc"
+}
+
+const AVL2Button={
+  marginBottom:"5px",
+  minWidth:"6pc"
+}
+
+
+const p20={
+  padding:"20px"
+}
 
   const styles = {
     HeaderContainer: HeaderContainer,
@@ -209,7 +244,7 @@ const AVEBox={
     AVInfoHeader:AVInfoHeader,
     level2Box:level2Box,
     options,
-    spaceBetween,
+    spaceBetweenFlexEnd,
     level2GContainer:level2GContainer,
     level1ActionButton:level1ActionButton,
     paddingBottom10:paddingBottom10,
@@ -223,8 +258,14 @@ const AVEBox={
     MenuIcon,
     HeiWid50,
     ml20,
+    AVEBox,
+    BoxLeve2,
+    flexstrech,
+    AVL1Button,
+    AVL2Button,
+    p20,
     p2Box,
-    AVEBox
+ 
   }
 
 

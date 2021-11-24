@@ -175,8 +175,8 @@ function deleteitem(record){
             
              <Box item 
                 key={show.id_Museum}  
-                sx={{   border:1,borderRadius:1,}} 
-                style={styles.level2Box}
+                // sx={{   border:1,borderRadius:1,}} 
+                style={styles.BoxLeve2}
                 >
                <Grid Container style={styles.level2GContainer}>
                <Grid item xs={7} >
@@ -200,8 +200,8 @@ function deleteitem(record){
                   </Button>
 
                     <Box style={styles.level2ActionIcons}>
-                      <EditIcon  onClick={() => openEditPopup(show)}/>
-                      <DeleteIcon  onClick={() => deleteitem(show)}/>
+                      <EditIcon fontSize="small" onClick={() => openEditPopup(show)}/>
+                      <DeleteIcon fontSize="small" onClick={() => deleteitem(show)}/>
                     </Box>
                   
                </Grid>
