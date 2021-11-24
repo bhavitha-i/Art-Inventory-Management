@@ -32,7 +32,15 @@ const p1Box={
   margin:"auto"
 
 }
+const p2Box={
+  display: "flex",
+  alignItems:"center",
+  justifyContent: "flex-end",
+  padding:"5px",
+  width:"80%",
+  margin:"auto"
 
+}
 const SettingsSearch={
     justifyContent: "flex-start",
     boxShadow: "none",
@@ -255,7 +263,9 @@ const p20={
     flexstrech,
     AVL1Button,
     AVL2Button,
-    p20
+    p20,
+    p2Box,
+ 
   }
 
 

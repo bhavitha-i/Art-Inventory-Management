@@ -20,6 +20,8 @@ router.put("/customer_purchases_art_store/rent/:id",customer_purchases.rent);
 
 router.put("/customer_purchases/close/:id",customer_purchases.closebid);
 
+router.post("/customer_purchases/tickets",customer_purchases.tickets);
+
 
 
 module.exports = router;
