@@ -41,7 +41,7 @@ export default function ArtHomeCard() {
   const navigate = useNavigate();
 
   function handleClick(){
-    navigate("/art")
+    navigate("/artDisplay")
   }
 
   return (

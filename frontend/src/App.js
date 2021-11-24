@@ -30,13 +30,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route  path="/" element={<Home />} />
-        <Route  path="/artist" element={<Artist />} />
-        <Route  path="/customer" element={<Customer />} />
-        <Route  path="/art" element={<Art />} />
+        <Route  path="/artistDisplay" element={<Artist />} />
+        <Route  path="/customerDisplay" element={<Customer />} />
+        <Route  path="/artDisplay" element={<Art />} />
         <Route  path="/artview/:Id" element={<ArtView />} />
         <Route  path="/artshow/:Id" element={<ArtShowView />} />
         <Route  path="/artstore/:Id" element={<ArtStoreView />} />
-        <Route  path="/museum/:Id" element={<Exhibits />} />
+        <Route  path="/museumDisplay/:Id" element={<Exhibits />} />
         <Route  path="/exhibit/:Id" element={<ExhibitView />} />
         <Route  path="/artistView/:Id" element={<ArtsByList />} />
 
@@ -44,8 +44,8 @@ function App() {
 
         <Route  path="/artshow" element={<ArtShows />} />
    	    <Route  path="/artstore" element={<ArtStores />} />
-        <Route  path="/museum" element={<Museums />} />
-        <Route  path="/order" element={<Orders />} />
+        <Route  path="/museumDisplay" element={<Museums />} />
+        <Route  path="/orderDisplay" element={<Orders />} />
         <Route  path="/artsupplies" element={<ArtSupplies />} />
 
         <Route  path="/settings" element={<Settings />} />

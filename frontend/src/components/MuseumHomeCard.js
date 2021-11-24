@@ -42,7 +42,7 @@ export default function MuseumHomeCard(props) {
   const navigate = useNavigate();
 
   function handleClick(){
-    navigate("/museum")
+    navigate("/museumDisplay")
   }
 
   return (

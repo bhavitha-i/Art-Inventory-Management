@@ -19,6 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(10,2),
       allowNull: false
     },
+
     RentPerDay: {
       type: DataTypes.DECIMAL(10,2),
       allowNull: true
@@ -31,15 +32,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_Store'
       }
     },
-    Status: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 0,
-      references: {
-        model: 'InStore_Art_Status',
-        key: 'id_InStore_Art_Status'
-      }
-    }
   }, {
     sequelize,
     tableName: 'Art_In_Store',

@@ -22,7 +22,6 @@ const Artist_PurchasesRouter = require("./routers/Artist_Purchases");
 const CustomerRouter = require("./routers/Customer");
 const Customer_PurchasesRouter = require("./routers/Customer_Purchases");
 const Exhibition_TicketsRouter = require("./routers/Exhibition_Tickets");
-const InStore_Art_StatusRouter = require("./routers/InStore_Art_Status");
 const MuseumRouter = require("./routers/Museum");
 const OrderRouter = require("./routers/Order");
 const Painting_ArtRouter = require("./routers/Painting_Art");
@@ -70,7 +69,6 @@ app.use(ZipcodeRouter)
 app.use(ArtRouter)
 app.use(Art_StatusRouter)
 app.use(Art_ShowRouter)
-app.use(InStore_Art_StatusRouter)
 app.use(StoreRouter)
 app.use(Art_ShowRouter)
 app.use(MuseumRouter)

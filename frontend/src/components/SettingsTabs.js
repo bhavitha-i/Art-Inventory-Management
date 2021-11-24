@@ -12,7 +12,6 @@ import Countries from "./Countries"
 import States from "./States"
 import Cities from "./Cities"
 import ArtStatus from "./ArtStatusList"
-import ArtStore_ArtStatus from "./ArtStore_ArtStatus"
 
 
 class SettingsTabs extends React.PureComponent {

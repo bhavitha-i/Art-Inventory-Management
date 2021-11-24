@@ -107,7 +107,8 @@ const getOrders = async () => {
 
 const requestSearch = (searchedVal) => {
     const filteredRows = rows.filter((row) => {
-      return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
+      return ( row.Customer_Customer.FirstName.toLowerCase().includes(searchedVal.toLowerCase()) 
+            || row.Customer_Customer.LastName.toLowerCase().includes(searchedVal.toLowerCase()) );
     });
     setOrders(filteredRows);
 };

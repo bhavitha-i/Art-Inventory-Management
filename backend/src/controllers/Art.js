@@ -206,6 +206,15 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
+  dbmodels.Art_For_Rent.destroy({ where: { Art: id } }).then( (res) => console.log(res))
+  dbmodels.Art_in_Auction.destroy({ where: { Art: id } }).then( (res) => console.log(res))
+  dbmodels.Art_In_Store.destroy({ where: { Art: id } }).then( (res) => console.log(res))
+  dbmodels.Art_In_Museum.destroy({ where: { Art: id } }).then( (res) => console.log(res))
+  dbmodels.Art_in_Exhibition.destroy({ where: { Art: id } }).then( (res) => console.log(res))
+  dbmodels.Customer_Art_Purchases.destroy({ where: { Purchase_Ref_Id: id } }).then( (res) => console.log(res))
+  dbmodels.Painting_Art.destroy({ where: { Art: id } }).then( (res) => console.log(res))
+  dbmodels.Sculpture_Art.destroy({ where: { ArtId: id } }).then( (res) => console.log(res))
+
   dbmodels.Art.destroy({
     where: { id_Art: id },
   }).then(() => {

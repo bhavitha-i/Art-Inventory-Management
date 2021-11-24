@@ -44,7 +44,7 @@ export default function CusotmersHomeCard(props) {
   const navigate = useNavigate();
 
   function handleClick(){
-    navigate("/customer")
+    navigate("/customerDisplay")
   }
 
 

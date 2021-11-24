@@ -45,7 +45,7 @@ export default function ArtistHomeCard(props) {
   const navigate = useNavigate();
 
   function handleClick(){
-    navigate("/artist")
+    navigate("/artistDisplay")
   }
 
   return (
