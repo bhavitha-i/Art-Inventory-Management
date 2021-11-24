@@ -1,23 +1,24 @@
 import * as React from 'react';
-import ArtSuppliesList from '../components/ArtSuppliesList'
+import ArtShowView from '../components/ArtShowView'
 import NavAppBar from '../components/NavAppBar';
 import theme from '../components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import withRoot from '../components/WithRoot';
+import { useParams } from "react-router-dom";
 
 
-function ArtSupplies(){
+function ArtShowview(){
+    const [options,setOptions]= React.useState([])
+    options.push( { title:"Art Shows", url:"/artshow"})
     
-    const options=[]
-    options.push( { title:"Art Supplies", url:"/artsupplies"})
 
     return (
     <ThemeProvider theme={theme}>
         <NavAppBar options={options}/>
-        <ArtSuppliesList/>
+        <ArtShowView  id={useParams().Id}/>
     </ThemeProvider>
     );
 }
 
-export default withRoot(ArtSupplies)
+export default withRoot(ArtShowview)
 

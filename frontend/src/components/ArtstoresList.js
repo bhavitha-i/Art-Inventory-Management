@@ -38,7 +38,7 @@ export default function ArtstoresList() {
   const [errAlert,setErrAlert] = useState("");
   const [message,setMessage] = useState("");
   const [artcount, setArtcount] = useState([])
-
+  const [zips,setZips]=useState([])
 
 
   function refreshPage() {
@@ -52,6 +52,7 @@ export default function ArtstoresList() {
   useEffect(() => {     
         getArtStores()
         getArtCount()
+        getZipcode()
   },[]);
 
 
@@ -63,6 +64,22 @@ const getArtStores = async () => {
             console.log(response.data,"from api")})
           .catch(error => {console.log(error)})
 };  
+
+const getZipcode = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/zipcode/all')
+        .then(response =>{ 
+          const data = response.data
+          const options = data.map(s => ({
+            "value" : s.ZipCode,
+            "label" : s.ZipCode,
+            "city": s.CityName,
+            "state": s.State
+          }))
+
+          setZips(response.data)
+          console.log(response.data,"from api")})
+        .catch(error => {console.log(error)})
+}; 
 
 
 const getArtCount = async () => {
@@ -91,6 +108,11 @@ const cancelSearch = () => {
 
 
 const openEditPopup = item => {
+  if(item.Location){
+    item.Street1 = item.Location_Address.Street1
+    item.Street2 = item.Location_Address.Street2
+    item.ZipCode = item.Location_Address.ZipCode
+  }  
   setRecordForEdit(item)
   setOpenPopup(true)
   setIsEdit(true)
@@ -163,7 +185,12 @@ function deleteitem(record){
                <Grid item xs={7} >
                   <Typography variant="h5" >{store.Name}</Typography>
                   <Typography variant="body">
-                     <b>Location</b> : {store.Location}<br/>
+                     <b>Location</b> : <br/>
+                     {store.Location && store.Location_Address &&  <div>
+                     {<span>{store.Location_Address.Street1 && store.Location_Address.Street1} , {store.Location_Address.Street2 && store.Location_Address.Street2} </span> }<br/>
+                     {store.Location_Address.ZipCode_ZipCode_in_State.CityName+' ,'+store.Location_Address.ZipCode_ZipCode_in_State.State.Name  }<br/>
+                     {store.Location_Address.ZipCode_ZipCode_in_State.State.Country.Name + ' - ' +store.Location_Address.ZipCode }<br/>
+                     </div> }
                   </Typography>
                </Grid>
                <Grid item xs={3} >
@@ -194,6 +221,7 @@ function deleteitem(record){
                 setOpenPopup={setOpenPopup}
              >
                 <ArtStoreFrom
+                    zips={zips}
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
                     />

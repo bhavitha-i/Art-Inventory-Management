@@ -184,31 +184,28 @@ function deleteitem(record){
           </Button>
       </Box>
       <Container sx={{ py: 1 }} >
+        <Grid Container style={styles.flexwrap}>
           {exhibits.length === 0 && <Typography> No Exhibits Available</Typography>}
             {exhibits.map(show => (
-            
+            <Grid item xs={12} sm={6}>
              <Box item 
+                boxShadow={3}
                 key={show.id_Art_Exhibition}  
                 sx={{   border:1,borderRadius:1,}} 
                 style={styles.level2Box}
                 >
-               <Grid Container style={styles.level2GContainer}>
-               <Grid item xs={7} >
+               <Container style={styles.flexp10spacebetween}>
+               <Box>
                   <Typography variant="h5" >{show.Title}</Typography>
                   <Typography variant="body1">
                     <b>Description</b> : {show.Description}<br/>
                     <b>Ticket Price</b> : ${show.TicketPrice}<br/>
-                  </Typography>
-               </Grid>
-               <Grid item xs={3} >
-                  <Typography variant="body1">
-                  <b>Start Time</b> : {show.StartTime && moment(show.StartTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                    <b>Start Time</b> : {show.StartTime && moment(show.StartTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
                   <b>Last Time</b> : {show.EndTime && moment(show.EndTime).format('DD/MM/YYYY h:mm:ss a')}<br/>
                   <b>Art Count</b> : {(artcount[show.id_Art_Exhibition] >0) ? artcount[show.id_Art_Exhibition] : 0}<br/>
                   </Typography>
-               </Grid>
-
-               <Grid item xs={3} style={styles.level2ActionGrid}>
+               </Box>
+               <Box item style={styles.level2ActionGrid}>
                  <Button variant="outlined" endIcon={<SendIcon />} onClick={() => openExhibit(show)}>
                           Get into Exhibit
                   </Button>
@@ -218,11 +215,12 @@ function deleteitem(record){
                       <DeleteIcon fontSize="small" onClick={() => deleteitem(show)}/>
                     </Box>
                   
-               </Grid>
-               </Grid>
+               </Box>
+               </Container>
               </Box>
-              
+              </Grid>
             ))}
+            </Grid>
         </Container>
         <Popup
                 title={isEdit?"Edit Exhibtion":"Add Exhibtion"}

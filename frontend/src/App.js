@@ -10,13 +10,13 @@ import Artist from "./views/Artist"
 import Art from "./views/Arts"
 import Settings from './views/Settings';
 import ArtView from './views/ArtView'
-import ArtShowView from './components/ArtShowView'
+import ArtShowView from './views/ArtshowView'
 import ArtShows from './views/Artshows'
 import Museums from './views/Museums';
 import ArtStores from './views/ArtStores';
 import ArtStoreView from './views/ArtStoreView';
 import Customer from './views/Customer'
-import Orders from './components/Orders'
+import Orders from './views/Orders'
 import Exhibits from './views/Exhibits';
 import ExhibitView from './views/ExhibitView';
 import ArtsByList from './components/ArtsByList';
@@ -34,7 +34,7 @@ function App() {
         <Route  path="/customer" element={<Customer />} />
         <Route  path="/art" element={<Art />} />
         <Route  path="/artview/:Id" element={<ArtView />} />
-        <Route  path="/artshow/:showId" element={<ArtShowView />} />
+        <Route  path="/artshow/:Id" element={<ArtShowView />} />
         <Route  path="/artstore/:Id" element={<ArtStoreView />} />
         <Route  path="/museum/:Id" element={<Exhibits />} />
         <Route  path="/exhibit/:Id" element={<ExhibitView />} />

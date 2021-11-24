@@ -255,7 +255,7 @@ const openEditPopup = item => {
                   <Grid item xs={1} >
                     {/* {showIcon=="artDetails"&&  */}
                     <Box style={styles.flexstrech}>
-                    <Button style={styles.AVL1Button} variant="contained" color="error">Delete</Button>
+                    <Button style={styles.AVL1Button} variant="outlined" color="error">Delete</Button>
                     <Button style={styles.AVL1Button} variant="outlined" color="primary" onClick={() => openEditPopup("artDetails")}>Edit</Button>
                     </Box> 
                     {/* } */}

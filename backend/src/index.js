@@ -90,7 +90,7 @@ app.use(Exhibition_TicketsRouter)
 
 app.use(Art_SuppliesRouter)
 app.use(Artist_PurchasesRouter)
-
+app.use(AddressRouter)
 
 app.listen(port,()=>{
     console.log('server is up on port '+ port)

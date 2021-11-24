@@ -31,7 +31,13 @@ exports.findAll = (req, res) => {
     include: [
       {
         model: dbmodels.State,
-        as: "State"
+        as: "State",
+        include:[
+          {
+            model: dbmodels.Country,
+            as:"Country",
+          }
+        ]
       }
     ]
   })

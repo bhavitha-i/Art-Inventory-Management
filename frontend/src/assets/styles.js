@@ -118,12 +118,18 @@ const AVInfoHeader={
 
 const level2Box={
   margin: "10px",
-  borderColor: theme.palette.primary.main
+  borderColor: theme.palette.grey[200]
 }
 
 const level2GContainer={
   display:"flex",
   padding:"10px"
+}
+
+const flexp10spacebetween={
+  display:"flex",
+  padding:"10px",
+  justifyContent:"space-between"
 }
 
 const level1ActionButton={
@@ -236,6 +242,11 @@ const mb20={
   marginBottom:"20px"
 }
 
+const flexwrap={
+  display:"flex",
+  flexWrap:"wrap"
+}
+
   const styles = {
     HeaderContainer: HeaderContainer,
     MyProfileTabsBox:MyProfileTabsBox,
@@ -279,8 +290,9 @@ const mb20={
     p2Box,
     p2TableContainer,
     tickethead,
-    mb20
- 
+    mb20,
+    flexp10spacebetween,
+    flexwrap
   }
 
 
