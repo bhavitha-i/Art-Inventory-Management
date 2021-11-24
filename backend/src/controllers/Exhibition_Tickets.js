@@ -59,6 +59,32 @@ exports.findByPk = (req, res) => {
 };
 
 
+
+exports.findByExhibitPk = (req, res) => {
+  dbmodels.Exhibition_Tickets.findAll( 
+    { where: { Museum: req.params.id } ,
+    include:[
+      { 
+        model:dbmodels.Customer,
+        as:"Customer_Customer"
+      }
+    ]
+  })
+    .then((result) => {
+    res.status(200).json({
+      status: true,
+      data: result,
+    });
+  })
+  .catch(err => {
+    res.send({
+      message:
+        err.message || "Some error occurred while retrieving ."
+    });
+  });
+};
+
+
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;

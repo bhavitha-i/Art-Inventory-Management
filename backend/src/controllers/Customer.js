@@ -9,11 +9,11 @@ exports.create = (req, res) => {
   const rowData = req.body;
 
   dbmodels.Customer.create(rowData)
-      .then((result) => {
+    .then((result) => {
       res.status(200).json({
         status: true,
         message: "Row created successfully",
-        data:result
+        data: result
       });
     })
     .catch(err => {
@@ -22,29 +22,41 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while adding data."
       });
     });
-  };
+};
 
 //Get all from Table
 exports.findAll = (req, res) => {
 
   dbmodels.Customer.findAll({})
-      .then(result => {
-        res.send(result);
-      })
-      .catch(err => {
-        res.send({
-          message:
-            err.message || "Some error occurred while retrieving ."
-        });
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      res.send({
+        message:
+          err.message || "Some error occurred while retrieving ."
       });
-  };
+    });
+};
 
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-    dbmodels.Artist_Purchases.findByPk(req.params.id, {
-    })
-      .then((result) => {
+  dbmodels.Customer.findByPk(req.params.id, {
+    include: [
+      {
+        model: dbmodels.Customer_Art_Purchases,
+        as: "Customer_Art_Purchases",
+      include: [
+        {
+          model: dbmodels.Art,
+          as: "Purchase_Ref"
+        }
+      ]
+    },
+    ]
+  })
+    .then((result) => {
       res.status(200).json({
         status: true,
         data: result,
@@ -65,18 +77,18 @@ exports.update = (req, res) => {
   dbmodels.Customer.update(req.body,
     { where: { id_Customer: id } }
   ).
-  then(() => {
-    res.status(200).json({
+    then(() => {
+      res.status(200).json({
         status: true,
         message: "Updated successfully with id = " + id,
+      });
+    })
+    .catch(err => {
+      res.send({
+        message:
+          err.message || "Some error occurred while retrieving ."
+      });
     });
-  })
-  .catch(err => {
-    res.send({
-      message:
-        err.message || "Some error occurred while retrieving ."
-    });
-  });
 };
 
 
@@ -88,14 +100,14 @@ exports.delete = (req, res) => {
     where: { id_Customer: id },
   }).then(() => {
     res.status(200).json({
-        status: true,
-        message: "Deleted successfully with id = " + id
+      status: true,
+      message: "Deleted successfully with id = " + id
     });
   })
-  .catch(err => {
-    res.send({
-      message:
-        err.message || "Some error occurred while deleting."
+    .catch(err => {
+      res.send({
+        message:
+          err.message || "Some error occurred while deleting."
+      });
     });
-  });
 };

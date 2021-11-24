@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import Popup from './Popup'
 import ExhibitArtForm from './ExhibitArtForm';
+import TicketData from './TicketData';
 
 
 // ----------------------------------------------------------------------
@@ -38,6 +39,8 @@ export default function ExhibitViewArts(props) {
   const [openPopup, setOpenPopup] = useState(false);
   const [museumId,setMusumId] = useState("")
   const [museumarts, setMuseumarts] = useState([])
+  const [openPopupTix, setOpenPopupTix] = useState(false);
+  const [tickets,setTickets] = useState("");
   var exhibitids=[]
   const [exhibitbools,setBools]=useState([])
   var museumIds=[]
@@ -53,9 +56,19 @@ export default function ExhibitViewArts(props) {
   useEffect(() => {     
         getArts()
         getMuseum()
+        getValues()
 
   },[]);
 
+    const getValues = async() =>{
+    axios.get(process.env.REACT_APP_API_URL+`/exhibition_tickets/exhibit/${exhibitId}`)
+    .then(response =>{ 
+        setTickets(response.data)
+
+        console.log(response.data,"tickets from api")})
+      .catch(error => {console.log(error)})
+
+  }
 
   const getArts = async () => {
     axios.get(process.env.REACT_APP_API_URL+`/art_in_exhibit/${exhibitId}`)
@@ -119,7 +132,10 @@ const cancelSearch = () => {
 const openAddPopup = item => {
   setOpenPopup(true)
 }
-
+const openAddPopupTix = item => {
+  setOpenPopupTix(true)
+  
+}
 
 
   return (
@@ -132,7 +148,19 @@ const openAddPopup = item => {
         placeholder="Search for Art"
         style={styles.SettingsSearch}
         />
+            <Box style={styles.p2Box}>
+      
+      <Button
+           type="submit"
+           variant="outlined"
+           // style={styles.ArtStylesAddButton}
+           onClick={() => openAddPopupTix(true)}
+       >
+        Tickets
+       </Button>
+   </Box>
           <Button
+              sx={{   width: "150px"}}
               type="submit"
               variant="outlined"
               // style={styles.ArtStylesAddButton}
@@ -189,6 +217,19 @@ const openAddPopup = item => {
                     />
                 
         </Popup>
+        
+        <Popup
+                title="Tickets"
+                openPopup={openPopupTix}
+                setOpenPopup={setOpenPopupTix}
+             >
+                <TicketData 
+                    tickets={tickets}
+               
+                    setOpenPopup={setOpenPopupTix}
+                    />
+                
+            </Popup>
 
     </ThemeProvider>
 

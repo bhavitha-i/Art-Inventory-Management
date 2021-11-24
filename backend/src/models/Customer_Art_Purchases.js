@@ -56,7 +56,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "id_Customer_Purchases" },
         ]
-      },
+      }
     ]
   });
 };

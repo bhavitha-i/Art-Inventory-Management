@@ -9,6 +9,8 @@ router.post("/exhibition_tickets/add",exhibition_tickets.create)
 
 router.get("/exhibition_tickets/:id", exhibition_tickets.findByPk);
 
+router.get("/exhibition_tickets/exhibit/:id", exhibition_tickets.findByExhibitPk);
+
 router.put("/exhibition_tickets/:id", exhibition_tickets.update);
 
 router.delete("/exhibition_tickets/:id", exhibition_tickets.delete);

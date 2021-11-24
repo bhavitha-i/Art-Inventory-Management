@@ -40,7 +40,7 @@ const Cdivider = styled(Divider)(() => ({
 
 
 function RentBuyForm(props)  {
-    const [storeId,setStoreId] =useState(useParams().storeId)
+    const [storeId,setStoreId] =useState(props.id)
     const [inputs, setInputs] = useState({});
     const [callFlag,setCallFlag] = useState(false);
     const [errAlert,setErrAlert] = useState("");
@@ -70,25 +70,32 @@ function RentBuyForm(props)  {
       console.log(inputs,"++++++++++")
       inputs.price = props.art.Price
       inputs.rent = props.art.RentPerDay
-      inputs.store = storeId
+      inputs.store = props.id
       inputs.Art = props.art.Art
-      var days = ((new Date(inputs.RentFrom).getTime() - new Date(inputs.RentTo).getTime())/(1000*3600*24),"+++++++++++++")
+      var days = ((new Date(inputs.RentTo).getTime() - new Date(inputs.RentFrom).getTime())/(1000*3600*24))
+      if(days < 0){
+        
+        alert('From date should be before to Date')
+        return
+      }
       
-      inputs.TotalRentValue = days * inputs.rent
+      inputs.TotalRentValue = (days * inputs.rent)
     
 
-      console.log(inputs,"inside submit")
+      console.log(inputs,inputs.store,storeId,"inside submit")
 
+      
 
       if(isRent){
         axios.put(process.env.REACT_APP_API_URL+`/customer_purchases_art_store/rent/${inputs.Art}`,inputs)
         .then(response =>{ 
           console.log(response.data,"rent from api")})
         .catch(error => {console.log(error)})
+        return
 
       }
-
-      axios.put(process.env.REACT_APP_API_URL+`/customer_purchases_art_store/${inputs.Art}`,inputs)
+      
+      axios.put(process.env.REACT_APP_API_URL+`/order/buy/${inputs.Art}`,inputs)
       .then(response =>{ 
         console.log(response.data,"buy from api")})
       .catch(error => {console.log(error)})
@@ -100,8 +107,16 @@ function RentBuyForm(props)  {
       const handleInputChange = (event) => {
         // event.persist();
 
-        if(event.target.name == "RentorBuy" && event.target.value == 2){
-            setIsRent(true)
+        // const filteredRows = rows.filter((row) => {
+        //     return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
+        //   });
+        if(event.target.name == 'RentorBuy' &&event.target.value == 1){
+          setIsRent(false)
+        }
+
+        if(event.target.name == 'RentorBuy' &&event.target.value == 2){
+          setIsRent(true)
+         
             const premCust = props.customers.filter((c) =>{
                 console.log(c); 
                 return c.isprem == 1
@@ -110,7 +125,7 @@ function RentBuyForm(props)  {
             setCusts(premCust)
            
         }else{
-            setIsRent(false)
+       
             setCusts(props.customers)
         }
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
@@ -181,39 +196,38 @@ function RentBuyForm(props)  {
         
         </FormControl>
 
-        {isRent && 
-        <Grid Container>
-            <Grid item xs={5}>
-              <TextField
-                id="Rent Start Date"
-                label="From"
-                type="date"
-                fullWidth   
-                name="RentFrom"         
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleDate}
-                value={inputs.RentFrom|| ''}
-              />
-            </Grid>
-            
-            <Grid item xs={5}>
-              <TextField
-                id="Rent end Date"
-                label="To"
-                type="date"
-                fullWidth   
-                name="RentTo"         
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={handleDate}
-                value={inputs.RentTo|| ''}
-              />
-            </Grid>
+        {isRent && <Grid>
+        <Grid item xs={5}>
+           <TextField
+            id="Rent Start Date"
+            label="From"
+            type="date"
+            fullWidth   
+            name="RentFrom"         
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={handleDate}
+            value={inputs.RentFrom|| ''}
+          />
+        </Grid>
+        
+        <Grid item xs={5}>
+           <TextField
+            id="Rent end Date"
+            label="To"
+            type="date"
+            fullWidth   
+            name="RentTo"         
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            onChange={handleDate}
+            value={inputs.RentTo|| ''}
+          />
+        </Grid>
         </Grid>
       }   
 

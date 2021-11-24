@@ -13,7 +13,7 @@ router.put("/customer_purchases/:id", customer_purchases.update);
 
 router.delete("/customer_purchases/:id", customer_purchases.delete);
 
-router.put("/customer_purchases_art_store/:id",customer_purchases.order);
+
 
 router.put("/customer_purchases_art_store/rent/:id",customer_purchases.rent);
 

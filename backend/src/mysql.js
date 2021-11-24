@@ -18,6 +18,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+// initialize()
 var initModels = require("./models/init-models");
 db.models = initModels(sequelize);
 

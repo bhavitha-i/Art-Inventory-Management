@@ -1,19 +1,10 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import strings from '../assets/strings';
 import theme from './theme'
 import { ThemeProvider } from '@material-ui/core/styles';
-import { Button } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import { withStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import Divider from "@material-ui/core/Divider";
+import moment from 'moment'
 import { styled } from '@mui/material/styles';
+import NativeSelect from '@mui/material/NativeSelect';
 import  { useState, useEffect } from "react"
 import axios from "axios";
 import Table from '@mui/material/Table';
@@ -127,43 +118,38 @@ const cancelSearch = () => {
 };
 
 
-  const openEditPopup = item => {
-    setRecordForEdit(item)
-    setOpenPopup(true)
-    setIsEdit(true)
-  }
+
+  const handleAddrTypeChange = async (e,order) => {
+    console.log((e.target.value,order))
+
+
   
+   
 
-  const openAddPopup = item => {
-    setOpenPopup(true)
-    setIsEdit(false)
-  }
-
-  function deleteitem(item){
-
-    axios.delete(process.env.REACT_APP_API_URL+'/customer/'+item.id_Customer)
+    const statusUpdate={
+        
+        "PaymentStatus":e.target.value
+    }
+    console.log(order.order_id,"order")
+    axios.put(process.env.REACT_APP_API_URL+`/order/${order.id_Order}`,statusUpdate)
     .then(response =>{ 
-        if(response.data == null){
-            setCallFlag(true)
-            setErrAlert("error")
-            setMessage(response.message)
-        }
-        else{
+
         console.log(response.data,"from api")
-        setCallFlag(true)
         setErrAlert("success")
-        setMessage("Artist Deleted")
+        setMessage("Payment Added")
+        setCallFlag(true)
         refreshPage()
-        }
+        
     })
     .catch(error => {
         console.log(error)
         setCallFlag(true)
         setErrAlert("error")
-        setMessage("Error while deleting Artist")
+        setMessage("Error while adding Exhibit")
     })
-    
 
+  
+          
   }
 
 
@@ -201,6 +187,7 @@ const cancelSearch = () => {
             <P1TableCell >Customer Name</P1TableCell>
             <P1TableCell >Value</P1TableCell>
             <P1TableCell >Payment Status</P1TableCell>
+            <P1TableCell >Action</P1TableCell>
             <P1TableCell >Date</P1TableCell>
             
           </TableRow>
@@ -218,18 +205,26 @@ const cancelSearch = () => {
               <P1TableCell>{order.Customer_Customer.FirstName + " "+order.Customer_Customer.LastName }</P1TableCell>
               <P1TableCell >{order.Value}</P1TableCell>
               <P1TableCell >{order.PaymentStatus_Payment_Status.Status}</P1TableCell>
-      
-              <P1TableCell >{order.Date}</P1TableCell>
+              <P1TableCell >  <NativeSelect
+          defaultValue={30}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+         
+          }}
+          onChange={(e) => handleAddrTypeChange(e,order)}
+        >
+            <option value={order.PaymentStatus_Payment_Status.Status}>-</option>
+          <option value={0}>Initiated</option>
+          <option value={1}>Pending</option>
+          <option value={2}>Accepted</option>
+          <option value={3}>Rejected</option>
+        
+        </NativeSelect></P1TableCell>
+              <P1TableCell >{moment(order.Date).format('DD/MM/YYYY h:mm:ss a')}</P1TableCell>
              
              
-{/*               
-              <P1TableCell>
-                <Container  style={styles.TableActionIcons}>
-                  <EditIcon onClick={() => openEditPopup(prder)}/>
-                  <DeleteIcon onClick={() => deleteitem(customer)}/>
-                  </Container>
-              </P1TableCell> */}
-              
+
             </TableRow>
           ))}
           </TableBody>  

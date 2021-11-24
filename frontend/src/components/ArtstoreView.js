@@ -230,6 +230,7 @@ const openActionPop = item => {
                     customers = {customers}
                     openActionPopup={openActionPopup}
                     art={selectedArt}
+                    id={storeId}
                 />
                 
         </PopupAction>
