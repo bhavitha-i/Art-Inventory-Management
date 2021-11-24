@@ -8,7 +8,7 @@ const dbmodels = db.models
 exports.create = (req, res) => {
   const rowData = req.body;
 
-  dbmodels.Customer_Purchases.create(rowData)
+  dbmodels.Customer_Art_Purchases.create(rowData)
     .then((result) => {
       res.status(200).json({
         status: true,
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Customer_Purchases.findAll({})
+  dbmodels.Customer_Art_Purchases.findAll({})
     .then(result => {
       res.send(result);
     })
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 
 // Find a Table by Id
 exports.findByPk = (req, res) => {
-  dbmodels.Customer_Purchases.findByPk(req.params.id, {
+  dbmodels.Customer_Art_Purchases.findByPk(req.params.id, {
   })
     .then((result) => {
       res.status(200).json({
@@ -62,7 +62,7 @@ exports.findByPk = (req, res) => {
 // Update a Table
 exports.update = (req, res) => {
   const id = req.params.id;
-  dbmodels.Customer_Purchases.update(req.body,
+  dbmodels.Customer_Art_Purchases.update(req.body,
     { where: { id_Customer_Purchases: id } }
   ).
     then(() => {
@@ -84,7 +84,7 @@ exports.update = (req, res) => {
 // Delete a Artist by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
-  dbmodels.Customer_Purchases.destroy({
+  dbmodels.Customer_Art_Purchases.destroy({
     where: { id_Customer_Purchases: id },
   }).then(() => {
     res.status(200).json({
@@ -135,7 +135,7 @@ exports.order = (req, res) => {
 
       console.log(newDataRow, "helo----------------")
 
-      dbmodels.Customer_Purchases.create(newDataRow)
+      dbmodels.Customer_Art_Purchases.create(newDataRow)
         .then((result) => {
           res.status(200).json({
             status: true,
@@ -195,7 +195,7 @@ exports.rent = (req, res) => {
 
       console.log(newDataRow, "helo----------------")
 
-      dbmodels.Customer_Purchases.create(newDataRow)
+      dbmodels.Customer_Art_Purchases.create(newDataRow)
         .then((result) => {
           console.log("row added in customer purchases")
         })
@@ -272,7 +272,7 @@ exports.closebid = (req, res) => {
 
       console.log(newDataRow, "helo----------------")
 
-      dbmodels.Customer_Purchases.create(newDataRow)
+      dbmodels.Customer_Art_Purchases.create(newDataRow)
         .then((result) => {
           console.log("row added in customer purchases")
         })
@@ -317,7 +317,7 @@ exports.tickets = (req, res) => {
 
     console.log(newDataRow, "helo----------------")
 
-    dbmodels.Customer_Purchases.create(newDataRow)
+    dbmodels.Customer_Art_Purchases.create(newDataRow)
       .then((result) => {
         console.log("row added in customer purchases")
       })
