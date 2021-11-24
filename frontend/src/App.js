@@ -16,7 +16,7 @@ import Museums from './views/Museums';
 import ArtStores from './views/ArtStores';
 import ArtStoreView from './views/ArtStoreView';
 import Customer from './views/Customer'
-import Orders from './components/Orders'
+import Orders from './views/Orders'
 import Exhibits from './views/Exhibits';
 import ExhibitView from './views/ExhibitView';
 import ArtSupplies from './views/ArtSupplies'

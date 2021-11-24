@@ -7,9 +7,12 @@ import withRoot from '../components/WithRoot';
 
 
 function Home(){
+    const options=[]
+    options.push( { title:"Arts", url:"/art"})
+    
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Arts"}/>
+        <NavAppBar options={options}/>
         <ArtsList/>
     </ThemeProvider>
     );

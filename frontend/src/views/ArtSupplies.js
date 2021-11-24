@@ -7,9 +7,13 @@ import withRoot from '../components/WithRoot';
 
 
 function ArtSupplies(){
+
+    const options=[]
+    options.push( { title:"Art Supplies", url:"/artsupplies"})
+
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Art Supplies"}/>
+        <NavAppBar options={options}/>
         <ArtSuppliesList/>
     </ThemeProvider>
     );
