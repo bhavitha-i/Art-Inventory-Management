@@ -124,8 +124,6 @@ function initModels(sequelize) {
   InStore_Art_Status.hasMany(Art_In_Store, { as: "Art_In_Stores", foreignKey: "Status"});
   Art_Exhibition.belongsTo(Museum, { as: "Museum_Museum", foreignKey: "Museum"});
   Museum.hasMany(Art_Exhibition, { as: "Art_Exhibitions", foreignKey: "Museum"});
-  Artist_Purchases.belongsTo(Order, { as: "Order_Order", foreignKey: "Order"});
-  Order.hasMany(Artist_Purchases, { as: "Artist_Purchases", foreignKey: "Order"});
   Order.belongsTo(Payment_Status, { as: "PaymentStatus_Payment_Status", foreignKey: "PaymentStatus"});
   Payment_Status.hasMany(Order, { as: "Orders", foreignKey: "PaymentStatus"});
   ZipCode_in_States.belongsTo(State, { as: "State", foreignKey: "StateId"});

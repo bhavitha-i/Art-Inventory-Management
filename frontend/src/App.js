@@ -21,6 +21,7 @@ import Exhibits from './views/Exhibits';
 import ExhibitView from './views/ExhibitView';
 import ArtsByList from './components/ArtsByList';
 
+import ArtSupplies from './views/ArtSupplies'
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
    	    <Route  path="/artstore" element={<ArtStores />} />
         <Route  path="/museum" element={<Museums />} />
         <Route  path="/order" element={<Orders />} />
+        <Route  path="/artsupplies" element={<ArtSupplies />} />
 
         <Route  path="/settings" element={<Settings />} />
         <Route  path="/settings/:index" element={<Settings />} />

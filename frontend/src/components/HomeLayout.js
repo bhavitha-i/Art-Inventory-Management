@@ -10,7 +10,9 @@ import ArtShowsHomeCard from './ArtShowsHomeCard'
 import ArtStoresHomeCard from './ArtStoresHomeCard'
 import CustomersHomeCard from './CustomersHomeCard'
 import MuseumHomeCard from './MuseumHomeCard'
+import ArtSuppliesHomeCard from './ArtSuppliesHomeCard'
 import OrderCard from './OrderCard'
+
 
 
 // ----------------------------------------------------------------------
@@ -21,11 +23,12 @@ export default function App() {
          <Container  style={styles.HeaderContainer}>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <ArtHomeCard title="Art" icon="androidFilled"/>
-          </Grid>
+
           <Grid item xs={12} sm={6} md={3}>
             <ArtistHomeCard />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <ArtHomeCard/>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <ArtShowsHomeCard />
@@ -41,6 +44,9 @@ export default function App() {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <OrderCard />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <ArtSuppliesHomeCard />
           </Grid>
 
 

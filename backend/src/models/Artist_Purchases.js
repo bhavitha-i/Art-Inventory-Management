@@ -7,14 +7,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    Order: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Order',
-        key: 'id_Order'
-      }
-    },
     ArtSupplies: {
       type: DataTypes.INTEGER,
       allowNull: true,

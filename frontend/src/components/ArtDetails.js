@@ -166,6 +166,9 @@ const getHighBid = async () => {
   .catch(error => {console.log(error)})
 }
 
+
+
+
 const showEditIcon = (event,id) => {
   setShowIcon(id)
   console.log(event,id)
@@ -207,8 +210,8 @@ const openEditPopup = item => {
           <Grid container >
             <Grid item xs={12}>
               <Box 
-                onMouseEnter={(e)=>showEditIcon(e,"artDetails")}
-                onMouseLeave={(e)=>hideEditIcon(e,"artDetails")}
+                // onMouseEnter={(e)=>showEditIcon(e,"artDetails")}
+                // onMouseLeave={(e)=>hideEditIcon(e,"artDetails")}
                 >
               <Grid container >
                   <Grid item xs={4} >
@@ -250,12 +253,12 @@ const openEditPopup = item => {
                     }
                   </Grid>
                   <Grid item xs={1} >
-                    {showIcon=="artDetails"&& 
+                    {/* {showIcon=="artDetails"&&  */}
                     <Box style={styles.flexstrech}>
                     <Button style={styles.AVL1Button} variant="contained" color="error">Delete</Button>
                     <Button style={styles.AVL1Button} variant="outlined" color="primary" onClick={() => openEditPopup("artDetails")}>Edit</Button>
                     </Box> 
-                    }
+                    {/* } */}
                   </Grid>
               </Grid>
               </Box>
@@ -264,20 +267,20 @@ const openEditPopup = item => {
 
             <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}
-                 onMouseEnter={(e)=>showEditIcon(e,"artType")}
-                 onMouseLeave={(e)=>hideEditIcon(e,"artType")} 
+                //  onMouseEnter={(e)=>showEditIcon(e,"artType")}
+                //  onMouseLeave={(e)=>hideEditIcon(e,"artType")} 
               >
                 <Box style={styles.spaceBetweenFlexEnd}>
                   <Typography variant="h5" sx={{paddingTop:"11px"}}>{artType}</Typography>
 
-                  {showIcon=="artType"  &&
+                  {/* {showIcon=="artType"  && */}
                   <Button style={styles.AVL2Button} hidden variant="outlined" color="primary" onClick={() => openEditPopup("artType")}>Edit</Button>
-                  }
+                  {/* } */}
                 </Box>
               <Cdivider/>
 
               
-              {artType == "Painting" && 
+              {artType == "Painting" && typeDetails && 
                   <CSubtitle
                   variant={"body1"}
                   >
@@ -288,7 +291,7 @@ const openEditPopup = item => {
                 </CSubtitle>
               }
 
-            {artType == "Sculpture" && 
+            {artType == "Sculpture" && typeDetails &&
                   <CSubtitle
                   variant={"body1"}
                   >
@@ -306,14 +309,14 @@ const openEditPopup = item => {
             {(artInfo.Status == 2 || artInfo.Status == 6) && artInfo.Art_in_Auctions.length >0 &&
             <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}
-                  onMouseEnter={(e)=>showEditIcon(e,"artShow")}
-                  onMouseLeave={(e)=>hideEditIcon(e,"artShow")} 
+                  // onMouseEnter={(e)=>showEditIcon(e,"artShow")}
+                  // onMouseLeave={(e)=>hideEditIcon(e,"artShow")} 
               >
                 <Box style={styles.spaceBetweenFlexEnd}>
                   <Typography variant="h5"sx={{paddingTop:"11px"}}>Art Show : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.Title}</Typography>
-                  {showIcon=="artShow"  &&
+                  {/* {showIcon=="artShow"  && */}
                   <Button style={styles.AVL2Button} hidden variant="outlined" color="primary" onClick={() => openEditPopup("artShow")}>Edit</Button>
-                  }
+                  {/* } */}
                 </Box>
               <Cdivider/>
                   <CSubtitle
@@ -389,17 +392,17 @@ const openEditPopup = item => {
         }
 
 
-        {(artInfo.Status == 1) && artInfo.Art_In_Stores.length >0 &&
+        {(artInfo.Status == 1 || artInfo.Status == 4 || artInfo.Status == 5) && artInfo.Art_In_Stores.length >0 &&
             <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}
-                 onMouseEnter={(e)=>showEditIcon(e,"artStore")}
-                 onMouseLeave={(e)=>hideEditIcon(e,"artStore")} 
+                //  onMouseEnter={(e)=>showEditIcon(e,"artStore")}
+                //  onMouseLeave={(e)=>hideEditIcon(e,"artStore")} 
               >
               <Box style={styles.spaceBetweenFlexEnd}>
                   <Typography variant="h5" sx={{paddingTop:"11px"}}>Art Store : {artInfo.Art_In_Stores[0].AtStore_Store.Name}</Typography>
-                  {showIcon=="artStore"  &&
+                  {/* {showIcon=="artStore"  && */}
                   <Button style={styles.AVL2Button} hidden variant="outlined" color="primary" onClick={() => openEditPopup("artStore")}>Edit</Button>
-                  }
+                  {/* } */}
                 </Box>
               <Cdivider/>
                   <CSubtitle
@@ -471,9 +474,121 @@ const openEditPopup = item => {
                 </Grid>
                 </Box>
             </Grid>
-            }   
+            } 
 
-      
+            {artInfo.Status == 4 && artInfo.Customer_Art_Purchases.length >0 &&
+             <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Bought by : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
+              <Cdivider/>
+              <CSubtitle
+                  variant={"body1"}
+                  >
+                    <Grid Container style={styles.disaplyFlex}>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Order Id</b> : {artInfo.Customer_Art_Purchases[0].Order}<br/>
+                        <b>Order Value</b> : ${artInfo.Customer_Art_Purchases[0].Price}<br/>
+                      </Grid>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Phone</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Phone}<br/>
+                        <b>Email</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Email}<br/>
+                        <b>Premium</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.isPremium == 1 ? "True" : "False"}<br/>
+                      </Grid>
+
+                    </Grid> 
+                </CSubtitle>
+              
+                </Box>
+            </Grid>
+            }  
+
+            {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
+             <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Rented to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
+              <Cdivider/>
+              <CSubtitle
+                  variant={"body1"}
+                  >
+                    <Grid Container style={styles.disaplyFlex}>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Order Id</b> : {artInfo.Customer_Art_Purchases[0].Order}<br/>
+                        <b>Order Value</b> : ${artInfo.Customer_Art_Purchases[0].Price}<br/>
+                      </Grid>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Phone</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Phone}<br/>
+                        <b>Email</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Email}<br/>
+                        <b>Premium</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.isPremium == 1 ? "True" : "False"}<br/>
+                      </Grid>
+
+                    </Grid> 
+                </CSubtitle>
+              
+                </Box>
+            </Grid>
+            }  
+
+          {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
+             <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Rented to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
+              <Cdivider/>
+              <CSubtitle
+                  variant={"body1"}
+                  >
+                    <Grid Container style={styles.disaplyFlex}>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Order Id</b> : {artInfo.Customer_Art_Purchases[0].Order}<br/>
+                        <b>Order Value</b> : ${artInfo.Customer_Art_Purchases[0].Price}<br/>
+                        <b>Rented from</b> : {artInfo.Art_For_Rents[0].StartDate && moment(artInfo.Art_For_Rents[0].StartDate).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                        <b>Rented to</b> : {artInfo.Art_For_Rents[0].EndDate && moment(artInfo.Art_For_Rents[0].EndDate).format('DD/MM/YYYY h:mm:ss a')}<br/>
+                      </Grid>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Phone</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Phone}<br/>
+                        <b>Email</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Email}<br/>
+                        <b>Premium</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.isPremium == 1 ? "True" : "False"}<br/>
+                      </Grid>
+
+                    </Grid> 
+                </CSubtitle>
+              
+                </Box>
+            </Grid>
+            } 
+
+          {artInfo.Status == 6 && artInfo.Customer_Art_Purchases.length >0 &&
+             <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}>
+              <Typography variant="h5">Sold to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
+              <Cdivider/>
+              <CSubtitle
+                  variant={"body1"}
+                  >
+                    <Grid Container style={styles.disaplyFlex}>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Order Id</b> : {artInfo.Customer_Art_Purchases[0].Order}<br/>
+                        <b>Order Value</b> : ${artInfo.Customer_Art_Purchases[0].Price}<br/>
+                      </Grid>
+
+                      <Grid item xs ={12} sm={6}>
+                        <b>Phone</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Phone}<br/>
+                        <b>Email</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.Email}<br/>
+                        <b>Premium</b> : {artInfo.Customer_Art_Purchases[0].Customer_Customer.isPremium == 1 ? "True" : "False"}<br/>
+                      </Grid>
+
+                    </Grid> 
+                </CSubtitle>
+              
+                </Box>
+            </Grid>
+            } 
                    
           </Grid>
         </Ccontainer>
@@ -502,6 +617,7 @@ const openEditPopup = item => {
               } 
 
             {poptype =="artShow" && <AuctionUpdate
+                  sold={artInfo.Status}
                   bidsCount ={bids.length} 
                   recordForEdit={recordForEdit} 
                   setOpenActionPopup={setOpenPopup}
@@ -509,6 +625,7 @@ const openEditPopup = item => {
               } 
 
             {poptype =="artStore" && <ArtStoreUpdate
+                  sold={artInfo.Status}
                   recordForEdit={recordForEdit} 
                   setOpenActionPopup={setOpenPopup}
                   /> 
