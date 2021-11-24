@@ -11,7 +11,8 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 import strings from '../assets/strings';
 import SnackBar from './SnackBar';
-
+import { MenuItem, Input, InputLabel } from "@mui/material";
+import Select from "@mui/material/Select";
 
 
 
@@ -24,6 +25,7 @@ function MuseumForm(props)  {
     const [errAlert,setErrAlert] = useState("");
     const [message,setMessage] = useState("");
     const [isEdit,setIsEdit] = useState(false);
+    const [addObj, setAddObj] = useState("");
 
 
 
@@ -38,73 +40,135 @@ function MuseumForm(props)  {
 
 
     useEffect(() => {
-
-
-        if (props.recordForEdit != null){
-            setInputs(props.recordForEdit)
-            setIsEdit(true)
-          }
-          else{
-            setInputs([])
-          }
-        }, []
-      )
+      if (props.recordForEdit != null) {
+        setInputs(props.recordForEdit);
+        setIsEdit(true);
+        if (props.recordForEdit.ZipCode) {
+          setAddObj(
+            props.recordForEdit.Location_Address.ZipCode_ZipCode_in_State
+          );
+        }
+      } else {
+        setInputs([]);
+      }
+      console.log(props, addObj, "----check inpu");
+    }, []);
 
     
+    const editMuseum = async () => {
 
+      axios.put(process.env.REACT_APP_API_URL+'/museum/'+inputs.id_Museum,inputs)
+      .then(response =>{ 
+          console.log(response.data,"from api")
+          setErrAlert("success")
+          setMessage("Museum Edited")
+          setCallFlag(true)
+          refreshPage()
+          
+      })
+      .catch(error => {
+          console.log(error)
+          setErrAlert("error")
+          setMessage("Error while editing Msueum")
+          setCallFlag(true)
 
+      })
+    }
+
+    const addMuseum = async() =>{
+      axios.post(process.env.REACT_APP_API_URL+'/museum/add',inputs)
+      .then(response =>{ 
+
+          console.log(response.data,"from api")
+          setErrAlert("success")
+          setMessage("Museum Added")
+          setCallFlag(true)
+          refreshPage()
+          
+      })
+      .catch(error => {
+          console.log(error)
+          setErrAlert("error")
+          setMessage("Error while adding Museum")
+          setCallFlag(true)
+      })
+    }
+ 
     async function handleSubmit(event){
         if (event) {
           event.preventDefault();
           const museum=inputs;
             console.log(museum,"  --museum")
-        
-        if(isEdit){
 
-            axios.put(process.env.REACT_APP_API_URL+'/museum/'+inputs.id_Museum,inputs)
-            .then(response =>{ 
-                console.log(response.data,"from api")
-                setErrAlert("success")
-                setMessage("Museum Edited")
-                setCallFlag(true)
-                refreshPage()
-                
-            })
-            .catch(error => {
-                console.log(error)
-                setErrAlert("error")
-                setMessage("Error while editing Msueum")
-                setCallFlag(true)
-
-            })
-        }
-
-        else{
-
-            axios.post(process.env.REACT_APP_API_URL+'/museum/add',inputs)
-            .then(response =>{ 
-
-                console.log(response.data,"from api")
-                setErrAlert("success")
-                setMessage("Museum Added")
-                setCallFlag(true)
-                refreshPage()
-                
-            })
-            .catch(error => {
-                console.log(error)
-                setCallFlag(true)
-                setErrAlert("error")
-                setMessage("Error while adding Museum")
-            })
-
-          }
+            if (isEdit) {
+              if (
+                (inputs.Street1 != null || inputs.Street2 != null) &&
+                inputs.ZipCode == null
+              ) {
+                setErrAlert("error");
+                setMessage("Please choose a Zipcode");
+                setCallFlag(true);
+              } else if (inputs.Location == null && inputs.ZipCode) {
+                axios
+                  .post(process.env.REACT_APP_API_URL + "/address/add", inputs)
+                  .then((response) => {
+                    console.log(response.data.data, "from api");
+                    inputs.Location = response.data.data.id_Address;
+                    editMuseum();
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              } else if (inputs.Location && inputs.ZipCode) {
+                console.log(inputs, "----");
+                axios
+                  .put(
+                    process.env.REACT_APP_API_URL + `/address/${inputs.Location}`,
+                    inputs
+                  )
+                  .then((response) => {
+                    console.log(response.data.data, "from api");
+                    editMuseum();
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              } else {
+                editMuseum();
+              }
+            } else {
+              if (
+                (inputs.Street1 != null || inputs.Street2 != null) &&
+                inputs.ZipCode == null
+              ) {
+                setErrAlert("error");
+                setMessage("Please choose a Zipcode");
+                setCallFlag(true);
+              } else if (inputs.ZipCode) {
+                axios
+                  .post(process.env.REACT_APP_API_URL + "/address/add", inputs)
+                  .then((response) => {
+                    console.log(response.data.data, "from api");
+                    inputs.Location = response.data.data.id_Address;
+                    addMuseum();
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              } else {
+                addMuseum();
+              }
+            }
         }
     }
     
 
+    const handleClick = (event, zip) => {
+      setAddObj(zip);
+    };
+
       const handleInputChange = (event) => {
-        event.persist();
+        // event.persist();
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
       }
 
@@ -146,6 +210,53 @@ function MuseumForm(props)  {
             value={inputs.FoundedBy}
           />
         </Grid>
+
+
+        <Grid item xs={12}>
+              <TextField
+                id="Street1"
+                name="Street1"
+                label="Street 1"
+                fullWidth
+                variant="standard"
+                onChange={handleInputChange}
+                value={inputs.Street1}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                id="Street2"
+                name="Street2"
+                label="Street 2"
+                fullWidth
+                variant="standard"
+                onChange={handleInputChange}
+                value={inputs.Street2}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <InputLabel htmlFor="select-label">Choose ZipCode</InputLabel>
+              <Select
+                input={<Input id="select-label" />}
+                value={inputs.ZipCode || ""}
+                onChange={handleInputChange}
+                id="ZipCode"
+                name="ZipCode"
+                fullWidth
+                label="Choose ZipCode"
+              >
+                {props.zips.map((st) => (
+                  <MenuItem
+                    value={st.ZipCode}
+                    onClick={(e) => handleClick(e, st)}
+                  >
+                    {st.ZipCode}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
 
 
         <Grid item xs={12}>

@@ -6,14 +6,18 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import withRoot from '../components/WithRoot';
 
 
-function Home(){
+function Museum(){
+
+    const options=[]
+    options.push( { title:"Museums", url:"/museum"})
+
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Museums"}/>
+        <NavAppBar options={options}/>
         <MuseumsList/>
     </ThemeProvider>
     );
 }
 
-export default withRoot(Home)
+export default withRoot(Museum)
 

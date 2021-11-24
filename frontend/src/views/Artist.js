@@ -6,14 +6,17 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import withRoot from '../components/WithRoot';
 
 
-function Home(){
+function Artist(){
+    const options=[]
+    options.push( { title:"Artists", url:"/artist"})
+    
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Artists"}/>
+        <NavAppBar options={options}/>
         <ArtistsList/>
     </ThemeProvider>
     );
 }
 
-export default withRoot(Home)
+export default withRoot(Artist)
 

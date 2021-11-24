@@ -6,10 +6,14 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import withRoot from '../components/WithRoot';
 
 
-function Home(){
+function Customer(){
+
+    const options=[]
+    options.push( { title:"Customers", url:"/customer"})
+
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Customers"}/>
+        <NavAppBar options={options}/>
 
         <CustomerList />
         
@@ -17,5 +21,5 @@ function Home(){
     );
 }
 
-export default withRoot(Home)
+export default withRoot(Customer)
 
