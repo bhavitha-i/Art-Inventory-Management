@@ -185,8 +185,8 @@ function deleteitem(record){
                   </Button>
                   
                     <Box style={styles.level2ActionIcons}>
-                      <EditIcon  onClick={() => openEditPopup(show)}/>
-                      <DeleteIcon  onClick={() => deleteitem(show)}/>
+                      <EditIcon fontSize="small"  onClick={() => openEditPopup(show)}/>
+                      <DeleteIcon fontSize="small" onClick={() => deleteitem(show)}/>
                     </Box>
                   
                </Grid>

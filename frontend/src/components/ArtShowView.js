@@ -19,7 +19,6 @@ import { Box, padding, typography } from '@mui/system';
 import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
-import PopupAction from './PopupAction';
 import { useParams } from "react-router-dom";
 import PlaceBidForm from './PlaceBidForm';
 import MoreVertIcon from '@mui/icons-material/MoreVert';

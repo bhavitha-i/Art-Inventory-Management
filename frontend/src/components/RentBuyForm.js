@@ -256,17 +256,9 @@ function RentBuyForm(props)  {
         </Grid>
         
  
-
-
-        <Grid item xs={12} >
-            {props.art.Status != null && 
-              <Typography>Status : {props.art.Art_Art.Status}</Typography>
-              }
-        </Grid>
             
         
-      
-
+  
 
         <Grid item xs={12}>
         <Button

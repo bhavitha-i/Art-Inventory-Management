@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material/styles';
 import { green, grey, red } from '@mui/material/colors';
 import { alpha } from '@mui/material/styles';
 
+
 function createGradient(color1, color2) {
   return `linear-gradient(to bottom, ${color1}, ${color2})`;
 }
@@ -218,7 +219,8 @@ const rawTheme = createTheme({
       fontSize: pxToRem(14),
       textTransform: 'capitalize'
     }
-  }
+  },
+  
 });
 
 

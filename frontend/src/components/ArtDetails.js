@@ -16,14 +16,13 @@ import Divider from "@material-ui/core/Divider";
 import { styled } from '@mui/material/styles';
 import  { useState, useEffect } from "react"
 import axios from "axios";
-import { Box, padding } from '@mui/system';
+import { Box, padding, typography } from '@mui/system';
 import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
 import { useParams } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -36,7 +35,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import moment from 'moment'
-import { green } from '@mui/material/colors';
+import CssBaseline from '@mui/material/CssBaseline';
+import PopupAction from './PopupAction';
+import ArtDetailsUpdate from './ADartdetailsUpdate'
+import PaintingUpdate from './ADPaintingUpdate'
+import SculptureUpdate from './ADSculptureUpdate'
+import AuctionUpdate from './ADAuctionUpdate'
+import ArtStoreUpdate from './ADSaleStoreUpdate';
 
 
 // ----------------------------------------------------------------------
@@ -87,9 +92,9 @@ const CTableCell = styled(TableCell)(() => ({
 // -------------------------------------------------------
 
 
-export default function ArtView() {
+export default function ArtDetails(props) {
 
-  const [artId,setArtId] =useState(useParams().artId)
+  const [artId,setArtId] =useState(props.id)
   const [artInfo, setArtInfo] = useState([])
   const [callFlag,setCallFlag] = useState(false);
   const [errAlert,setErrAlert] = useState("");
@@ -98,7 +103,11 @@ export default function ArtView() {
   const [typeDetails,setTypeDetails]=useState([])
   const [bidInfo,setBidInfo] = useState([])
   const [bids, setBids]= useState([])
-
+  const [showIcon, setShowIcon] = useState(false)
+  const [poptitle, setPoptitle]= useState("")
+  const [openPopup, setOpenPopup] = useState(false);
+  const [recordForEdit, setRecordForEdit] = useState(null)
+  const [poptype, setPoptype]= useState("")
 
 
   function refreshPage() {
@@ -111,7 +120,6 @@ export default function ArtView() {
 
   useEffect(() => {     
         getArtDetails()
-        getBidvalues()
         
   },[]);
 
@@ -141,6 +149,9 @@ export default function ArtView() {
                 setArtType("Sculpture")
                 setTypeDetails(response.data.data.Sculpture_Arts[0])
               }
+              if(response.data.data.Art_in_Auctions.length >0 ){
+                getBidvalues()
+              }
               console.log(response.data,"from api",artInfo)
           })
           .catch(error => {console.log(error)})
@@ -155,64 +166,113 @@ const getHighBid = async () => {
   .catch(error => {console.log(error)})
 }
 
+const showEditIcon = (event,id) => {
+  setShowIcon(id)
+  console.log(event,id)
+}
+
+const hideEditIcon = (event,id) => {
+  setShowIcon(false)
+  console.log(event,id)
+}
+
+
+const openEditPopup = item => {
+  if(item == "artDetails"){
+    setPoptitle("Update Art Details")
+    setRecordForEdit(artInfo)
+  }
+  else if(item == "artType" && artType == "Painting"){
+    setPoptitle("Update Painting Details")
+    setRecordForEdit(artInfo.Painting_Arts[0])
+  }else if(item == "artType" && artType == "Sculpture"){
+    setPoptitle("Update Sculpture Details")
+    setRecordForEdit(artInfo.Sculpture_Arts[0])
+  }else if(item == "artShow"){
+    setPoptitle("Update Art Auction Details")
+    setRecordForEdit(artInfo.Art_in_Auctions[0])
+  }else if(item == "artStore"){
+    setPoptitle("Update Art Sale Details")
+    setRecordForEdit(artInfo.Art_In_Stores[0])
+  }
+  setPoptype(item)
+  setOpenPopup(true)
+}
 
 
   return (
     <ThemeProvider theme={theme}>
-{console.log("Artinfo -- ",artInfo)}
+      {console.log("Artinfo -- ",artInfo)}
       <Ccontainer sx={{ py: 5 }} >
           <Grid container >
-            
-            <Grid item xs={4} >
-             <Avatar variant="square" style={styles.AVImage}
-                src={artInfo.Image} 
-              />
-            </Grid>
-            <Grid item xs={4} >
-              <Box style={styles.AVInfo}>
-                    <CHeading
-                        variant={"h4"}
-                        gutterBottom
-                    >
-                        {artInfo.Title}
-                    </CHeading>
-                    <CSubtitle
-                        variant={"body1"}
-                    >
-                    {artInfo.CountryOfOrigin && <span> <b>{strings.Art.country}</b> : {artInfo.CountryOfOrigin_Country.Name}<br/></span>}
-                    {artInfo.Style && <span> <b>{strings.Art.style}</b> : {artInfo.Style_Art_Style.StyleName}<br/></span>}
-                    <b>{strings.Art.year}</b> : {artInfo.Year}<br/>
-                    {artInfo.Status!=null && <span> <b>{strings.Art.status}</b> : {artInfo.Status_ArtStatus.Status}<br/></span>}
-                    <b>{strings.Art.type}</b> : {artType}<br/>
-                    </CSubtitle>
-                  </Box>
-            </Grid>
+            <Grid item xs={12}>
+              <Box 
+                onMouseEnter={(e)=>showEditIcon(e,"artDetails")}
+                onMouseLeave={(e)=>hideEditIcon(e,"artDetails")}
+                >
+              <Grid container >
+                  <Grid item xs={4} >
+                        <Avatar variant="square" style={styles.AVImage}
+                      src={artInfo.Image} 
+                      />
+                  </Grid>
+                  <Grid item xs={4} >
+                    <Box style={styles.AVInfo}>
+                          <CHeading
+                              variant={"h4"}
+                              gutterBottom
+                          >
+                              {artInfo.Title}
+                          </CHeading>
+                          <CSubtitle
+                              variant={"body1"}
+                          >
+                          {artInfo.CountryOfOrigin && <span> <b>{strings.Art.country}</b> : {artInfo.CountryOfOrigin_Country.Name}<br/></span>}
+                          {artInfo.Style && <span> <b>{strings.Art.style}</b> : {artInfo.Style_Art_Style.StyleName}<br/></span>}
+                          <b>{strings.Art.year}</b> : {artInfo.Year}<br/>
+                          {artInfo.Status!=null && <span> <b>{strings.Art.status}</b> : {artInfo.Status_ArtStatus.Status}<br/></span>}
+                          <b>{strings.Art.type}</b> : {artType}<br/>
+                          </CSubtitle>
+                        </Box>
+                  </Grid>
 
-            <Grid item xs={3} >
-              {artInfo.CreatedBy && 
-              <Avatar large style={styles.AVArtistImage}
-                src={artInfo.CreatedBy_Artist.Image} 
-              />}
+                  <Grid item xs={3} >
+                    {artInfo.CreatedBy && 
+                    <Avatar large style={styles.AVArtistImage}
+                      src={artInfo.CreatedBy_Artist.Image} 
+                    />}
 
-              {artInfo.CreatedBy && 
-              <Box>
-              <Typography><b>Created By:</b></Typography>
-              <Typography>{artInfo.CreatedBy_Artist.Name}</Typography>
+                    {artInfo.CreatedBy && 
+                    <Box>
+                    <Typography><b>Created By:</b></Typography>
+                    <Typography>{artInfo.CreatedBy_Artist.Name}</Typography>
+                    </Box>
+                    }
+                  </Grid>
+                  <Grid item xs={1} >
+                    {showIcon=="artDetails"&& 
+                    <Box style={styles.flexstrech}>
+                    <Button style={styles.AVL1Button} variant="contained" color="error">Delete</Button>
+                    <Button style={styles.AVL1Button} variant="outlined" color="primary" onClick={() => openEditPopup("artDetails")}>Edit</Button>
+                    </Box> 
+                    }
+                  </Grid>
+              </Grid>
               </Box>
-              }
             </Grid>
-            <Grid item xs={1}>
-            <Box>
-                  <EditIcon onClick={() => console.log("edit") }/>
-                 
-                  </Box>
-          </Grid>
+            
 
-            <Grid item xs={12} >
-              <Box style={styles.AVInfoHeader}>
-                <Box style={styles.spaceBetween}>
-                  <Typography variant="h5">{artType}</Typography>
-                  <EditIcon/>
+            <Grid item xs={12}>
+              <Box style={styles.AVInfoHeader}
+                 onMouseEnter={(e)=>showEditIcon(e,"artType")}
+                 onMouseLeave={(e)=>hideEditIcon(e,"artType")} 
+              >
+                <Box style={styles.spaceBetweenFlexEnd}>
+                  <Typography variant="h5" sx={{paddingTop:"11px"}}>{artType}</Typography>
+
+                  {showIcon=="artType"  &&
+                  <Button style={styles.AVL2Button} hidden variant="outlined" color="primary" onClick={() => openEditPopup("artType")}>Edit</Button>
+                  }
                 </Box>
               <Cdivider/>
 
@@ -237,17 +297,24 @@ const getHighBid = async () => {
                       <b>{strings.Art.smaterial}</b> : {typeDetails.Material}<br/>
                       <b>{strings.Art.stexture}</b> : {typeDetails.Texture}<br/>
                 </CSubtitle>
-              }   
+              }  
+              </Box> 
               
-
-              </Box>
             </Grid>
 
 
             {(artInfo.Status == 2 || artInfo.Status == 6) && artInfo.Art_in_Auctions.length >0 &&
             <Grid item xs={12}>
-              <Box style={styles.AVInfoHeader}>
-              <Typography variant="h5">Art Show : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.Title}</Typography>
+              <Box style={styles.AVInfoHeader}
+                  onMouseEnter={(e)=>showEditIcon(e,"artShow")}
+                  onMouseLeave={(e)=>hideEditIcon(e,"artShow")} 
+              >
+                <Box style={styles.spaceBetweenFlexEnd}>
+                  <Typography variant="h5"sx={{paddingTop:"11px"}}>Art Show : {artInfo.Art_in_Auctions[0].AtArtShow_Art_Show.Title}</Typography>
+                  {showIcon=="artShow"  &&
+                  <Button style={styles.AVL2Button} hidden variant="outlined" color="primary" onClick={() => openEditPopup("artShow")}>Edit</Button>
+                  }
+                </Box>
               <Cdivider/>
                   <CSubtitle
                   variant={"body1"}
@@ -317,15 +384,23 @@ const getHighBid = async () => {
               </Accordion>
               
           : 
-          <Typography style={styles.padding10}>No bids Available</Typography>}
+          <Typography style={styles.p20}>No bids Available</Typography>}
           </Grid>
         }
 
 
         {(artInfo.Status == 1) && artInfo.Art_In_Stores.length >0 &&
             <Grid item xs={12}>
-              <Box style={styles.AVInfoHeader}>
-              <Typography variant="h5">Art Store : {artInfo.Art_In_Stores[0].AtStore_Store.Name}</Typography>
+              <Box style={styles.AVInfoHeader}
+                 onMouseEnter={(e)=>showEditIcon(e,"artStore")}
+                 onMouseLeave={(e)=>hideEditIcon(e,"artStore")} 
+              >
+              <Box style={styles.spaceBetweenFlexEnd}>
+                  <Typography variant="h5" sx={{paddingTop:"11px"}}>Art Store : {artInfo.Art_In_Stores[0].AtStore_Store.Name}</Typography>
+                  {showIcon=="artStore"  &&
+                  <Button style={styles.AVL2Button} hidden variant="outlined" color="primary" onClick={() => openEditPopup("artStore")}>Edit</Button>
+                  }
+                </Box>
               <Cdivider/>
                   <CSubtitle
                   variant={"body1"}
@@ -333,14 +408,14 @@ const getHighBid = async () => {
                     <Grid Container style={styles.disaplyFlex}>
 
                       <Grid item xs ={12} sm={6}>
-                        <b>Manager</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Manager}<br/>
-                        <b>Phone</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Phone}<br/>
-                        <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/>
+                        <b>Price</b> : ${artInfo.Art_In_Stores[0].Price}<br/>
+                        <b>Rent for day</b> : ${artInfo.Art_In_Stores[0].RentPerDay}<br/>
                       </Grid>
 
                       <Grid item xs ={12} sm={6}>
-                        <b>Price</b> : ${artInfo.Art_In_Stores[0].Price}<br/>
-                        <b>Rent for day</b> : ${artInfo.Art_In_Stores[0].RentPerDay}<br/>
+                        <b>Manager</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Manager}<br/>
+                        <b>Phone</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Phone}<br/>
+                        <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/>
                       </Grid>
 
                     </Grid> 
@@ -402,6 +477,47 @@ const getHighBid = async () => {
                    
           </Grid>
         </Ccontainer>
+        <PopupAction
+            title={poptitle}
+            openActionPopup={openPopup}
+            setOpenActionPopup={setOpenPopup}
+        >
+             {poptype =="artDetails" && <ArtDetailsUpdate 
+                  recordForEdit={recordForEdit} 
+                  setOpenActionPopup={setOpenPopup}
+                  /> 
+              }
+
+            {poptype =="artType" && artType =="Painting" && <PaintingUpdate 
+                  recordForEdit={recordForEdit} 
+                  setOpenActionPopup={setOpenPopup}
+                  /> 
+              }   
+
+
+            {poptype =="artType" && artType =="Sculpture" && <SculptureUpdate 
+                  recordForEdit={recordForEdit} 
+                  setOpenActionPopup={setOpenPopup}
+                  /> 
+              } 
+
+            {poptype =="artShow" && <AuctionUpdate
+                  bidsCount ={bids.length} 
+                  recordForEdit={recordForEdit} 
+                  setOpenActionPopup={setOpenPopup}
+                  /> 
+              } 
+
+            {poptype =="artStore" && <ArtStoreUpdate
+                  recordForEdit={recordForEdit} 
+                  setOpenActionPopup={setOpenPopup}
+                  /> 
+              } 
+
+
+
+                
+        </PopupAction>
     </ThemeProvider>
 
   );

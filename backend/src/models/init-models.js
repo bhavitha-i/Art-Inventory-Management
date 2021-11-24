@@ -15,7 +15,6 @@ var _Artist = require("./Artist");
 var _Artist_Purchases = require("./Artist_Purchases");
 var _Country = require("./Country");
 var _Customer = require("./Customer");
-var _Customer_Purchases = require("./Customer_Purchases");
 var _Exhibition_Tickets = require("./Exhibition_Tickets");
 var _InStore_Art_Status = require("./InStore_Art_Status");
 var _Museum = require("./Museum");
@@ -30,6 +29,7 @@ var _Store = require("./Store");
 var _Art_In_Museum = require("./Art_In_Museum");
 var _ZipCode_in_States = require("./ZipCode_in_States");
 var _Art_In_Museum = require("./Art_In_Museum");
+var _Customer_Art_Purchases = require("./Customer_Art_Purchases");
 
 
 function initModels(sequelize) {
@@ -50,7 +50,6 @@ function initModels(sequelize) {
   var Artist_Purchases = _Artist_Purchases(sequelize, DataTypes);
   var Country = _Country(sequelize, DataTypes);
   var Customer = _Customer(sequelize, DataTypes);
-  var Customer_Purchases = _Customer_Purchases(sequelize, DataTypes);
   var Exhibition_Tickets = _Exhibition_Tickets(sequelize, DataTypes);
   var InStore_Art_Status = _InStore_Art_Status(sequelize, DataTypes);
   var Museum = _Museum(sequelize, DataTypes);
@@ -64,6 +63,7 @@ function initModels(sequelize) {
   var Store = _Store(sequelize, DataTypes);
   var ZipCode_in_States = _ZipCode_in_States(sequelize, DataTypes);
   var Art_In_Museum = _Art_In_Museum(sequelize, DataTypes);
+  var Customer_Art_Purchases = _Customer_Art_Purchases(sequelize, DataTypes);
 
 
   Art_Show.belongsTo(Address, { as: "Location_Address", foreignKey: "Location"});
@@ -116,10 +116,6 @@ function initModels(sequelize) {
   Customer.hasMany(Art_For_Rent, { as: "Art_For_Rents", foreignKey: "Customer"});
   Art_bids.belongsTo(Customer, { as: "Customer_Customer", foreignKey: "Customer"});
   Customer.hasMany(Art_bids, { as: "Art_bids", foreignKey: "Customer"});
-  Customer_Purchases.belongsTo(Customer, { as: "Customer_Customer", foreignKey: "Customer"});
-  Customer.hasMany(Customer_Purchases, { as: "Customer_Purchases", foreignKey: "Customer"});
-  Exhibition_Tickets.belongsTo(Customer, { as: "Customer_Customer", foreignKey: "Customer"});
-  Customer.hasMany(Exhibition_Tickets, { as: "Exhibition_Tickets", foreignKey: "Customer"});
   Order.belongsTo(Customer, { as: "Customer_Customer", foreignKey: "Customer"});
   Customer.hasMany(Order, { as: "Orders", foreignKey: "Customer"});
   Premium_Customer.belongsTo(Customer, { as: "id_Customer_Customer", foreignKey: "id_Customer"});
@@ -128,16 +124,10 @@ function initModels(sequelize) {
   InStore_Art_Status.hasMany(Art_In_Store, { as: "Art_In_Stores", foreignKey: "Status"});
   Art_Exhibition.belongsTo(Museum, { as: "Museum_Museum", foreignKey: "Museum"});
   Museum.hasMany(Art_Exhibition, { as: "Art_Exhibitions", foreignKey: "Museum"});
-  Exhibition_Tickets.belongsTo(Museum, { as: "Museum_Museum", foreignKey: "Museum"});
-  Museum.hasMany(Exhibition_Tickets, { as: "Exhibition_Tickets", foreignKey: "Museum"});
   Artist_Purchases.belongsTo(Order, { as: "Order_Order", foreignKey: "Order"});
   Order.hasMany(Artist_Purchases, { as: "Artist_Purchases", foreignKey: "Order"});
-  Customer_Purchases.belongsTo(Order, { as: "Order_Order", foreignKey: "Order"});
-  Order.hasMany(Customer_Purchases, { as: "Customer_Purchases", foreignKey: "Order"});
   Order.belongsTo(Payment_Status, { as: "PaymentStatus_Payment_Status", foreignKey: "PaymentStatus"});
   Payment_Status.hasMany(Order, { as: "Orders", foreignKey: "PaymentStatus"});
-  Customer_Purchases.belongsTo(Purchase_Types, { as: "Type_Purchase_Type", foreignKey: "Type"});
-  Purchase_Types.hasMany(Customer_Purchases, { as: "Customer_Purchases", foreignKey: "Type"});
   ZipCode_in_States.belongsTo(State, { as: "State", foreignKey: "StateId"});
   State.hasMany(ZipCode_in_States, { as: "ZipCode_in_States", foreignKey: "StateId"});
   Art_For_Rent.belongsTo(Store, { as: "FromStore_Store", foreignKey: "FromStore"});
@@ -152,6 +142,18 @@ function initModels(sequelize) {
   Art.hasMany(Art_In_Museum, { as: "Art_In_Museums", foreignKey: "Art"});
   Art_In_Museum.belongsTo(Museum, { as: "Musem_Museum", foreignKey: "Musem"});
   Museum.hasMany(Art_In_Museum, { as: "Art_In_Museums", foreignKey: "Musem"});
+  Customer_Art_Purchases.belongsTo(Art, { as: "Purchase_Ref", foreignKey: "Purchase_Ref_Id"});
+  Art.hasMany(Customer_Art_Purchases, { as: "Customer_Art_Purchases", foreignKey: "Purchase_Ref_Id"});
+  Customer_Art_Purchases.belongsTo(Customer, { as: "Customer_Customer", foreignKey: "Customer"});
+  Customer.hasMany(Customer_Art_Purchases, { as: "Customer_Art_Purchases", foreignKey: "Customer"});
+  Customer_Art_Purchases.belongsTo(Order, { as: "Order_Order", foreignKey: "Order"});
+  Order.hasMany(Customer_Art_Purchases, { as: "Customer_Art_Purchases", foreignKey: "Order"});
+  Customer_Art_Purchases.belongsTo(Purchase_Types, { as: "Type_Purchase_Type", foreignKey: "Type"});
+  Purchase_Types.hasMany(Customer_Art_Purchases, { as: "Customer_Art_Purchases", foreignKey: "Type"});
+  Exhibition_Tickets.belongsTo(Art_Exhibition, { as: "Museum_Art_Exhibition", foreignKey: "Museum"});
+  Art_Exhibition.hasMany(Exhibition_Tickets, { as: "Exhibition_Tickets", foreignKey: "Museum"});
+  Exhibition_Tickets.belongsTo(Customer, { as: "Customer_Customer", foreignKey: "Customer"});
+  Customer.hasMany(Exhibition_Tickets, { as: "Exhibition_Tickets", foreignKey: "Customer"});
 
   return {
     Address,
@@ -170,7 +172,6 @@ function initModels(sequelize) {
     Artist_Purchases,
     Country,
     Customer,
-    Customer_Purchases,
     Exhibition_Tickets,
     InStore_Art_Status,
     Museum,
@@ -184,6 +185,7 @@ function initModels(sequelize) {
     Store,
     ZipCode_in_States,
     Art_In_Museum,
+    Customer_Art_Purchases,
   };
 }
 module.exports = initModels;

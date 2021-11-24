@@ -79,9 +79,9 @@ const Ccontent = styled(CardContent)(({ theme }) => ({
 // -------------------------------------------------------
 
 
-export default function ArtistsList() {
+export default function ArtistsList(props) {
 
-  const [storeId,setStoreId] =useState(useParams().storeId)
+  const [storeId,setStoreId] =useState(props.id)
   const [artStores, setArtStores] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
@@ -139,7 +139,7 @@ export default function ArtistsList() {
 
 const requestSearch = (searchedVal) => {
   const filteredRows = rows.filter((row) => {
-    return row.Title.toLowerCase().includes(searchedVal.toLowerCase());
+    return row.Art_Art.Title.toLowerCase().includes(searchedVal.toLowerCase());
   });
   setArtStores(filteredRows);
 };
@@ -168,7 +168,6 @@ const openActionPop = item => {
         placeholder="Search for Art"
         style={styles.SettingsSearch}
         />
-         {console.log("inside reutnr",artStores)}
       </Box>
       <Container sx={{ py: 1 }} >
           {artStores.length === 0 && <Typography> No Arts Available</Typography>}
@@ -211,7 +210,7 @@ const openActionPop = item => {
                             {art.Art_Art.CreatedBy_Artist.Name}  
                         </CSubtitle> }
                         {console.log(art.Art_Art,"________________________")}
-                        {art.Art_Art && art.Art_Art.Status  === 1  && <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Buy/Rent</Button> }
+                        {art.Art_Art && art.Art_Art.Status  === 1  && <Button size="small"  variant="outlined" style={styles.level1ActionButton} onClick={() => openActionPop(art)}> Buy / Rent</Button> }
                         {art.Art_Art && art.Art_Art.Status !== 1 && <Typography variant="body1" color="primary" style={styles.MarginAuto}><b>{art.Art_Art.Status_ArtStatus.Status}</b></Typography>}
                         
                         </Box>
