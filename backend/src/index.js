@@ -88,7 +88,7 @@ app.use(Painting_ArtRouter)
 app.use(Sculpture_ArtRouter)
 app.use(Art_SuppliesRouter)
 app.use(Artist_PurchasesRouter)
-
+app.use(AddressRouter)
 
 app.listen(port,()=>{
     console.log('server is up on port '+ port)

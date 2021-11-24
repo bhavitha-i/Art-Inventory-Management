@@ -36,6 +36,7 @@ export default function MuseumList() {
   const [message,setMessage] = useState("");
   const [artcount, setArtcount] = useState([])
   const [exhibitCount, SetExhibitCount] = useState([])
+  const [zips,setZips]=useState([])
 
 
 
@@ -52,7 +53,8 @@ export default function MuseumList() {
         getMuseums()
         getArtCount()
         getExhibitCount()
-  
+        getZipcode()
+
 
   },[]);
 
@@ -66,6 +68,21 @@ const getMuseums = async () => {
           .catch(error => {console.log(error)})
 };  
 
+const getZipcode = async () => {
+  axios.get(process.env.REACT_APP_API_URL+'/zipcode/all')
+        .then(response =>{ 
+          const data = response.data
+          const options = data.map(s => ({
+            "value" : s.ZipCode,
+            "label" : s.ZipCode,
+            "city": s.CityName,
+            "state": s.State
+          }))
+
+          setZips(response.data)
+          console.log(response.data,"from api")})
+        .catch(error => {console.log(error)})
+}; 
 
 const getArtCount = async () => {
   axios.get(process.env.REACT_APP_API_URL+'/art_in_museum_artCount')
@@ -107,6 +124,11 @@ const cancelSearch = () => {
 
 
 const openEditPopup = item => {
+  if(item.Location){
+    item.Street1 = item.Location_Address.Street1
+    item.Street2 = item.Location_Address.Street2
+    item.ZipCode = item.Location_Address.ZipCode
+  }
   setRecordForEdit(item)
   setOpenPopup(true)
   setIsEdit(true)
@@ -182,7 +204,12 @@ function deleteitem(record){
                <Grid item xs={7} >
                   <Typography variant="h5" >{show.Name}</Typography>
                   <Typography variant="body1">
-                    <b>{strings.Museum.location}</b> : {show.Location}<br/>
+                    <b>{strings.Museum.location}</b> : 
+                    {show.Location && show.Location_Address &&  <div>
+                     {<span>{show.Location_Address.Street1 && show.Location_Address.Street1} , {show.Location_Address.Street2 && show.Location_Address.Street2} </span> }<br/>
+                     {show.Location_Address.ZipCode_ZipCode_in_State.CityName+' ,'+show.Location_Address.ZipCode_ZipCode_in_State.State.Name  }<br/>
+                     {show.Location_Address.ZipCode_ZipCode_in_State.State.Country.Name + ' - ' +show.Location_Address.ZipCode }<br/>
+                     </div> }
 
                   </Typography>
                </Grid>
@@ -216,6 +243,7 @@ function deleteitem(record){
                 setOpenPopup={setOpenPopup}
              >
                 <MusuemForm 
+                    zips={zips}
                     recordForEdit={recordForEdit} 
                     setOpenPopup={setOpenPopup}
                     />

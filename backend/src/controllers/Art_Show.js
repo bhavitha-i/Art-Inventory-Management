@@ -27,7 +27,33 @@ exports.create = (req, res) => {
 //Get all from Table
 exports.findAll = (req, res) => {
 
-  dbmodels.Art_Show.findAll({})
+  dbmodels.Art_Show.findAll({
+    include:[
+      {
+        model:dbmodels.Address,
+        as:"Location_Address",
+        include:[
+          {
+            model:dbmodels.ZipCode_in_States,
+            as:"ZipCode_ZipCode_in_State",
+            include:[
+              {
+                model:dbmodels.State,
+                as:"State",
+                include:[
+                  {
+                    model:dbmodels.Country,
+                    as:"Country",
+                  }
+                ]
+              }
+            ]
+
+          }
+        ]
+      }
+    ]
+  })
       .then(result => {
         res.send(result);
       })

@@ -15,7 +15,7 @@ import Divider from "@material-ui/core/Divider";
 import { styled } from '@mui/material/styles';
 import  { useState, useEffect } from "react"
 import axios from "axios";
-import { Box, padding, typography } from '@mui/system';
+import { Box, getThemeProps, padding, typography } from '@mui/system';
 import styles from '../assets/styles';
 import SearchBar from "material-ui-search-bar";
 import { Link } from '@mui/material';
@@ -81,9 +81,9 @@ const Ccontent = styled(CardContent)(({ theme }) => ({
 // -------------------------------------------------------
 
 
-export default function ArtShowView() {
+export default function ArtShowView(props) {
 
-  const [showId,setShowId] =useState(useParams().showId)
+  const [showId,setShowId] =useState(props.id)
   const [artshows, setArtshows] = useState([])
   const [searched, setSearched] = useState("");
   const [rows, setRows] = useState([])
@@ -106,7 +106,9 @@ export default function ArtShowView() {
   }    
 
 
-  useEffect(() => {     
+  useEffect(() => { 
+    
+        
         getArts()
         getValues()
 
