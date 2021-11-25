@@ -91,7 +91,7 @@ app.use(Artist_PurchasesRouter)
 app.use(AddressRouter)
 
 
-app.use(express.static(path.join(__dirname, '/src/public')))
+app.use("/uploadImages",express.static(path.join(__dirname, '/src/public/uploadImages')))
 
 // app.use("/uploadImages",express.static(path.join(__dirname, '/public')))
 
