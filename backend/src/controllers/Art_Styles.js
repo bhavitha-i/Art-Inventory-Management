@@ -17,6 +17,7 @@ exports.create = (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err)
       res.send({
         message:
           err.message || "Some error occurred while retrieving Data."
