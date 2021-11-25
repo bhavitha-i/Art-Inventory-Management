@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter,Routes, Route } from "react-router-dom";
+import { BrowserRouter,Routes, Route , HashRouter} from "react-router-dom";
 import theme from './components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import FileUpload from './components/FileUpload';
@@ -27,7 +27,7 @@ import ArtSupplies from './views/ArtSupplies'
 function App() {
   return (
     <ThemeProvider theme={theme}>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route  path="/" element={<Home />} />
         <Route  path="/artistDisplay" element={<Artist />} />
@@ -53,7 +53,7 @@ function App() {
         <Route  path="/fileUpload" element={<FileUpload />} />
 
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
     </ThemeProvider>
   );
 }
