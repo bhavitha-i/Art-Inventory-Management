@@ -34,7 +34,7 @@ const StoreRouter = require("./src/routers/Store");
 const ZipcodeRouter = require("./src/routers/ZipCode_in_States");
 const ArtStyleRouter = require("./src/routers/Art_Styles")
 const CountryRouter = require("./src/routers/Country")
-const ImageRouter = require("./src/routers/images");
+const ImageRouter = require("./src/routers/Images");
 const Art_In_MuseumRouter = require("./src/routers/Art_In_Museum")
 
 

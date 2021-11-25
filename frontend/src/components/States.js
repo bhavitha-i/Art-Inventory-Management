@@ -114,7 +114,7 @@ const cancelSearch = () => {
         setCallFlag(true)
         setErrAlert("success")
         setMessage("Record Deleted")
-        window.location.href = "/settings/2";
+        window.location.href = "/#/settings/2";
       }
     })
     .catch(error => {

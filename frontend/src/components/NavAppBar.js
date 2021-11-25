@@ -25,7 +25,7 @@ export default function NavAppBar(props) {
       underline="none" 
       variant="h5" 
       color="initial" 
-      href="/"
+      href="/#"
       sx={{ fontSize: 24 }}>
       {strings.common.artInventoryManagement } 
   </Link>
@@ -37,7 +37,7 @@ export default function NavAppBar(props) {
           underline="none" 
           variant="h5" 
           color="initial" 
-          href={crum.url}
+          href={'/#'+crum.url}
           sx={{ fontSize: 24 }}>
           {crum.title} 
       </Link>
@@ -64,7 +64,7 @@ export default function NavAppBar(props) {
             <IconButton
               size="large"
               aria-label="account of current user"
-              href="/settings"
+              href="/#/settings"
               color="inherit"
             >
               <SettingsIcon />

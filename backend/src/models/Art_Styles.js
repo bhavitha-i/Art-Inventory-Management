@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "StyleName_UNIQUE"
     },
     Description: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
