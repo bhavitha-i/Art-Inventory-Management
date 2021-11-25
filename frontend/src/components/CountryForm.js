@@ -75,7 +75,7 @@ function CountryForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Edited")
-                window.location.href = "/settings/1";
+                window.location.href = "/#/settings/1";
               }
             })
             .catch(error => {
@@ -100,7 +100,7 @@ function CountryForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Added")
-                window.location.href = "/settings/1";
+                window.location.href = "/#/settings/1";
                 }
             })
             .catch(error => {

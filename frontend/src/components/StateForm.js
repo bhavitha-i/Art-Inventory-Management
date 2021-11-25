@@ -77,7 +77,7 @@ function StateForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Edited")
-                window.location.href = "/settings/2";
+                window.location.href = "/#/settings/2";
                 }
             })
             .catch(error => {
@@ -102,7 +102,7 @@ function StateForm(props)  {
                 setCallFlag(true)
                 setErrAlert("success")
                 setMessage("Record Added")
-                window.location.href = "/settings/2";
+                window.location.href = "/#/settings/2";
 
                 }
             })

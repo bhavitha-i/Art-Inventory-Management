@@ -34,7 +34,7 @@ const StoreRouter = require("./src/routers/Store");
 const ZipcodeRouter = require("./src/routers/ZipCode_in_States");
 const ArtStyleRouter = require("./src/routers/Art_Styles")
 const CountryRouter = require("./src/routers/Country")
-const ImageRouter = require("./src/routers/images");
+const ImageRouter = require("./src/routers/Images");
 const Art_In_MuseumRouter = require("./src/routers/Art_In_Museum")
 
 
@@ -51,10 +51,10 @@ app.use(express.json({limit: '25mb'}));
 app.use(express.urlencoded({limit: '25mb'}));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors())
-// app.use(cors({
-//     origin:["http://localhost:3000"]
-// }));
+// app.use(cors())
+app.use(cors({
+    origin:["http://localhost:3000"]
+}));
 
 console.log(__dirname)
 
@@ -96,11 +96,11 @@ app.use("/uploadImages",express.static(path.join(__dirname, '/src/public/uploadI
 // app.use("/uploadImages",express.static(path.join(__dirname, '/public')))
 
 
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 
 

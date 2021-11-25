@@ -244,7 +244,7 @@ const openAddPopupTix = item => {
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
-                          href={'/artview/'+art.id_Art}
+                          href={'/#/artview/'+art.id_Art}
                           color="inherit"Created
                         >
                         <CHeading

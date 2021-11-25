@@ -203,7 +203,7 @@ const openCloseBidPop = item => {
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
-                          href={'/artview/'+props.art.Art_Art.id_Art}
+                          href={'/#/artview/'+props.art.Art_Art.id_Art}
                           color="inherit"
                         >
                         <CHeading

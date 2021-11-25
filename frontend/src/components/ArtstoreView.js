@@ -182,7 +182,7 @@ const openActionPop = item => {
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
-                          href={'/artview/'+art.Art_Art.id_Art}
+                          href={'/#/artview/'+art.Art_Art.id_Art}
                           color="inherit"
                         >
                         <CHeading
