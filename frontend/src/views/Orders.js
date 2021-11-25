@@ -9,7 +9,7 @@ import OrdersList from '../components/Orders'
 function Orders(){
 
     const options=[]
-    options.push( { title:"Customer Orders", url:"/order"})
+    options.push( { title:"Customer Orders", url:"/orderDisplay"})
 
     return (
     <ThemeProvider theme={theme}>

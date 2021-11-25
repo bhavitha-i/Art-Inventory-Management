@@ -9,7 +9,7 @@ import withRoot from '../components/WithRoot';
 function Museum(){
 
     const options=[]
-    options.push( { title:"Museums", url:"/museum"})
+    options.push( { title:"Museums", url:"/museumDisplay"})
 
     return (
     <ThemeProvider theme={theme}>

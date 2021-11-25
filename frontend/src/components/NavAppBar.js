@@ -47,8 +47,8 @@ export default function NavAppBar(props) {
 
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ flexGrow: 1 }}>
-        <Toolbar>
+    <Box sx={{ flexGrow: 1, }}>
+        <Toolbar >
             
           <Typography  component="div" sx={{ flexGrow: 1 , fontSize:24}}>
             

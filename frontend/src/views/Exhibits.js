@@ -9,9 +9,13 @@ import { useParams } from "react-router-dom";
 
 function Home(){
 
+    const options=[]
+    options.push( { title:"Museums", url:"/museumDisplay"})
+    options.push( { title:"Exhibits", url:""})
+
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Museums > Exhibits"}/>
+        <NavAppBar options={options}/>
         <MuseumExhibits id={useParams().Id}/>
     </ThemeProvider>
     );

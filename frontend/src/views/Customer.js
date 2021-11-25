@@ -9,7 +9,7 @@ import withRoot from '../components/WithRoot';
 function Customer(){
 
     const options=[]
-    options.push( { title:"Customers", url:"/customer"})
+    options.push( { title:"Customers", url:"/customerDisplay"})
 
     return (
     <ThemeProvider theme={theme}>

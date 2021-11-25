@@ -8,7 +8,7 @@ import withRoot from '../components/WithRoot';
 
 function Artist(){
     const options=[]
-    options.push( { title:"Artists", url:"/artist"})
+    options.push( { title:"Artists", url:"/artistDisplay"})
     
     return (
     <ThemeProvider theme={theme}>

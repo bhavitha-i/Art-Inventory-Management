@@ -116,7 +116,8 @@ const getCustomers = async () => {
 
 const requestSearch = (searchedVal) => {
     const filteredRows = rows.filter((row) => {
-      return row.Name.toLowerCase().includes(searchedVal.toLowerCase());
+      return ( row.FirstName.toLowerCase().includes(searchedVal.toLowerCase()) 
+              || row.LastName.toLowerCase().includes(searchedVal.toLowerCase())  );
     });
     setCustomers(filteredRows);
 };
@@ -201,7 +202,7 @@ const cancelSearch = () => {
             <P1TableCell >Last Name</P1TableCell>
             <P1TableCell >Phone</P1TableCell>
             <P1TableCell >Email</P1TableCell>
-            <P1TableCell >Address</P1TableCell>
+            {/* <P1TableCell >Address</P1TableCell> */}
             <P1TableCell>Premimum membership</P1TableCell>
           </TableRow>
         </TableHead>
@@ -218,7 +219,7 @@ const cancelSearch = () => {
               <P1TableCell>{customer.LastName}</P1TableCell>
               <P1TableCell >{customer.Phone}</P1TableCell>
               <P1TableCell >{customer.Email}</P1TableCell>
-              <P1TableCell >TBD</P1TableCell>
+              {/* <P1TableCell >TBD</P1TableCell> */}
               <P1TableCell >{customer.isPremium}</P1TableCell>
              
              

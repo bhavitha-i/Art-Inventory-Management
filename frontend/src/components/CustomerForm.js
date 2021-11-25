@@ -60,12 +60,6 @@ function CustomerForm(props)  {
 
     }, [])
 
-    const fileChangeHandler = (event) => {
-      // event.preventDefault()
-      setFileData(event.target.files[0]);
-      setFileFlag(true)
-
-    };
 
 
     async function addCustomer(event){
@@ -73,16 +67,18 @@ function CustomerForm(props)  {
       axios.post(process.env.REACT_APP_API_URL+'/customer/add',inputs)
           .then(response =>{ 
               if(response.data == null){
-                  setCallFlag(true)
                   setErrAlert("error")
                   setMessage(response.message)
+                  setCallFlag(true)
+
               }
               else{
               console.log(response.data,"from api")
-              setCallFlag(true)
               setErrAlert("success")
               setMessage("Customer Added")
-              
+              setCallFlag(true)
+              refreshPage()
+
 
               var now = new Date();
               var duedate = new Date(now);
@@ -98,23 +94,25 @@ function CustomerForm(props)  {
               axios.post(process.env.REACT_APP_API_URL+'/premimum_customer/add',premInputs)
               .then(response =>{ 
                   if(response.data == null){
-                      setCallFlag(true)
                       setErrAlert("error")
                       setMessage(response.message)
+                      setCallFlag(true)
+
                   }
                   else{
                   console.log(response.data,"from api")
-                  setCallFlag(true)
                   setErrAlert("success")
                   setMessage("Customer Added")
-                //   refreshPage()
+                  setCallFlag(true)
+                  refreshPage()
                   }
               })
               .catch(error => {
                   console.log(error)
-                  setCallFlag(true)
                   setErrAlert("error")
                   setMessage("Error while adding premium Customer")
+                  setCallFlag(true)
+
               })
             }
 
@@ -141,23 +139,24 @@ function CustomerForm(props)  {
       axios.put(process.env.REACT_APP_API_URL+'/customer/'+inputs.id_Customer,inputs)
           .then(response =>{ 
               if(response.data == null){
-                  setCallFlag(true)
                   setErrAlert("error")
                   setMessage(response.message)
+                  setCallFlag(true)
+
               }
               else{
               console.log(response.data,"from api")
-              setCallFlag(true)
               setErrAlert("success")
               setMessage("Customer Edited")
-              // refreshPage()
+              setCallFlag(true)
+              refreshPage()
               }
           })
           .catch(error => {
               console.log(error)
-              setCallFlag(true)
               setErrAlert("error")
               setMessage("Error while editing Customer")
+              setCallFlag(true)
           })
     }
 

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer")
 // const path = require("path")
+require('dotenv').config();
 
 
 
@@ -41,8 +42,8 @@ router.post("/uploadImage", upload.single('Image'), (req, res) => {
         console.log("No file upload");
     } else {
         console.log(req.file.filename)
-        var imgsrc = 'http://localhost:5000/uploadImages/' + req.file.filename
-console.log(imgsrc, "--imgsrc")
+        var imgsrc = process.env.EXPRESS_HOST+'uploadImages/' + req.file.filename
+        console.log(imgsrc, "--imgsrc")
         res.status(200).json({
           status: true,
           message: "Image Stored ",

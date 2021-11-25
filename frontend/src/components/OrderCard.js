@@ -42,7 +42,7 @@ export default function Order(props) {
   const navigate = useNavigate();
 
   function handleClick(){
-    navigate("/order")
+    navigate("/orderDisplay")
   }
 
   return (
