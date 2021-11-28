@@ -2,7 +2,6 @@ import './App.css';
 import { BrowserRouter,Routes, Route , HashRouter} from "react-router-dom";
 import theme from './components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
-import FileUpload from './components/FileUpload';
 
 
 import Home from "./views/Home";
@@ -50,7 +49,6 @@ function App() {
 
         <Route  path="/settings" element={<Settings />} />
         <Route  path="/settings/:index" element={<Settings />} />
-        <Route  path="/fileUpload" element={<FileUpload />} />
 
       </Routes>
     </HashRouter>

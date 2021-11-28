@@ -153,8 +153,8 @@ const openArtPopup = item =>{
 
     axios.delete(process.env.REACT_APP_API_URL+'/artist/'+item.id_Artist)
     .then(response =>{ 
-      console.log(response.data.status,'---res')
-        if(response.data.status == 200){
+      console.log(response.data.status, response.status,'---res')
+        if(response.data.status == true){
           console.log(response.data,"from api")
           setCallFlag(true)
           setErrAlert("success")
