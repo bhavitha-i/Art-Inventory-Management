@@ -511,7 +511,7 @@ const openDeletePop = () => {
             </Grid>
             }  
 
-            {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
+            {/* {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
              <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}>
               <Typography variant="h5">Rented to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
@@ -537,7 +537,7 @@ const openDeletePop = () => {
               
                 </Box>
             </Grid>
-            }  
+            }   */}
 
           {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
              <Grid item xs={12}>

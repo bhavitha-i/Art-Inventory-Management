@@ -90,6 +90,7 @@ function RentBuyForm(props)  {
         axios.put(process.env.REACT_APP_API_URL+`/customer_purchases_art_store/rent/${inputs.Art}`,inputs)
         .then(response =>{ 
           console.log(response.data,"rent from api")})
+          refreshPage()
         .catch(error => {console.log(error)})
         return
 
@@ -98,6 +99,7 @@ function RentBuyForm(props)  {
       axios.put(process.env.REACT_APP_API_URL+`/order/buy/${inputs.Art}`,inputs)
       .then(response =>{ 
         console.log(response.data,"buy from api")})
+        refreshPage()
       .catch(error => {console.log(error)})
 
 
