@@ -31,8 +31,6 @@ function CustomerForm(props)  {
     const [errAlert,setErrAlert] = useState("");
     const [message,setMessage] = useState("");
     const [isEdit,setIsEdit] = useState(false);
-    const [fileData, setFileData] = useState("");
-    const [fileFlag, setFileFlag] = useState(false);
     const [isPrem,setIsPrem]=useState(false)
 
 
@@ -80,50 +78,42 @@ function CustomerForm(props)  {
               refreshPage()
 
 
-              var now = new Date();
-              var duedate = new Date(now);
-              duedate.setDate(now.getDate() + 365);
-              
-               var premInputs={
-                    "id_Customer":response.data.data.id_Customer,
-                    "ExpiresOn":duedate
 
-                }
-                console.log(response.data.data.id_Customer,premInputs,"before customer")
                 if(isPrem){
-              axios.post(process.env.REACT_APP_API_URL+'/premimum_customer/add',premInputs)
-              .then(response =>{ 
-                  if(response.data == null){
-                      setErrAlert("error")
-                      setMessage(response.message)
-                      setCallFlag(true)
+                  var now = new Date();
+                  var duedate = new Date(now);
+                  duedate.setDate(now.getDate() + 365);
+                  
+                   var premInputs={
+                        "id_Customer":response.data.data.id_Customer,
+                        "ExpiresOn":duedate
+    
+                    }
+                    console.log(response.data.data.id_Customer,premInputs,"before customer")
+             
+                    axios.post(process.env.REACT_APP_API_URL+'/premimum_customer/add',premInputs)
+                         .then(response =>{ 
+                                if(response.data == null){
+                                    console.log("Premium Details added")
 
-                  }
-                  else{
-                  console.log(response.data,"from api")
-                  setErrAlert("success")
-                  setMessage("Customer Added")
-                  setCallFlag(true)
-                  refreshPage()
-                  }
-              })
+                                }
+                                else{
+                                console.log(response.data,"from api")
+                                setErrAlert("success")
+                                setMessage("Customer Added")
+                                setCallFlag(true)
+                                refreshPage()
+                                }
+                            })
               .catch(error => {
                   console.log(error)
-                  setErrAlert("error")
-                  setMessage("Error while adding premium Customer")
-                  setCallFlag(true)
-
               })
             }
 
-
-              }
+            }
           })
           .catch(error => {
               console.log(error)
-              setCallFlag(true)
-              setErrAlert("error")
-              setMessage("Error while adding Customer")
           })
 
 
@@ -164,55 +154,36 @@ function CustomerForm(props)  {
     async function handleSubmit(event){
       event.preventDefault()
       console.log(inputs,"++++++++++")
-
-      if(fileFlag){
-        console.log(fileData)
-        const data = new FormData();
-        data.append("Image",fileData);
-        axios.post(process.env.REACT_APP_API_URL+'/uploadImage',data)
-        .then(response =>{ 
-              if(response.data != null){
-                inputs.Image = response.data.filepath
-                // setInputs(inputs => ({...inputs, Image }));
-                
-                console.log(response.data,"******ResImage")
-                console.log(inputs)
-                    if(isEdit){
-                        editCustomer(event)
-                    }else{
-                        editCustomer(event)
-                    }
-              }
-            }
-        )
-        .catch(error => {
-            console.log(error)
-        })
-
-      }else{
-            if(isEdit){
-                editCustomer(event)
-            }else{
-                addCustomer(event)
-            }
+      if (isEdit) {
+         editCustomer(event);
+      } else {
+        addCustomer(event);
       }
+
         
     }
 
 const handleinfo =(event) =>{
    
         if(event.target.value == 1){
-        setIsPrem(true)
+        
         setInputs(inputs => ({...inputs, "isPremium": 1}));
         return
     }
     else setIsPrem(false)
     return
+
 }
       const handleInputChange = (event) => {
         // event.persist();
         
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
+        if(event.target.name == "isPremium"){
+          if(event.target.value == 1)
+            setIsPrem(true)
+          else
+            setIsPrem(false)
+        }
       }
 
   return (
@@ -293,10 +264,10 @@ const handleinfo =(event) =>{
           <RadioGroup
             row
             name="isPremium"
-            value={inputs.isPremium}
-            onChange={handleInputChange,handleinfo}
+            value={inputs.isPremium || 0}
+            onChange={handleInputChange}
             required
-            defaultValue={0}
+            
           >
             <FormControlLabel value="0" control={<Radio />} label="No" />
             <FormControlLabel value="1" control={<Radio />} label="Yes" />

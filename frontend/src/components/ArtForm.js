@@ -95,7 +95,7 @@ function ArtForm(props)  {
               setCallFlag(true)
               setErrAlert("success")
               setMessage("Art Added")
-              // refreshPage()
+              refreshPage()
               }
           })
           .catch(error => {

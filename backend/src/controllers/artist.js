@@ -16,6 +16,7 @@ exports.create = (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err)
       res.send({
         message:
           err.message || "Some error occurred while creaitng row."
@@ -97,7 +98,7 @@ exports.update = (req, res) => {
   dbmodels.Artist.update(req.body,
     { where: { id_Artist: id } }
   ).
-  then((result) => {
+  then(() => {
     res.status(200).json({
         status: true,
         message: "Artist updated successfully with id = " + id,
@@ -119,10 +120,11 @@ exports.delete = (req, res) => {
   const id = req.params.id;
   dbmodels.Artist.destroy({
     where: { id_Artist: id },
-  }).then(() => {
+  }).then((result) => {
     res.status(200).json({
         status: true,
-        message: "Artist deleted successfully with id = " + id
+        message: "Artist deleted successfully with id = " + id,
+        data:result
     });
   })
   .catch(err => {

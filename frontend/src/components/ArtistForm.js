@@ -79,7 +79,7 @@ function ArtistForm(props)  {
               setCallFlag(true)
               setErrAlert("success")
               setMessage("Artist Added")
-              // refreshPage()
+              refreshPage()
               }
           })
           .catch(error => {
@@ -103,7 +103,7 @@ function ArtistForm(props)  {
               setCallFlag(true)
               setErrAlert("success")
               setMessage("Artist Edited")
-              // refreshPage()
+              refreshPage()
               }
           })
           .catch(error => {

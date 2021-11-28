@@ -143,7 +143,7 @@ const openAddPopup = item => {
 
 const openExhibits = item => {
   console.log(item)
-    window.location.assign(`/museumDisplay/${item.id_Museum}`)
+    window.location.assign(`/#/museumDisplay/${item.id_Museum}`)
 }
 
 

@@ -122,7 +122,7 @@ const Ccontent = styled(CardContent)(({ theme }) => ({
 
 export default function ArtsByList(props) {
 
-  const [artistId,setArtistId] =useState(useParams().Id)
+  const [artistId,setArtistId] =useState(props.id)
   const [artistInfo, setArtistInfo] = useState([])
   const [openPopupTix, setOpenPopupTix] = useState(false);
   const [callFlag,setCallFlag] = useState(false);
@@ -149,7 +149,7 @@ export default function ArtsByList(props) {
 
   useEffect(() => {     
         getArtistDetails()
-        
+        console.log(props,'-props')
   },[]);
 
  

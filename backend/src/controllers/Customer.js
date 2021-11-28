@@ -93,18 +93,45 @@ exports.update = (req, res) => {
 
 
 
-// Delete a Artist by Id
+// Delete a Customer by Id
 exports.delete = (req, res) => {
   const id = req.params.id;
+
+
+  console.log("--")
+  dbmodels.Premium_Customer.destroy({ where: { id_Customer: id } }).then((result) => {console.log(result)})
+
+  dbmodels.Customer_Art_Purchases.destroy({
+    where: { Customer: id }
+  }).then((result) => {
+      console.log(result)
+  })
+
+
+  dbmodels.Order.destroy({
+    where: { Customer: id }
+  }).then((result) => {
+      console.log(result)
+  })
+
+  dbmodels.Exhibition_Tickets.destroy({
+    where: { Customer: id }
+  }).then((result) => {
+      console.log(result)
+  })
+
+
   dbmodels.Customer.destroy({
     where: { id_Customer: id },
-  }).then(() => {
+  }).then((result) => {
+    console.log(result,'---')
     res.status(200).json({
       status: true,
       message: "Deleted successfully with id = " + id
     });
   })
     .catch(err => {
+      console.log(err,'---')
       res.send({
         message:
           err.message || "Some error occurred while deleting."

@@ -64,7 +64,7 @@ function TicketData(props)  {
     </TableRow>
   </TableHead>
   <TableBody>
-    {props.tickets.data.map((ticket) => (
+    {props.tickets.data && props.tickets.data.map((ticket) => (
       <TableRow
         key={ticket.id_Exhibition_Tickets}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

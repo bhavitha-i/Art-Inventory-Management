@@ -33,6 +33,8 @@ import Popup from './Popup'
 import ArtistForm from './ArtistForm';
 import SearchBar from "material-ui-search-bar";
 import { Box } from '@mui/system';
+import SnackBar from './SnackBar';
+
 
 // ----------------------------------------------------------------------
 
@@ -151,17 +153,18 @@ const openArtPopup = item =>{
 
     axios.delete(process.env.REACT_APP_API_URL+'/artist/'+item.id_Artist)
     .then(response =>{ 
-        if(response.data == null){
-            setCallFlag(true)
-            setErrAlert("error")
-            setMessage(response.message)
+      console.log(response.data.status,'---res')
+        if(response.data.status == 200){
+          console.log(response.data,"from api")
+          setCallFlag(true)
+          setErrAlert("success")
+          setMessage("Artist Deleted")
+          refreshPage()
         }
         else{
-        console.log(response.data,"from api")
+        setErrAlert("error")
+        setMessage("Artist can not be deleted")
         setCallFlag(true)
-        setErrAlert("success")
-        setMessage("Artist Deleted")
-        refreshPage()
         }
     })
     .catch(error => {
@@ -182,6 +185,7 @@ const openArtPopup = item =>{
 
   return (
     <ThemeProvider theme={theme}>
+                { callFlag && <SnackBar errAlert={errAlert} message={message} setCallFlag={setCallFlag} /> }
       <Box style={styles.p1Box}>
         <SearchBar
         value={searched}

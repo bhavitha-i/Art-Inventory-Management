@@ -179,7 +179,6 @@ function ExhibitonForm(props)  {
                 inputVariant="standard"
                 value={seleSd}
                 fullWidth
-                disablePast
                 onChange={handleDateChangeSd}
               />
           </MuiPickersUtilsProvider>
@@ -195,7 +194,6 @@ function ExhibitonForm(props)  {
                 inputVariant="standard"
                 value={seleEd}
                 fullWidth
-                disablePast
                 onChange={handleDateChangeEd}
               />
           </MuiPickersUtilsProvider>

@@ -8,10 +8,14 @@ import ExhibitViewArt from '../components/ExhibitViewArts'
 
 
 function Home(){
+    const options=[]
+    options.push( { title:"Museums", url:"/museumDisplay"})
+    options.push( { title:"Exhibits"})
+
 
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar title={"  >  Museums > Exhibits > Exhibit Title "}/>
+        <NavAppBar options={options}/>
         <ExhibitViewArt id={useParams().Id}/>
     </ThemeProvider>
     );

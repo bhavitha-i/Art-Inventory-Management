@@ -115,6 +115,10 @@ const getMuseumArts = async (id) => {
         .catch(error => {console.log(error)})
 }; 
 
+const openArt = item => {
+  console.log(item)
+    window.location.assign(`/#/artview/${item.id_Art}`)
+}
 
 
 const requestSearch = (searchedVal) => {
@@ -185,6 +189,7 @@ const openAddPopupTix = item => {
                     src={`${item.Image}?w=248&fit=crop&auto=format`}
                     alt={item.title}
                     loading="lazy"
+                    
                   />
                   <ImageListItemBar
                     title={item.Title}
@@ -193,6 +198,7 @@ const openAddPopupTix = item => {
                       <IconButton
                         sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                         aria-label={`info about ${item.id_Art}`}
+                        onClick={() => openArt(item)}
                       >
                         <InfoIcon />
                       </IconButton>

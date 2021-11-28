@@ -122,8 +122,10 @@ const openAddPopup = item => {
 
 const openExhibit = item => {
   console.log(item)
-    window.location.assign(`/exhibit/${item.id_Art_Exhibition}`)
+    window.location.assign(`/#/exhibit/${item.id_Art_Exhibition}`)
 }
+
+
 
 
 
