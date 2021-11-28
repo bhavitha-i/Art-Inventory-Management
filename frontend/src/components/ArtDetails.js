@@ -425,7 +425,7 @@ const openDeletePop = () => {
                       <Grid item xs ={12} sm={6}>
                         <b>Manager</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Manager}<br/>
                         <b>Phone</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Phone}<br/>
-                        <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/>
+                        {/* <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/> */}
                       </Grid>
 
                     </Grid> 
@@ -445,7 +445,7 @@ const openDeletePop = () => {
                   variant={"body1"}
                   >
                         <b>{strings.Museum.found}</b> : {artInfo.Art_In_Museums[0].Musem_Museum.FoundedBy}<br/>
-                        <b>Location</b> : {artInfo.Art_In_Museums[0].Musem_Museum.Location}<br/>
+                        {/* <b>Location</b> : {artInfo.Art_In_Museums[0].Musem_Museum.Location}<br/> */}
 
                 </CSubtitle>
               
