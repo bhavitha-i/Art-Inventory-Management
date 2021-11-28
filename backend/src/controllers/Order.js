@@ -134,24 +134,25 @@ exports.buy = (req, res) => {
 
   dbmodels.Order.create(rowData)
     .then((result) => {
+      
 
 
 
-      console.log( "Order created --buy")
-      newDataRow = {
+      console.log( result,"Order result created --buy")
+      var newDataRow = {
         "Customer": req.body.Customer,
         "Order": result.id_Order,
         "Type": 1,
         "Price": req.body.price,
-        "Purchase_Ref_Id": 1
+        "Purchase_Ref_Id": id
 
       }
-
+       console.log(newDataRow,"--buy new data for custoemr purchases")
  
 
       dbmodels.Customer_Art_Purchases.create(newDataRow)
         .then((result) => {
-          console.log("customer art purhcases --buy")
+          console.log(result,"customer art purhcases --buy")
           res.status(200).json({
             status: true,
             message: "Row created successfully",
@@ -159,6 +160,7 @@ exports.buy = (req, res) => {
           });
         })
         .catch(err => {
+          console.log(err,"Error art purhcases --buy")
           res.send({
             message:
               err.message || "Some error occurred while adding data."

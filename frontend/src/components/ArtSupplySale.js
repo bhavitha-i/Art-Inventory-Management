@@ -68,7 +68,7 @@ function ArtSupplySale(props)  {
 
               console.log(response.data,"from api")
               setErrAlert("success")
-              setMessage("Artist Purchase added ")
+              setMessage("Artist Purchase completed. ")
               setCallFlag(true)
               refreshPage()
               

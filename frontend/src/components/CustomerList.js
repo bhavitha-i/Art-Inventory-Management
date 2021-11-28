@@ -145,9 +145,9 @@ const cancelSearch = () => {
     axios.delete(process.env.REACT_APP_API_URL+'/customer/'+item.id_Customer)
     .then(response =>{ 
         if(response.data == null){
-            setCallFlag(true)
             setErrAlert("error")
             setMessage(response.message)
+            setCallFlag(true)
         }
         else{
         console.log(response.data,"from api")
@@ -159,9 +159,9 @@ const cancelSearch = () => {
     })
     .catch(error => {
         console.log(error)
-        setCallFlag(true)
         setErrAlert("error")
         setMessage("Error while deleting Artist")
+        setCallFlag(true)
     })
     
 

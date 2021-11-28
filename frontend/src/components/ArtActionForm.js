@@ -106,7 +106,7 @@ function ArtistForm(props)  {
               setCallFlag(true)
               setErrAlert("success")
               setMessage("Art moved to art store.")
-              // refreshPage()
+              refreshPage()
               
           })
           .catch(error => {
@@ -124,7 +124,7 @@ function ArtistForm(props)  {
               setCallFlag(true)
               setErrAlert("success")
               setMessage("Art moved to art show")
-              // refreshPage()
+              refreshPage()
               
           })
           .catch(error => {
@@ -141,7 +141,7 @@ function ArtistForm(props)  {
               setCallFlag(true)
               setErrAlert("success")
               setMessage("Art moved to  Museum")
-              // refreshPage()
+              refreshPage()
               
           })
           .catch(error => {

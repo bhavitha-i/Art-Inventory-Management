@@ -42,7 +42,8 @@ import PaintingUpdate from './ADPaintingUpdate'
 import SculptureUpdate from './ADSculptureUpdate'
 import AuctionUpdate from './ADAuctionUpdate'
 import ArtStoreUpdate from './ADSaleStoreUpdate';
-
+import Popup from './Popup';
+import ArtDeleteConfirm from './ArtDeleteConfirm';
 
 // ----------------------------------------------------------------------
 
@@ -105,10 +106,10 @@ export default function ArtDetails(props) {
   const [bids, setBids]= useState([])
   const [showIcon, setShowIcon] = useState(false)
   const [poptitle, setPoptitle]= useState("")
-  const [openPopup, setOpenPopup] = useState(false);
+  const [openActionPopup, setOpenActionPopup] = useState(false);
   const [recordForEdit, setRecordForEdit] = useState(null)
   const [poptype, setPoptype]= useState("")
-
+  const [openPopup, setOpenPopup] = useState(false)
 
   function refreshPage() {
     setTimeout(()=>{
@@ -199,7 +200,13 @@ const openEditPopup = item => {
     setRecordForEdit(artInfo.Art_In_Stores[0])
   }
   setPoptype(item)
+  setOpenActionPopup(true)
+}
+
+const openDeletePop = () => {
+  setRecordForEdit(artInfo)
   setOpenPopup(true)
+
 }
 
 
@@ -255,7 +262,7 @@ const openEditPopup = item => {
                   <Grid item xs={1} >
                     {/* {showIcon=="artDetails"&&  */}
                     <Box style={styles.flexstrech}>
-                    <Button style={styles.AVL1Button} variant="outlined" color="error">Delete</Button>
+                    <Button style={styles.AVL1Button} variant="outlined" color="error" onClick={() => openDeletePop()}>Delete</Button>
                     <Button style={styles.AVL1Button} variant="outlined" color="primary" onClick={() => openEditPopup("artDetails")}>Edit</Button>
                     </Box> 
                     {/* } */}
@@ -418,7 +425,7 @@ const openEditPopup = item => {
                       <Grid item xs ={12} sm={6}>
                         <b>Manager</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Manager}<br/>
                         <b>Phone</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Phone}<br/>
-                        <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/>
+                        {/* <b>Location</b> : {artInfo.Art_In_Stores[0].AtStore_Store.Location}<br/> */}
                       </Grid>
 
                     </Grid> 
@@ -438,7 +445,7 @@ const openEditPopup = item => {
                   variant={"body1"}
                   >
                         <b>{strings.Museum.found}</b> : {artInfo.Art_In_Museums[0].Musem_Museum.FoundedBy}<br/>
-                        <b>Location</b> : {artInfo.Art_In_Museums[0].Musem_Museum.Location}<br/>
+                        {/* <b>Location</b> : {artInfo.Art_In_Museums[0].Musem_Museum.Location}<br/> */}
 
                 </CSubtitle>
               
@@ -504,7 +511,7 @@ const openEditPopup = item => {
             </Grid>
             }  
 
-            {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
+            {/* {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
              <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}>
               <Typography variant="h5">Rented to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
@@ -530,7 +537,7 @@ const openEditPopup = item => {
               
                 </Box>
             </Grid>
-            }  
+            }   */}
 
           {artInfo.Status == 5 && artInfo.Customer_Art_Purchases.length >0 &&
              <Grid item xs={12}>
@@ -594,25 +601,25 @@ const openEditPopup = item => {
         </Ccontainer>
         <PopupAction
             title={poptitle}
-            openActionPopup={openPopup}
-            setOpenActionPopup={setOpenPopup}
+            openActionPopup={openActionPopup}
+            setOpenActionPopup={setOpenActionPopup}
         >
              {poptype =="artDetails" && <ArtDetailsUpdate 
                   recordForEdit={recordForEdit} 
-                  setOpenActionPopup={setOpenPopup}
+                  setOpenActionPopup={setOpenActionPopup}
                   /> 
               }
 
             {poptype =="artType" && artType =="Painting" && <PaintingUpdate 
                   recordForEdit={recordForEdit} 
-                  setOpenActionPopup={setOpenPopup}
+                  setOpenActionPopup={setOpenActionPopup}
                   /> 
               }   
 
 
             {poptype =="artType" && artType =="Sculpture" && <SculptureUpdate 
                   recordForEdit={recordForEdit} 
-                  setOpenActionPopup={setOpenPopup}
+                  setOpenActionPopup={setOpenActionPopup}
                   /> 
               } 
 
@@ -620,21 +627,28 @@ const openEditPopup = item => {
                   sold={artInfo.Status}
                   bidsCount ={bids.length} 
                   recordForEdit={recordForEdit} 
-                  setOpenActionPopup={setOpenPopup}
+                  setOpenActionPopup={setOpenActionPopup}
                   /> 
               } 
 
             {poptype =="artStore" && <ArtStoreUpdate
                   sold={artInfo.Status}
                   recordForEdit={recordForEdit} 
-                  setOpenActionPopup={setOpenPopup}
+                  setOpenActionPopup={setOpenActionPopup}
                   /> 
-              } 
-
-
-
-                
+              }   
         </PopupAction>
+        <Popup
+                title="Confirm Art Delete"
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+            >
+                <ArtDeleteConfirm 
+                    recordForEdit={recordForEdit} 
+                    setOpenPopup={setOpenPopup}
+                    />
+                
+            </Popup>
     </ThemeProvider>
 
   );

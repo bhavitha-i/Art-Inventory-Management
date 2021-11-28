@@ -136,7 +136,7 @@ const openAddPopup = item => {
 
 const openShowArts = item => {
   console.log(item)
-    window.location.assign(`/artshow/${item.id_Art_Show}`)
+    window.location.assign(`/#/artshow/${item.id_Art_Show}`)
 }
 
 

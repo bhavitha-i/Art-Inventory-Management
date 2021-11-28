@@ -241,16 +241,22 @@ const openActionPop = item => {
              <Grid item key={art} xs={3} >
                     <Ccard >
                       
-                   
+                        <Link
+                          underline="none"
+                          href={'/#/artview/'+art.id_Art}
+                          color="inherit"
+                        >
                          <Cmedia
+                         
                         image={ art.Image}
                         /> 
+                        </Link>
                         
                         <Ccontent style={styles.ArtCardContent}>
                         <Link
                           underline="none"
                           href={'/#/artview/'+art.id_Art}
-                          color="inherit"Created
+                          color="inherit"
                         >
                         <CHeading
                             variant={"h6"}

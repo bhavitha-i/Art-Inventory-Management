@@ -1,6 +1,6 @@
 const Strings ={
 common:{
-    artInventoryManagement: 'Art Inventory Management',
+    artInventoryManagement: 'Art Repository Management',
     art: 'Art',
     artist: 'Artist',
     settings: 'Settings'

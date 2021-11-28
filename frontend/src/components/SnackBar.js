@@ -18,7 +18,6 @@ export default function SnackBar(props) {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 

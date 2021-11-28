@@ -2,7 +2,6 @@ import './App.css';
 import { BrowserRouter,Routes, Route , HashRouter} from "react-router-dom";
 import theme from './components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
-import FileUpload from './components/FileUpload';
 
 
 import Home from "./views/Home";
@@ -19,7 +18,7 @@ import Customer from './views/Customer'
 import Orders from './views/Orders'
 import Exhibits from './views/Exhibits';
 import ExhibitView from './views/ExhibitView';
-import ArtsByList from './components/ArtsByList';
+import ArtistView from './views/ArtistView'
 
 import ArtSupplies from './views/ArtSupplies'
 
@@ -38,7 +37,7 @@ function App() {
         <Route  path="/artstore/:Id" element={<ArtStoreView />} />
         <Route  path="/museumDisplay/:Id" element={<Exhibits />} />
         <Route  path="/exhibit/:Id" element={<ExhibitView />} />
-        <Route  path="/artistView/:Id" element={<ArtsByList />} />
+        <Route  path="/artistView/:Id" element={<ArtistView />} />
 
 
 
@@ -50,7 +49,6 @@ function App() {
 
         <Route  path="/settings" element={<Settings />} />
         <Route  path="/settings/:index" element={<Settings />} />
-        <Route  path="/fileUpload" element={<FileUpload />} />
 
       </Routes>
     </HashRouter>

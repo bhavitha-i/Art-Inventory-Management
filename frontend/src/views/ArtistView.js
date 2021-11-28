@@ -3,23 +3,17 @@ import NavAppBar from '../components/NavAppBar';
 import theme from '../components/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import withRoot from '../components/WithRoot';
-import MuseumExhibits from '../components/MuseumExhibits'
 import { useParams } from "react-router-dom";
+import ArtistDetails from '../components/ArtsByList'
 
-
-function Home(){
-
-    const options=[]
-    options.push( { title:"Museums", url:"/museumDisplay"})
-    options.push( { title:"Exhibits"})
-
+function ArtistView(){
     return (
     <ThemeProvider theme={theme}>
-        <NavAppBar options={options}/>
-        <MuseumExhibits id={useParams().Id}/>
+        <NavAppBar/>
+        <ArtistDetails id={useParams().Id}/>
     </ThemeProvider>
     );
 }
 
-export default withRoot(Home)
+export default withRoot(ArtistView)
 

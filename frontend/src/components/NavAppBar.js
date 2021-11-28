@@ -32,7 +32,8 @@ export default function NavAppBar(props) {
   ]
 
   props.options && props.options.map( (crum) =>{
-    const obj =    
+    const obj =  
+    crum.url ?  
       <Link 
           underline="none" 
           variant="h5" 
@@ -40,7 +41,10 @@ export default function NavAppBar(props) {
           href={'/#'+crum.url}
           sx={{ fontSize: 24 }}>
           {crum.title} 
-      </Link>
+      </Link> 
+      : <Typography variant="h5" color="initial" > 
+        {crum.title}
+      </Typography>
       breadcrumbs.push(obj)
   })
 
