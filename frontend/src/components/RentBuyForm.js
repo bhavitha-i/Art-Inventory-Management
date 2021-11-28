@@ -181,7 +181,7 @@ function RentBuyForm(props)  {
 
         <Grid item xs={12} >
         <FormControl component="fieldset">
-          <FormLabel required component="legend" variant="body1">Rent/Buy</FormLabel>
+          <FormLabel required component="legend" variant="body1">Rent/Sell</FormLabel>
           <RadioGroup
             row
             name="RentorBuy"
@@ -190,7 +190,7 @@ function RentBuyForm(props)  {
             required
             defaultValue={1}
           >
-            <FormControlLabel value="1" control={<Radio />} label="Buy" />
+            <FormControlLabel value="1" control={<Radio />} label="Sell" />
             <FormControlLabel value="2" control={<Radio />} label="Rent" />
 
 

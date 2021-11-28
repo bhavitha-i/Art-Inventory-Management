@@ -486,7 +486,7 @@ const openDeletePop = () => {
             {artInfo.Status == 4 && artInfo.Customer_Art_Purchases.length >0 &&
              <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}>
-              <Typography variant="h5">Bought by : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
+              <Typography variant="h5">Sold to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
               <Cdivider/>
               <CSubtitle
                   variant={"body1"}
@@ -572,7 +572,7 @@ const openDeletePop = () => {
           {artInfo.Status == 6 && artInfo.Customer_Art_Purchases.length >0 &&
              <Grid item xs={12}>
               <Box style={styles.AVInfoHeader}>
-              <Typography variant="h5">Sold to : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
+              <Typography variant="h5">Bid won by : {artInfo.Customer_Art_Purchases[0].Customer_Customer.FirstName} {artInfo.Customer_Art_Purchases[0].Customer_Customer.LastName}</Typography>
               <Cdivider/>
               <CSubtitle
                   variant={"body1"}
